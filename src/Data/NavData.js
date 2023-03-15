@@ -1,29 +1,20 @@
 export const NavMenu = [
     {
-      name:"Home",
-      link: "/",
+      name:"Dashboard",
+      link: "/admin/dashboard",
       id: 1
     }, 
     {
-      link: "/products",
+      link: "/managment",
       id: 2,
-      name:"Products",
+      name:"Staff mgt",
     },
     {
       id: 3,
-      link: "/services",
-      name:"Sevices",
+      link: "/report",
+      name:"Report",
     }, 
-    {
-      link: "/contact",
-      id: 4,
-      name:"Contact",
-    },
-    {
-      link: "/about",
-      id: 5,
-      name:"About Us",
-    }
+  
   ]
 
 
