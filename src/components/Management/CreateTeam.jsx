@@ -1,11 +1,32 @@
-import React from "react";
-import { useDisclosure, Input, Select } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { useDisclosure, Input, Textarea } from "@chakra-ui/react";
 import ModalWrapper from "../../common/ModalWrapper";
-import avatar from "../../assets/avatar.svg";
-import calender from "../../assets/calender.svg";
+import search from "../../assets/search.svg";
+import user from "../../assets/user.png";
+import deleteIcon from "../../assets/deleteIcon.svg";
 
+const staff = [
+  {
+    id: 1,
+    img: user,
+    name: "Moses Samule",
+    email: "samuel.lorchain@gmail.com",
+  },
+  {
+    id: 2,
+    img: user,
+    name: "Moses Samule",
+    email: "samuel.lorchain@gmail.com",
+  },
+];
 const CreateTeam = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  let [aboutTeam, setAboutTeam] = useState("");
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    setAboutTeam(inputValue);
+  };
 
   return (
     <div>
@@ -21,91 +42,86 @@ const CreateTeam = () => {
         onOpen={onOpen}
         onClose={onClose}
       >
-        <form className=" py-4">
+        <form className=" py-6">
           <div className="flex justify-between ">
-            <p className="font-[500] text-[22px]">Add Staff</p>
+            <p className="font-[500] text-[22px]"> Create team</p>
             <button className="px-5 py-1 text-white bg-primary h-fit border-2 border-primary rounded-lg">
-              Save information
+              Save
             </button>
           </div>
-          <div className="flex gap-3 mt-7 rounded-xl items-center bg-[#F7F7F7] p-3">
-            <div>
-              <img className="w-[50px]" src={avatar} alt="" />
+
+          <div>
+            <div className="mt-6 w-full">
+              <label className="font-semibold">Team name</label>
+              <Input
+                label="text"
+                type="text"
+                // value={regFormData.email}
+                // onChange={(e) => setRegFormData({...regFormData, email: e.target.value})}
+                placeholder="chose team name"
+                mt={1}
+              />
             </div>
-            <div>
-              <p className="font-semibold ">
-                Upload staff picture or drag and drop
-              </p>
-              <p className="text-[14px]">only files in PNG or JPG upto 3MB</p>
+            <div className="mt-6 w-full relative">
+              <label className="block mb-2 font-semibold">Team lead</label>
+              <input
+                label="text"
+                type="text"
+                // value={regFormData.email}
+                // onChange={(e) => setRegFormData({...regFormData, email: e.target.value})}
+                placeholder="Search staff"
+                className="pl-8 w-full outline-1 border-[#eeeeee] border-2 rounded-md p-2 outline-[#EEEEEE]"
+                mt={1}
+              />
+              <img
+                className="absolute bottom-[10px] left-2"
+                src={search}
+                alt=""
+              />
             </div>
-          </div>
-          <div className="flex items-center mt-6 gap-2 h-[38px] rounded-md font-semibold border-2 border-[#EEEEEE] p-3">
-            <img src={calender} alt="" />
-            <p>04, feb 2023</p>
-          </div>
-          <div className="flex gap-5">
-            <div>
-              <div className="mt-6">
-                <label>Full name</label>
-                <Input
-                  label="text"
-                  type="text"
-                  // value={regFormData.email}
-                  // onChange={(e) => setRegFormData({...regFormData, email: e.target.value})}
-                  placeholder="Enter staff legal"
-                  mt={1}
-                />
-              </div>
-              <div className="mt-6">
-                <label>Email address</label>
-                <Input
-                  label="email"
-                  type="email"
-                  // value={regFormData.email}
-                  // onChange={(e) => setRegFormData({...regFormData, email: e.target.value})}
-                  placeholder="enter company mail"
-                  mt={1}
-                />
-              </div>
-              <div className="mt-6">
-                <label>Phone number</label>
-                <Select mt={1} fontWeight={"500"} placeholder="Select action">
-                  <option value="option1">Login</option>
-                  <option value="option2">Add staff</option>
-                  <option value="option3">Edit staff</option>
-                  <option value="option3">Payment records</option>
-                  <option value="option3">Download report</option>
-                </Select>
-              </div>
+            <div className="mt-6 w-full">
+              <label className="font-semibold mb-3">About team</label>
+              <Textarea
+                value={setAboutTeam}
+                onChange={handleInputChange}
+                placeholder=""
+                size="sm"
+                rounded={"md"}
+                mt={2}
+              />
             </div>
-            <div>
-              <div className="mt-6">
-                <label>Phone number</label>
-                <Select mt={1} fontWeight={"500"} placeholder="Gender">
-                  <option value="option1">Male</option>
-                  <option value="option2">Female</option>
-                  <option value="option3">Binary</option>
-                </Select>
-              </div>
-              <div className="mt-6">
-                <label>Nationality</label>
-                <Select mt={1} fontWeight={"500"} placeholder="Select country">
-                  <option value="option1">Nigerial</option>
-                </Select>
-              </div>
-              <div className="mt-6">
-                <label>Address</label>
-                <Input
-                  label="adrdess"
-                  type="text"
-                  mt={1}
-                  // value={regFormData.email}
-                  // onChange={(e) => setRegFormData({...regFormData, email: e.target.value})}
-                  placeholder="Full address"
-                />
-              </div>
+            <div className="mt-6 w-full relative">
+              <label className="block mb-2 font-semibold">Team members</label>
+              <input
+                label="text"
+                type="text"
+                // value={regFormData.email}
+                // onChange={(e) => setRegFormData({...regFormData, email: e.target.value})}
+                placeholder="Search members"
+                className="pl-8 w-full outline-1 border-[#eeeeee] border-2 rounded-md p-2 outline-[#EEEEEE]"
+                mt={1}
+              />
+              <img
+                className="absolute bottom-[10px] left-2"
+                src={search}
+                alt=""
+              />
             </div>
-            <div></div>
+
+            <div className="mt-5 ">
+              {staff?.map((list) => (
+                <div key={list.id} className="flex justify-between mb-3">
+                  <div className="flex gap-3 mb-3">
+                    <img className="w-[40px] h-[40px]" src={list.img} alt="" />
+                    <div>
+                        <p className="font-semibold mt-1">{list.name}</p>
+                        <p className="-mt-2">{list.email}</p>
+                    </div>
+                  </div>
+                    <img src={deleteIcon} alt="" />
+                </div>
+              ))}
+            </div>
           </div>
         </form>
       </ModalWrapper>

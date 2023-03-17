@@ -1,6 +1,6 @@
 import React from "react";
 import { Select } from "@chakra-ui/react";
-import Editw from "../assets/Editw.svg";
+import Editw from "../../assets/Editw.svg";
 
 
 const PermissionLog = () => {

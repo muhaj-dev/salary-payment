@@ -14,10 +14,10 @@ import {
   TableContainer,
   Checkbox,
 } from "@chakra-ui/react";
-import Edit from "../assets/Edit.svg";
+import Edit from "../../assets/Edit.svg";
 import { BsThreeDots } from "react-icons/bs";
-import download from "../assets/download.svg"
-import Iicon from "../assets/Iicon.svg"
+import download from "../../assets/download.svg"
+import Iicon from "../../assets/Iicon.svg"
 
 
 const table = [

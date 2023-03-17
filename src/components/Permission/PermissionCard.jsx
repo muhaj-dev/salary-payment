@@ -1,5 +1,5 @@
 import React from "react";
-import user from "../assets/user.png";
+import user from "../../assets/user.png";
 
 const cards = [
   {
@@ -80,14 +80,13 @@ const PermissionCard = () => {
                 </p>
                 <div className="flex justify-between">
                   {item.img.map((item) => (
-                   
-                     <div key={item.id} className="flex items-center justify-center w-10 h-10 -mx-3 overflow-hidden rounded-full border-2 border-white">
-                       <img src={item.img} alt="" />
-                     
-                       </div>
-                    
+                    <div
+                      key={item.id}
+                      className="flex items-center justify-center w-10 h-10 -mx-3 overflow-hidden rounded-full border-2 border-white"
+                    >
+                      <img src={item.img} alt="" />
+                    </div>
                   ))}
-
                 </div>
               </div>
             </div>

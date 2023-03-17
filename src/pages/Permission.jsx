@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import PermissionHoc from "../components/PermissiomHoc";
-import PermissionLog from "../components/PermissionLog";
+import PermissionHoc from "../components/Permission/PermissiomHoc";
+import PermissionLog from "../components/Permission/PermissionLog";
 import Pagination from "../common/Pagination";
-import PermissionTable from "../components/PermissionTable";
+import PermissionTable from "../components/Permission/PermissionTable";
 
 const body = [
   {

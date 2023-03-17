@@ -2,6 +2,7 @@ import React from "react";
 import SearchFill from "../../assets/SearchFill.svg";
 import { ImSearch } from "react-icons/im";
 import CreateTeam from "./CreateTeam";
+import AddStaff from "./AddStaff";
 
 const MangLog = () => {
   return (
@@ -29,9 +30,7 @@ const MangLog = () => {
         </div>
         <div className="flex gap-3 ">
           <CreateTeam />
-          <button className="px-5 py-2 text-white bg-primary border-2 border-primary rounded-lg">
-          Add Staff
-          </button>
+          <AddStaff />
         </div>
       </div>
     </div>

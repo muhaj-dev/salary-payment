@@ -1,7 +1,7 @@
 import React from "react";
-import Card from "./Card";
-import Hero from "./Hero";
-import Navbar from "./Navbar";
+import Card from "../Card";
+import Hero from "../Hero";
+import Navbar from "../Navbar";
 import PermissionCard from "./PermissionCard";
 
 const PermissionHoc = (WrappedComponent) => {
