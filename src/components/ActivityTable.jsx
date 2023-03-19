@@ -11,25 +11,25 @@ import {
 } from "@chakra-ui/react";
 
 const table = [
-    {
-      id: 1,
-      head: "User ID",
-    },
-    {
-      id: 2,
-      head: "Staff name",
-    },
-    {
-      id: 3,
-      head: "Time & Date",
-    },
-    {
-      id: 4,
-      head: "Action",
-    },
-  ]
+  {
+    id: 1,
+    head: "User ID",
+  },
+  {
+    id: 2,
+    head: "Staff name",
+  },
+  {
+    id: 3,
+    head: "Time & Date",
+  },
+  {
+    id: 4,
+    head: "Action",
+  },
+];
 
-const ActivityTable = ({currentPosts}) => {
+const ActivityTable = ({ currentPosts }) => {
   const [checkedItems, setCheckedItems] = React.useState([false, false]);
 
   const allChecked = checkedItems.every(Boolean);
@@ -43,12 +43,13 @@ const ActivityTable = ({currentPosts}) => {
               <Td>
                 <Checkbox
                   isChecked={allChecked}
+                  className="accent-primary"
                   isIndeterminate={isIndeterminate}
                   onChange={(e) =>
                     setCheckedItems([e.target.checked, e.target.checked])
                   }
                 >
-                 {" "}
+                  {" "}
                 </Checkbox>
               </Td>
               {table?.map((item) => (
@@ -62,6 +63,7 @@ const ActivityTable = ({currentPosts}) => {
                 <Td>
                   <Checkbox
                     isChecked={checkedItems[item.id]}
+                    className="accent-primary"
                     onChange={(e) =>
                       setCheckedItems([e.target.checked, checkedItems[item.id]])
                     }

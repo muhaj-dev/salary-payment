@@ -1,6 +1,4 @@
 import React from "react";
-import { Select } from "@chakra-ui/react";
-import EditP from "../../assets/EditP.svg";
 import AddAdmin from "./AddAdmin";
 import PermissionModal from "./PermissionModal";
 

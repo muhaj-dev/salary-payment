@@ -75,7 +75,7 @@ const PermissionModal = () => {
                         <input
                           type="checkbox"
                           name={item.label}
-                          className="form-checkbox h-5 w-5 text-gray-600 transition duration-150 ease-in-out"
+                          className="form-checkbox accent-primary h-5 w-5 text-gray-600 transition duration-150 ease-in-out"
                           checked={checkedItems[item.label]}
                           onChange={handleChange}
                         />
@@ -106,7 +106,7 @@ const PermissionModal = () => {
                         <input
                           type="checkbox"
                           name={item.label}
-                          className="form-checkbox h-5 w-5 text-gray-600 transition duration-150 ease-in-out"
+                          className="form-checkbox h-5 w-5 accent-primary text-gray-600 transition duration-150 ease-in-out"
                           checked={checkedItems[item.label]}
                           onChange={handleChange}
                         />

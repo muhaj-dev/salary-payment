@@ -14,9 +14,9 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import { BsThreeDots } from "react-icons/bs";
-import download from "../assets/download.svg";
-import Edit from "../assets/Edit.svg";
-import Iicon from "../assets/Iicon.svg";
+import download from "../../assets/download.svg";
+import Edit from "../../assets/Edit.svg";
+import Iicon from "../../assets/Iicon.svg";
 
 const table = [
   {
@@ -67,6 +67,7 @@ const TaxTable = ({ TeamcurrentPosts }) => {
               <Td>
                 <Checkbox
                   isChecked={allChecked}
+                  className="accent-primary"
                   isIndeterminate={isIndeterminate}
                   onChange={(e) =>
                     setCheckedItems([e.target.checked, e.target.checked])
@@ -86,6 +87,7 @@ const TaxTable = ({ TeamcurrentPosts }) => {
                 <Td>
                   <Checkbox
                     isChecked={checkedItems[item.id]}
+                    className="accent-primary"
                     onChange={(e) =>
                       setCheckedItems([e.target.checked, checkedItems[item.id]])
                     }

@@ -14,7 +14,7 @@ const MangLog = () => {
       </div>
       <div className="flex gap-3">
         <div className="flex relative">
-          <ImSearch className="relative top-3 h-[20px] w-[30px] left-[32px] text-[#B9BBBE] " />
+          <ImSearch className="relative top-4 h-[16px] w-[30px] left-[32px] text-[#B9BBBE] " />
           <input
             placeholder="Search"
             type="text"

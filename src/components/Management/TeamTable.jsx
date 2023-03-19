@@ -15,11 +15,9 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import { BsThreeDots } from "react-icons/bs";
-import download from "../../assets/download.svg"
-import Edit from "../../assets/Edit.svg"
-import Iicon from "../../assets/Iicon.svg"
-
-
+import download from "../../assets/download.svg";
+import Edit from "../../assets/Edit.svg";
+import Iicon from "../../assets/Iicon.svg";
 
 const table = [
   {
@@ -63,6 +61,7 @@ const TeamTable = ({ TeamcurrentPosts }) => {
                 <Checkbox
                   isChecked={allChecked}
                   isIndeterminate={isIndeterminate}
+                  className="accent-primary"
                   onChange={(e) =>
                     setCheckedItems([e.target.checked, e.target.checked])
                   }
@@ -81,6 +80,7 @@ const TeamTable = ({ TeamcurrentPosts }) => {
                 <Td>
                   <Checkbox
                     isChecked={checkedItems[item.id]}
+                    className="accent-primary"
                     onChange={(e) =>
                       setCheckedItems([e.target.checked, checkedItems[item.id]])
                     }
@@ -89,7 +89,7 @@ const TeamTable = ({ TeamcurrentPosts }) => {
                   </Checkbox>
                 </Td>
                 <Td>{item.team}</Td>
-                
+
                 <Td>
                   <span className="bg-[#F7F7F7] px-3 py-1 rounded-md">
                     {item.staff}
@@ -110,29 +110,27 @@ const TeamTable = ({ TeamcurrentPosts }) => {
                       </MenuButton>
                       <MenuList>
                         <MenuItem
-                        //   onClick={() => alert("Kagebunshin")}
+                          //   onClick={() => alert("Kagebunshin")}
                           fontWeight="semi-bold"
                           _hover={{ color: "red" }}
                           display="flex"
                           justifyContent={"space-between"}
                         >
-                        <div className="flex gap-2">
+                          <div className="flex gap-2">
                             <img src={Edit} alt="" />
                             <span>Edit</span>
-                        </div>
-                        <img src={Iicon} alt="" />
-                        
+                          </div>
+                          <img src={Iicon} alt="" />
                         </MenuItem>
                         <MenuItem
-                        //   onClick={() => alert("Kagebunshin")}
+                          //   onClick={() => alert("Kagebunshin")}
                           fontWeight="semi-bold"
                           _hover={{ color: "red" }}
                         >
-                            <div className="flex gap-2">
+                          <div className="flex gap-2">
                             <img src={download} alt="" />
                             <span>Payment history</span>
-                        </div>
-                          
+                          </div>
                         </MenuItem>
                       </MenuList>
                     </Menu>

@@ -9,17 +9,15 @@ import {
   Thead,
   Tbody,
   Tr,
-  Th,
   Td,
   TableContainer,
   Checkbox,
 } from "@chakra-ui/react";
 import Edit from "../../assets/Edit.svg";
 import { BsThreeDots } from "react-icons/bs";
-import download from "../../assets/download.svg"
-import Iicon from "../../assets/Iicon.svg"
+import download from "../../assets/download.svg";
+import Iicon from "../../assets/Iicon.svg";
 import EditPermission from "./EditPermission";
-
 
 const table = [
   {
@@ -55,6 +53,7 @@ const PermissionTable = ({ currentPosts }) => {
                 <Checkbox
                   isChecked={allChecked}
                   isIndeterminate={isIndeterminate}
+                  className="accent-primary"
                   onChange={(e) =>
                     setCheckedItems([e.target.checked, e.target.checked])
                   }
@@ -73,6 +72,7 @@ const PermissionTable = ({ currentPosts }) => {
                 <Td>
                   <Checkbox
                     isChecked={checkedItems[item.id]}
+                    className="accent-primary"
                     onChange={(e) =>
                       setCheckedItems([e.target.checked, checkedItems[item.id]])
                     }
@@ -83,51 +83,49 @@ const PermissionTable = ({ currentPosts }) => {
                 <Td>{item.name}</Td>
                 <Td>
                   <p className="font-semibold text-[16px] mb-2">{item.name}</p>
-                    <p>{item.permission}</p>
+                  <p>{item.permission}</p>
                 </Td>
                 <Td>
-                <span className="flex gap-2 bg-[#F7F7F7] rounded-md">
-                  <EditPermission audit={item.audit}/>
-                </span>
+                  <span className="flex gap-2 bg-[#F7F7F7] w-fit rounded-md">
+                    <EditPermission audit={item.audit} />
+                  </span>
                 </Td>
                 <Td>
-                    <Menu bg="primary">
-                      <MenuButton
-                        as={Button}
-                        bg="transparent"
-                        _hover={{ bg: "transparent" }}
-                      >
-                        <BsThreeDots className="cursor-pointerml-auto text-[grey]" />
-                      </MenuButton>
-                      <MenuList>
-                        <MenuItem
+                  <Menu bg="primary">
+                    <MenuButton
+                      as={Button}
+                      bg="transparent"
+                      _hover={{ bg: "transparent" }}
+                    >
+                      <BsThreeDots className="cursor-pointerml-auto text-[grey]" />
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem
                         //   onClick={() => alert("Kagebunshin")}
-                          fontWeight="semi-bold"
-                          _hover={{ color: "red" }}
-                          display="flex"
-                          justifyContent={"space-between"}
-                        >
+                        fontWeight="semi-bold"
+                        _hover={{ color: "red" }}
+                        display="flex"
+                        justifyContent={"space-between"}
+                      >
                         <div className="flex gap-2">
-                            <img src={Edit} alt="" />
-                            <span>Edit</span>
+                          <img src={Edit} alt="" />
+                          <span>Edit</span>
                         </div>
                         <img src={Iicon} alt="" />
-                        
-                        </MenuItem>
-                        <MenuItem
+                      </MenuItem>
+                      <MenuItem
                         //   onClick={() => alert("Kagebunshin")}
-                          fontWeight="semi-bold"
-                          _hover={{ color: "red" }}
-                        >
-                            <div className="flex gap-2">
-                            <img src={download} alt="" />
-                            <span>Payment history</span>
+                        fontWeight="semi-bold"
+                        _hover={{ color: "red" }}
+                      >
+                        <div className="flex gap-2">
+                          <img src={download} alt="" />
+                          <span>Payment history</span>
                         </div>
-                          
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </Td>
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Td>
               </Tr>
             ))}
           </Tbody>

@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
 import Plogo from "../assets/Plogo.png";
 import user from "../assets/user.png";
-// import RedButton from '../common/Button/RedButton'
 import { NavMenu } from "../Data/NavData";
 import MobileNav from "./MobileNav";
 

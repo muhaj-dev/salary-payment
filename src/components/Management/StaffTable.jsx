@@ -16,11 +16,9 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import { BsThreeDots } from "react-icons/bs";
-import download from "../../assets/download.svg"
-import Edit from "../../assets/Edit.svg"
-import Iicon from "../../assets/Iicon.svg"
-
-
+import download from "../../assets/download.svg";
+import Edit from "../../assets/Edit.svg";
+import Iicon from "../../assets/Iicon.svg";
 
 const table = [
   {
@@ -67,6 +65,7 @@ const StaffTable = ({ currentPosts }) => {
               <Td>
                 <Checkbox
                   isChecked={allChecked}
+                  className="accent-primary"
                   isIndeterminate={isIndeterminate}
                   onChange={(e) =>
                     setCheckedItems([e.target.checked, e.target.checked])
@@ -86,6 +85,7 @@ const StaffTable = ({ currentPosts }) => {
                 <Td>
                   <Checkbox
                     isChecked={checkedItems[item.id]}
+                    className="accent-primary"
                     onChange={(e) =>
                       setCheckedItems([e.target.checked, checkedItems[item.id]])
                     }
@@ -112,44 +112,42 @@ const StaffTable = ({ currentPosts }) => {
                 <Td>{item.dateStated}</Td>
                 <Td>{item.dateEnded}</Td>
                 <Td>{item.salary}</Td>
-                  <Td>
-                    <Menu bg="primary">
-                      <MenuButton
-                        as={Button}
-                        bg="transparent"
-                        _hover={{ bg: "transparent" }}
-                      >
-                        <BsThreeDots className="cursor-pointerml-auto text-[grey]" />
-                      </MenuButton>
-                      <MenuList>
-                        <MenuItem
+                <Td>
+                  <Menu bg="primary">
+                    <MenuButton
+                      as={Button}
+                      bg="transparent"
+                      _hover={{ bg: "transparent" }}
+                    >
+                      <BsThreeDots className="cursor-pointerml-auto text-[grey]" />
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem
                         //   onClick={() => alert("Kagebunshin")}
-                          fontWeight="semi-bold"
-                          _hover={{ color: "red" }}
-                          display="flex"
-                          justifyContent={"space-between"}
-                        >
+                        fontWeight="semi-bold"
+                        _hover={{ color: "red" }}
+                        display="flex"
+                        justifyContent={"space-between"}
+                      >
                         <div className="flex gap-2">
-                            <img src={Edit} alt="" />
-                            <span>Edit</span>
+                          <img src={Edit} alt="" />
+                          <span>Edit</span>
                         </div>
                         <img src={Iicon} alt="" />
-                        
-                        </MenuItem>
-                        <MenuItem
+                      </MenuItem>
+                      <MenuItem
                         //   onClick={() => alert("Kagebunshin")}
-                          fontWeight="semi-bold"
-                          _hover={{ color: "red" }}
-                        >
-                            <div className="flex gap-2">
-                            <img src={download} alt="" />
-                            <span>Payment history</span>
+                        fontWeight="semi-bold"
+                        _hover={{ color: "red" }}
+                      >
+                        <div className="flex gap-2">
+                          <img src={download} alt="" />
+                          <span>Payment history</span>
                         </div>
-                          
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                  </Td>
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Td>
               </Tr>
             ))}
           </Tbody>

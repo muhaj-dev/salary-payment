@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import MangLog from "../components/Management/MangLog";
 import PageHoc from "../components/PageHoc";
 import Pagination from "../common/Pagination";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import PaymentTable from "../components/PaymentTable";
-import TaxTable from "../components/TaxTable";
-import RepoLog from "../components/RepoLog";
+import PaymentTable from "../components/Report/PaymentTable";
+import TaxTable from "../components/Report/TaxTable";
+import RepoLog from "../components/Report/RepoLog";
 
 const body = [
   {
