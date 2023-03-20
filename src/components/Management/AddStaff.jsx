@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  useDisclosure,
-  Input,
-  Select,
-} from "@chakra-ui/react";
+import { useDisclosure, Input, Select } from "@chakra-ui/react";
 import ModalWrapper from "../../common/ModalWrapper";
 import avatar from "../../assets/avatar.svg";
 import calender from "../../assets/calender.svg";
@@ -42,7 +38,6 @@ const AddStaff = () => {
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
-
 
   return (
     <div>
@@ -83,7 +78,7 @@ const AddStaff = () => {
           <div className="flex gap-5 justify-between">
             <div className="w-full tablet:w-[48%]">
               <div className="mt-6">
-                <label>Full name</label>
+                <label className="font-semibold">Full name</label>
                 <Input
                   label="text"
                   type="text"
@@ -105,7 +100,7 @@ const AddStaff = () => {
                 />
               </div>
               <div className="mt-6">
-                <label>Phone number</label>
+                <label className="font-semibold">Phone number</label>
                 <Select mt={1} fontWeight={"500"} placeholder="Select action">
                   <option value="option1">Login</option>
                   <option value="option2">Add staff</option>
@@ -125,13 +120,13 @@ const AddStaff = () => {
                 </Select>
               </div>
               <div className="mt-6">
-                <label>Nationality</label>
+                <label className="font-semibold">Nationality</label>
                 <Select mt={1} fontWeight={"500"} placeholder="Select country">
                   <option value="option1">Nigerial</option>
                 </Select>
               </div>
               <div className="mt-6">
-                <label>Address</label>
+                <label className="font-semibold">Address</label>
                 <Input
                   label="adrdess"
                   type="text"
@@ -148,7 +143,10 @@ const AddStaff = () => {
             <div>
               <div className="flex flex-wrap gap-4 justify-between">
                 {radio.map((radio) => (
-                  <label key={radio.title} className="w-[90%] shadow-md rounded-lg p-4 tablet:w-[45%] laptop:w-[30%] flex items-center space-x-2">
+                  <label
+                    key={radio.title}
+                    className=" w-[90%] shadow-md rounded-lg p-4 tablet:w-[45%] laptop:w-[30%] flex items-center space-x-2"
+                  >
                     <input
                       type="radio"
                       name="radioGroup"
@@ -158,14 +156,71 @@ const AddStaff = () => {
                       className="h-4 w-4 text-indigo-600"
                     />
                     <div className="ml-3">
-                        <p className="text-gray-900 font-[500]">{radio.title}</p>
-                        <p className="text-[13px] leading-4 text-gray-700">{radio.des}</p>
+                      <p className="text-gray-900 font-[500]">{radio.title}</p>
+                      <p className="text-[13px] leading-4 text-gray-700">
+                        {radio.des}
+                      </p>
                     </div>
                   </label>
                 ))}
               </div>
             </div>
           </div>
+          <div className="flex gap-5 justify-between">
+            <div className="w-full tablet:w-[48%]">
+              <div className="mt-6">
+                <label className="font-semibold">Phone number</label>
+                <Select mt={1} fontWeight={"500"} placeholder="Select action">
+                  <option value="option1">Login</option>
+                  <option value="option2">Add staff</option>
+                  <option value="option3">Edit staff</option>
+                  <option value="option3">Payment records</option>
+                  <option value="option3">Download report</option>
+                </Select>
+              </div>
+              <div className="mt-6">
+                <label className="font-semibold">Wallet Address</label>
+                <Input
+                  label="wallet"
+                  type="text"
+                  // value={regFormData.email}
+                  // onChange={(e) => setRegFormData({...regFormData, email: e.target.value})}
+                  placeholder="Ox"
+                  mt={1}
+                />
+              </div>
+            </div>
+            <div className="w-full tablet:w-[48%]">
+              <div className="mt-6 relative">
+                <span className="font-bold absolute top-9 left-3">$</span>
+                <label className="font-semibold">Salary</label>
+                <Input
+                  label="salary"
+                  type="number"
+                  mt={1}
+                  pl={7}
+                  // value={regFormData.email}
+                  // onChange={(e) => setRegFormData({...regFormData, email: e.target.value})}
+                  placeholder="000"
+                />
+              </div>
+              <div className="mt-6 relative">
+                <span className="font-bold absolute top-9 left-3">%</span>
+
+                <label className="font-semibold">Tax rate</label>
+                <Input
+                  label="tax"
+                  type="number"
+                  mt={1}
+                  pl={7}
+                  // value={regFormData.email}
+                  // onChange={(e) => setRegFormData({...regFormData, email: e.target.value})}
+                  placeholder="00"
+                />
+              </div>
+            </div>
+          </div>
+          <br/>
         </form>
       </ModalWrapper>
     </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import LoginHoc from "../components/LoginHoc";
+import AdminHoc from "../components/AdminHoc";
 import Input from "../common/Input";
 import PasswordInput from "../common/PasswordInput";
 
@@ -35,4 +35,4 @@ const AdminLogin = () => {
   );
 };
 
-export default LoginHoc(AdminLogin);
+export default AdminHoc(AdminLogin);

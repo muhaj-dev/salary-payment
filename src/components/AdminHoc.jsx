@@ -1,10 +1,9 @@
 import { Flex, Box } from "@chakra-ui/react";
 import React from "react";
 import admin from "../assets/Admin.jpg";
-import staff from "../assets/staff.jpg";
 
 import logo from "../assets/logo.svg";
-import LogDetails from "./LogDetails";
+import AdminDetails from "./AdminDetails";
 
 const LoginHoc = (WrappedComponent) => {
   return function (props) {
@@ -12,9 +11,9 @@ const LoginHoc = (WrappedComponent) => {
       <Flex>
         <Box className="relative hidden tablet:block tablet:w-[50%] h-[100vh] ">
           <img src={logo} className="absolute top-6 left-20 h-[45px]" alt="logo" />
-          <img src={staff} alt="logo" className="h-full object-cover w-full " />
+          <img src={admin} alt="logo" className="h-full object-cover w-full " />
           <div className="absolute top-[41%] w-full text-white">
-            <LogDetails />
+            <AdminDetails />
           </div>
         </Box>
         <Box className="h-[100vh] w-full tablet:w-[50%] flex">

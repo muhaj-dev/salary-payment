@@ -12,7 +12,7 @@ const ModalWrapper = ({ children, isOpen, onOpen, onClose, size }) => {
     <Modal isOpen={isOpen} size={size} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalBody>
+        <ModalBody  >
          {children}
         </ModalBody>
       </ModalContent>
