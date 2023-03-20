@@ -22,7 +22,6 @@ const AdminLogin = () => {
           // value={regFormData.password}
           // onChange={(e) => setRegFormData({...regFormData, password: e.target.value})}
         />
-        {/* <LightBtn text="Sign in"/> */}
         <div className="w-full">
           <button className="text-[16px] my-3 rounded-md py-3 text-white w-full bg-primary">
             Login
