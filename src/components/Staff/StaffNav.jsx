@@ -23,7 +23,7 @@ const StaffNav = () => {
         <Menu>
           <MenuButton pos="relative">
             <div className="flex gap-3">
-              <IoIosArrowDown className="absolute -right-4 top-1" />
+              <IoIosArrowDown className="w-[30px] h-[20px] absolute -right-6 top-2" />
               <div className="rounded-full border-2 ">
                 <img className=" h-[45px]" src={user} alt="logo" />
               </div>
@@ -41,7 +41,7 @@ const StaffNav = () => {
           </MenuList>
         </Menu>
       </div>
-      <div className="flex mr-5 ml-auto ">
+      <div className="flex laptop_l:hidden mr-5 ml-auto ">
         <Menu>
           <MenuButton pos="relative">
             <div className="flex">
