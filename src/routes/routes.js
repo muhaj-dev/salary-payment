@@ -13,7 +13,7 @@ const CreateRoutes = () => {
     <div className='relative'>
       <div>
         <Routes>
-          <Route path='/' element={<Login />}></Route>
+          <Route index element={<Login />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/admin/login' element={<AdminLogin />}></Route>
           <Route path='/admin/dashboard' element={<Dashboard />}></Route>
