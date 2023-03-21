@@ -1,6 +1,5 @@
 import { Flex, Box } from "@chakra-ui/react";
 import React from "react";
-import admin from "../assets/Admin.jpg";
 import staff from "../assets/staff.jpg";
 
 import logo from "../assets/logo.svg";

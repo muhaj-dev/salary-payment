@@ -1,10 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import LoginHoc from "../components/LoginHoc";
 import Input from "../common/Input";
 import PasswordInput from "../common/PasswordInput";
 
 
 const Login = () => {
+  const navigate = useNavigate()
   return (
     <div className=" px-3 m-auto w-full">
       <div className="w-full ">
@@ -24,7 +26,11 @@ const Login = () => {
           />
           {/* <LightBtn text="Sign in"/> */}
           <div className="w-full">
-            <button className="text-[16px] my-3 rounded-md py-3 text-white w-full bg-primary">
+            <button 
+            onClick={() => {
+              navigate("/admin/dashboard")
+            }}
+            className="text-[16px] my-3 rounded-md py-3 text-white w-full bg-primary">
               Login
             </button>
           </div>
