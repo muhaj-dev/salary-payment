@@ -1,5 +1,5 @@
 import React from "react";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
+import { AiOutlineEye } from "react-icons/ai"
 
 const PasswordInput = ( { label, placeholder, value, onChange }) => {
   return (
