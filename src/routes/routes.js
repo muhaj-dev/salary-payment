@@ -1,17 +1,10 @@
 import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
-import Dashboard from "../pages/Dashboard";
+import { Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
-import Managment from "../pages/Managment";
-import Permission from "../pages/Permission";
-import Report from "../pages/Report";
-import StaffDashboard from "../pages/StaffDashboard";
-import { useAuth } from "../components/API/AuthContext";
 import Protected from "./Protected";
 
 
 const CreateRoutes = () => {
-  const { isAuthenticated, setIsAuthenticated } = useAuth();
 
 
   return (
