@@ -10,7 +10,6 @@ import { useAuth } from "../components/API/AuthContext";
 const Protected = () => {
   const { isAuthenticated } = useAuth();
   const [IsLoggedIn, setIsLoggedIn] = useState();
-  const [isRoute, setIsRoute] = useState(true);
 
   const checkUserToken = () => {
     const IsLoggedIn = localStorage.getItem("lorchaintoken");
@@ -21,12 +20,8 @@ const Protected = () => {
   };
 
   useEffect(() => {
-    if (user.permission === null) {
-      setIsRoute(false);
-    } else {
-      setIsRoute(true);
-    }
     checkUserToken();
+  
   }, []);
 
   const userDetails = localStorage.getItem("user_details");
@@ -37,7 +32,7 @@ const Protected = () => {
       <div>
         {isAuthenticated ? (
           <Routes>
-            {isRoute ? (
+            {!user.permission ? (
               <Route path="/dashboard" element={<StaffDashboard />} />
             ) : (
               <>

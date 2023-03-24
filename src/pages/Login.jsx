@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth } from "../components/API/AuthContext";
 import LoginHoc from "../components/LoginHoc";
+import { Button } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -10,16 +11,19 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const { login } = useAuth();
+  const { login, Loading, setLoading } = useAuth();
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
+    
     validationSchema: LoginSchema,
     onSubmit: (values) => {
+      setLoading(true)
       login(values.email, values.password);
+      
     },
   });
 
@@ -71,9 +75,24 @@ const Login = () => {
           </div>
 
           <div className="w-full">
-            <button className="text-[16px] my-3 rounded-md py-3 text-white w-full bg-primary">
-              Login
-            </button>
+            {!Loading ? (
+              <button className="text-[16px] my-3 rounded-md py-3 text-white w-full bg-primary">
+                Login
+              </button>
+            ) : (
+              <Button
+                isLoading
+                loadingText="Loading"
+                colorScheme="primary"
+                variant="outline"
+                spinnerPlacement="end"
+                width={"full"}
+                mt={4}
+                py={4}
+              >
+                Continue
+              </Button>
+            )}
           </div>
         </form>
       </div>

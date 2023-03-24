@@ -44,7 +44,7 @@ const StaffNav = () => {
           </MenuButton>
           <MenuList>
             <MenuItem>Change password</MenuItem>
-            <MenuItem>Logout</MenuItem>
+            <MenuItem onClick={logout}>Logout</MenuItem>
           </MenuList>
         </Menu>
       </div>

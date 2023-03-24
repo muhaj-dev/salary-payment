@@ -12,7 +12,8 @@ const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isStaff, setIsStaff] = useState(false);
   const [IsLoggedIn, setIsLoggedIn] = useState(null);
-  //   const [user, setUser] = useState(localStorage.getItem("user_details"));
+  const [Loading, setLoading] = useState(false);
+
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -38,16 +39,15 @@ const AuthProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
+        // setLoading(true)
         localStorage.setItem("lorchaintoken", data.token);
 
         const user = JSON.stringify(data);
 
         localStorage.setItem("user_details", user);
-        // user(data);
-        console.log(data)
-        console.log(data.token)
 
         setIsAuthenticated(true);
+
         toast({
           position: "top-right",
           render: () => (
@@ -64,14 +64,18 @@ const AuthProvider = ({ children }) => {
             </Flex>
           ),
         });
-        if (data.permission === undefined) {
-          setIsStaff(true);
-          setIsAdmin(false);
-          navigate("/dashboard");
-        } else {
+        if (data.permission) {
           setIsAdmin(true);
           setIsStaff(false);
+          setLoading(false);
+
           navigate("/admin/dashboard");
+        } else {
+          setIsStaff(true);
+          setIsAdmin(false);
+          setLoading(false);
+
+          navigate("/dashboard");
         }
         console.log(user);
       } else {
@@ -100,8 +104,6 @@ const AuthProvider = ({ children }) => {
     }
   };
 
- 
-
   const contextValue = {
     user,
     setUser,
@@ -114,6 +116,8 @@ const AuthProvider = ({ children }) => {
     setIsAdmin,
     isStaff,
     setIsStaff,
+    Loading,
+    setLoading,
   };
 
   return (

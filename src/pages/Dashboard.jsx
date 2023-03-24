@@ -4,6 +4,7 @@ import ActivityTable from '../components/ActivityTable'
 import Card from '../components/Card'
 import PageHoc from '../components/PageHoc'
 import Pagination from '../common/Pagination'
+import useFetch from "../components/API/useFetch";
 
 
   const body = [
@@ -103,12 +104,20 @@ const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
 
+  // const userDetails = localStorage.getItem("user_details");
+  // const user = JSON.parse(userDetails);
+
+  const { data, pending, error } = useFetch(
+    "https://lorchain-api.onrender.com/activities"
+  );
+
+console.log(data)
   // Get current posts
-  const list = body
+  const list = data
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = list.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = list?.slice(indexOfFirstPost, indexOfLastPost);
 
   //Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -119,15 +128,25 @@ const Dashboard = () => {
     <div className='w-full bg-white rounded-[10px] p-6 mt-14'>
      <ActivityLog />
      <br />
+     {pending && (
+        <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
+          Loading...
+        </div>
+      )}
+      {error && (
+        <div className=" italic text-center bg-[red-500] font-semibold text-[18px]">
+          There is an error in the server. pls check back later...
+        </div>
+      )}
      <ActivityTable currentPosts={currentPosts} />
-      <Pagination
+     {!pending && <Pagination
         postsPerPage={postsPerPage} 
-        totalPosts={body.length} 
+        totalPosts={data?.length} 
         currentPage={currentPage}
         paginateBack={paginateBack}
         paginateFront={paginateFront}
         paginate={paginate} 
-      />
+      />}
       
     </div>
   )

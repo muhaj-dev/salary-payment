@@ -22,7 +22,7 @@ const Pagination = ({
 
   return (
     <div className="flex justify-between  mt-14">
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 items-center mr-4">
         <p className="font-semibold ">Show</p>
         <div className="w-[60px]">
         <Select fontWeight={"500"} placeholder="5">
@@ -57,7 +57,7 @@ const Pagination = ({
               </span>
             </Button>
 
-            <div className="flex mx-auto">
+            <div className="flex flex-wrap gap-2 mx-auto">
               {pageNumbers.map((number) => (
                 <span key={number} className="mx-1">
                   <Button
