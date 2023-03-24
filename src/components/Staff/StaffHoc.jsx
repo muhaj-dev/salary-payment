@@ -3,6 +3,7 @@ import StaffNav from "./StaffNav";
 import UserCard from "./UserCard";
 
 const PageHoc = (WrappedComponent) => {
+
   return function (props) {
     return (
       <div className="flex ">

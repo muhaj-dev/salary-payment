@@ -10,35 +10,48 @@ import { useAuth } from "../components/API/AuthContext";
 const Protected = () => {
   const { isAuthenticated } = useAuth();
   const [IsLoggedIn, setIsLoggedIn] = useState();
-console.log(IsLoggedIn)
+  const [isRoute, setIsRoute] = useState(true);
+
   const checkUserToken = () => {
-    const IsLoggedIn = localStorage.getItem('lorchaintoken');
-    if (!isAuthenticated || IsLoggedIn === 'undefine') {
+    const IsLoggedIn = localStorage.getItem("lorchaintoken");
+    if (!isAuthenticated || IsLoggedIn === "undefine") {
       setIsLoggedIn(null);
     }
     setIsLoggedIn(true);
-
   };
 
   useEffect(() => {
+    if (user.permission === null) {
+      setIsRoute(false);
+    } else {
+      setIsRoute(true);
+    }
     checkUserToken();
   }, []);
- 
+
+  const userDetails = localStorage.getItem("user_details");
+  const user = JSON.parse(userDetails);
+
   return (
     <div className="relative">
       <div>
         {isAuthenticated ? (
           <Routes>
-            <Route index path="/admin/dashboard" element={<Dashboard />} />
-            <Route path="/admin/dashboard" element={<Dashboard />} />
-            <Route path="/user/dashboard" element={<StaffDashboard />} />
-            <Route path="/managment" element={<Managment />} />
-            <Route path="/report" element={<Report />} />
-            <Route path="/permission" element={<Permission />} />
+            {isRoute ? (
+              <Route path="/dashboard" element={<StaffDashboard />} />
+            ) : (
+              <>
+                <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route path="/managment" element={<Managment />} />
+                <Route path="/report" element={<Report />} />
+                <Route path="/permission" element={<Permission />} />
+                <Route index path="/admin/dashboard" element={<Dashboard />} />
+              </>
+            )}
+            {/* {user.permission ===  ? <Route index path="/admin/dashboard" element={<Dashboard />} /> */}
+            {/* : null } */}
           </Routes>
-        ) : 
-        null
-        }
+        ) : null}
       </div>
     </div>
   );

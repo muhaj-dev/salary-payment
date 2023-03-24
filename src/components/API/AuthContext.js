@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast, Flex } from "@chakra-ui/react";
-import { BsCheckCircleFill } from "react-icons/bs"
+import { BsCheckCircleFill } from "react-icons/bs";
 
 const AuthContext = createContext();
 
@@ -9,9 +9,10 @@ const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const toast = useToast();
   const [isAuthenticated, setIsAuthenticated] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(null);
-  const [IsStaff, setisStaff] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isStaff, setIsStaff] = useState(false);
   const [IsLoggedIn, setIsLoggedIn] = useState(null);
+  //   const [user, setUser] = useState(localStorage.getItem("user_details"));
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -38,8 +39,14 @@ const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         localStorage.setItem("lorchaintoken", data.token);
-        setUser(data.user);
-        console.log(data);
+
+        const user = JSON.stringify(data);
+
+        localStorage.setItem("user_details", user);
+        // user(data);
+        console.log(data)
+        console.log(data.token)
+
         setIsAuthenticated(true);
         toast({
           position: "top-right",
@@ -57,24 +64,35 @@ const AuthProvider = ({ children }) => {
             </Flex>
           ),
         });
-        navigate("/admin/dashboard");
+        if (data.permission === undefined) {
+          setIsStaff(true);
+          setIsAdmin(false);
+          navigate("/dashboard");
+        } else {
+          setIsAdmin(true);
+          setIsStaff(false);
+          navigate("/admin/dashboard");
+        }
+        console.log(user);
       } else {
+        setIsAuthenticated(false);
+
         toast({
-            position: "top-right",
-            render: () => (
-              <Flex
-                color="white"
-                p={3}
-                bg="red"
-                w="fit-content"
-                className="gap-2 items-center font-semibold shadow-card "
-                rounded={"md"}
-              >
-                <BsCheckCircleFill className="text-white " />
-                Logged in successfuly
-              </Flex>
-            ),
-          });
+          position: "top-right",
+          render: () => (
+            <Flex
+              color="white"
+              p={3}
+              bg="red"
+              w="fit-content"
+              className="gap-2 items-center font-semibold shadow-card "
+              rounded={"md"}
+            >
+              <BsCheckCircleFill className="text-white " />
+              Incorrect Email or password
+            </Flex>
+          ),
+        });
       }
     } catch (error) {
       console.error(error);
@@ -82,25 +100,20 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("lorchaintoken");
-    setIsAuthenticated(false);
-    setUser({});
-    navigate("/login");
-  };
+ 
 
   const contextValue = {
     user,
+    setUser,
     login,
-    logout,
     isAuthenticated,
     setIsAuthenticated,
     IsLoggedIn,
     setIsLoggedIn,
     isAdmin,
     setIsAdmin,
-    IsStaff,
-    setisStaff,
+    isStaff,
+    setIsStaff,
   };
 
   return (

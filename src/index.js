@@ -12,9 +12,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <ChakraProvider theme={theme}>
-          <App />
-        </ChakraProvider>
+          <ChakraProvider theme={theme}>
+            <App />
+          </ChakraProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

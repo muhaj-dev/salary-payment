@@ -35,10 +35,6 @@ const table = [
     id: 4,
     head: "Note",
   },
-  {
-    id: 5,
-    head: "Action",
-  },
 ];
 
 const StaffTable = ({ currentPosts }) => {
@@ -69,15 +65,16 @@ const StaffTable = ({ currentPosts }) => {
               ))}
             </Tr>
           </Thead>
+
           <Tbody>
-            {currentPosts?.map((item) => (
-              <Tr key={item.id}>
+            {currentPosts?.map((item, index) => (
+              <Tr key={index}>
                 <Td>
                   <Checkbox
-                    isChecked={checkedItems[item.id]}
+                    isChecked={checkedItems[index]}
                     className="accent-primary"
                     onChange={(e) =>
-                      setCheckedItems([e.target.checked, checkedItems[item.id]])
+                      setCheckedItems([e.target.checked, checkedItems[index]])
                     }
                   >
                     {" "}
@@ -85,18 +82,18 @@ const StaffTable = ({ currentPosts }) => {
                 </Td>
                 <Td>
                   <a
-                    href="https://goggle.com"
+                    href={item.transaction_url}
                     target="_blank"
                     rel="noreferrer"
                     className="underline"
                   >
-                    {item.paymentID}
+                    {item._id}
                   </a>
                 </Td>
                 <Td>USD {item.salary}</Td>
-                <Td>{item.date}</Td>
-                <Td>{item.note}</Td>
-                <Td>
+                <Td>{item.payment_date}</Td>
+                <Td>{item.remark}</Td>
+                {/* <Td>
                   <Menu bg="primary">
                     <MenuButton
                       as={Button}
@@ -131,7 +128,7 @@ const StaffTable = ({ currentPosts }) => {
                       </MenuItem>
                     </MenuList>
                   </Menu>
-                </Td>
+                </Td> */}
               </Tr>
             ))}
           </Tbody>
