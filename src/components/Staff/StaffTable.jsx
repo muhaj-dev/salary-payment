@@ -25,35 +25,19 @@ const table = [
   },
   {
     id: 2,
-    head: "Staff name",
-  },
-  {
-    id: 3,
-    head: "Role",
-  },
-  {
-    id: 4,
-    head: "Date Stated",
-  },
-  {
-    id: 5,
-    head: "status",
-  },
-  {
-    id: 6,
     head: "Salary",
   },
   {
-    id: 7,
-    head: "Total Paid",
+    id: 3,
+    head: "Date",
   },
   {
-    id: 8,
-    head: "Action",
+    id: 4,
+    head: "Note",
   },
 ];
 
-const PaymentTable = ({ currentPosts }) => {
+const StaffTable = ({ currentPosts }) => {
   const [checkedItems, setCheckedItems] = React.useState([false, false]);
 
   const allChecked = checkedItems.every(Boolean);
@@ -81,36 +65,35 @@ const PaymentTable = ({ currentPosts }) => {
               ))}
             </Tr>
           </Thead>
+
           <Tbody>
-            {currentPosts?.map((item) => (
-              <Tr key={item.id}>
+            {currentPosts?.map((item, index) => (
+              <Tr key={index}>
                 <Td>
                   <Checkbox
-                    isChecked={checkedItems[item.id]}
+                    isChecked={checkedItems[index]}
                     className="accent-primary"
                     onChange={(e) =>
-                      setCheckedItems([e.target.checked, checkedItems[item.id]])
+                      setCheckedItems([e.target.checked, checkedItems[index]])
                     }
                   >
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td className="underline">#{item.user}</Td>
                 <Td>
-                  <p className="font-semibold text-[16px]">{item.name}</p>
-
-                  <p className="underline"> {item.wallet}</p>
+                  <a
+                    href={item.transaction_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="underline"
+                  >
+                    {item._id}
+                  </a>
                 </Td>
-                <Td>
-                  <span className="bg-[#F7F7F7] px-3 py-1 rounded-md">
-                    {item.role}
-                  </span>
-                </Td>
-                <Td>{item.dateStated}</Td>
-                <Td>{item.status}</Td>
-                <Td>{item.salary}</Td>
-                <Td>{item.total}</Td>
-                <Td>
+                <Td>USD {item.salary}</Td>
+                <Td>{item.payment_date}</Td>
+                <Td>{item.remark}</Td>
+                {/* <Td>
                   <Menu bg="primary">
                     <MenuButton
                       as={Button}
@@ -140,12 +123,12 @@ const PaymentTable = ({ currentPosts }) => {
                       >
                         <div className="flex gap-2">
                           <img src={download} alt="" />
-                          <span>Payment history</span>
+                          <span>Payslip </span>
                         </div>
                       </MenuItem>
                     </MenuList>
                   </Menu>
-                </Td>
+                </Td> */}
               </Tr>
             ))}
           </Tbody>
@@ -155,4 +138,4 @@ const PaymentTable = ({ currentPosts }) => {
   );
 };
 
-export default PaymentTable;
+export default StaffTable;

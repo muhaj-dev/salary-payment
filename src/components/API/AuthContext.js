@@ -1,37 +1,126 @@
-// import React, { createContext, useState } from "react";
-// import axios from "axios";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useToast, Flex } from "@chakra-ui/react";
+import { BsCheckCircleFill } from "react-icons/bs";
 
-// export const AuthContext = createContext();
+const AuthContext = createContext();
 
-// const AuthContextProvider = (props) => {
-//   const [isAuthenticated, setIsAuthenticated] = useState(false);
-//   const [user, setUser] = useState({});
+const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
+  const toast = useToast();
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isStaff, setIsStaff] = useState(false);
+  const [IsLoggedIn, setIsLoggedIn] = useState(null);
+  //   const [user, setUser] = useState(localStorage.getItem("user_details"));
+  const [user, setUser] = useState({});
 
-//   const login = (username, password) => {
-//     axios
-//       .post("http://localhost:8000/api/auth/login/", {
-//         username,
-//         password,
-//       })
-//       .then((res) => {
-//         localStorage.setItem("token", res.data.token);
-//         setIsAuthenticated(true);
-//         setUser(res.data.user);
-//       })
-//       .catch((err) => console.log(err));
-//   };
+  useEffect(() => {
+    const IsLoggedIn = localStorage.getItem("lorchaintoken");
+    if (IsLoggedIn) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, []);
 
-//   const logout = () => {
-//     localStorage.removeItem("token");
-//     setIsAuthenticated(false);
-//     setUser({});
-//   };
+  const login = async (email, password) => {
+    try {
+      const response = await fetch(
+        "https://lorchain-api.onrender.com/users/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
-//   return (
-//     <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
-//       {props.children}
-//     </AuthContext.Provider>
-//   );
-// };
+      const data = await response.json();
 
-// export default AuthContextProvider;
+      if (response.ok) {
+        localStorage.setItem("lorchaintoken", data.token);
+
+        const user = JSON.stringify(data);
+
+        localStorage.setItem("user_details", user);
+        // user(data);
+        console.log(data)
+        console.log(data.token)
+
+        setIsAuthenticated(true);
+        toast({
+          position: "top-right",
+          render: () => (
+            <Flex
+              color="primary"
+              p={3}
+              bg="white"
+              w="fit-content"
+              className="gap-2  items-center font-semibold shadow-card "
+              rounded={"md"}
+            >
+              <BsCheckCircleFill className="text-[#16A34A] " />
+              Logged in successfuly
+            </Flex>
+          ),
+        });
+        if (data.permission === undefined) {
+          setIsStaff(true);
+          setIsAdmin(false);
+          navigate("/dashboard");
+        } else {
+          setIsAdmin(true);
+          setIsStaff(false);
+          navigate("/admin/dashboard");
+        }
+        console.log(user);
+      } else {
+        setIsAuthenticated(false);
+
+        toast({
+          position: "top-right",
+          render: () => (
+            <Flex
+              color="white"
+              p={3}
+              bg="red"
+              w="fit-content"
+              className="gap-2 items-center font-semibold shadow-card "
+              rounded={"md"}
+            >
+              <BsCheckCircleFill className="text-white " />
+              Incorrect Email or password
+            </Flex>
+          ),
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+ 
+
+  const contextValue = {
+    user,
+    setUser,
+    login,
+    isAuthenticated,
+    setIsAuthenticated,
+    IsLoggedIn,
+    setIsLoggedIn,
+    isAdmin,
+    setIsAdmin,
+    isStaff,
+    setIsStaff,
+  };
+
+  return (
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+  );
+};
+
+const useAuth = () => useContext(AuthContext);
+
+export { AuthProvider, useAuth };
