@@ -33,6 +33,8 @@ const table = [
 const ActivityTable = ({ currentPosts }) => {
   const [checkedItems, setCheckedItems] = React.useState([false, false]);
 
+  
+
   const dateStr = "2023-02-03T22:08:00.000Z";
   const dateObj = new Date(dateStr);
 
@@ -75,7 +77,7 @@ const ActivityTable = ({ currentPosts }) => {
           </Thead>
           <Tbody>
             {currentPosts?.map((item) => (
-              <Tr key={item.user._id}>
+              <Tr key={item._id}>
                 <Td>
                   <Checkbox
                     isChecked={checkedItems[item.user._id]}

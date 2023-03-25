@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useState }from "react";
 import {
   Menu,
   MenuButton,
@@ -39,6 +39,7 @@ const table = [
 
 const StaffTable = ({ currentPosts }) => {
   const [checkedItems, setCheckedItems] = React.useState([false, false]);
+
 
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;

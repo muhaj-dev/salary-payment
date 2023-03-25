@@ -2,8 +2,15 @@ import React from "react";
 import { Select } from "@chakra-ui/react";
 import calender from "../assets/calender.svg";
 import { ImSearch } from "react-icons/im";
+import { Input } from "@chakra-ui/react";
 
-const ActivityLog = () => {
+const ActivityLog = ({
+  searchTerm,
+  handleSearch,
+  selectedUser,
+  handleSelect,
+  allUsers,
+}) => {
   return (
     <div className="flex flex-wrap justify-between">
       <div>
@@ -14,24 +21,31 @@ const ActivityLog = () => {
       </div>
       <div className="flex gap-2">
         <div className="">
-          <input
-            placeholder="Search"
+          <Input
             type="text"
-            // value="search"
-            // onChange={onChange}
-            className="border-[1.5px] pl-8 w-full text-[16px] border-[black] outline-[1.5px] outline-primary px-3 py-1 mt-1 rounded-md"
+            placeholder="Search by name or email"
+            value={searchTerm}
+            fontSize={"14px"}
+            pl={6}
+            onChange={handleSearch}
           />
           {/* <img src={ImSearch} alt="" /> */}
-          <ImSearch className="relative -top-6 left-3 text-[#B9BBBE] " />
+          <ImSearch className="relative -top-6 w-5 h-3 left-1 text-[#B9BBBE] " />
         </div>
         <div className="w-[30%]">
-          <Select fontWeight={"500"} placeholder="Select action">
-            <option value="option1">Login</option>
-            <option value="option2">Add staff</option>
-            <option value="option3">Edit staff</option>
-            <option value="option3">Payment records</option>
-            <option value="option3">Download report</option>
-          </Select>
+        <Select
+        fontWeight={"500"}
+          placeholder="Select action"
+          value={selectedUser}
+          onChange={handleSelect}
+          // style={{ width: "200px", marginLeft: "10px" }}
+        >
+          {allUsers.map((user) => (
+            <option key={user.value} value={user.value}>
+              {user.label}
+            </option>
+          ))}
+        </Select>
         </div>
         <div className="flex items-center gap-2 h-[38px] rounded-md font-semibold border-2 border-[#EEEEEE] p-3">
           <img src={calender} alt="" />
