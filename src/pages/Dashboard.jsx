@@ -1,112 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ActivityLog from "../components/ActivityLog";
 import ActivityTable from "../components/ActivityTable";
-import Card from "../components/Card";
 import PageHoc from "../components/PageHoc";
 import Pagination from "../common/Pagination";
 import useFetch from "../components/API/useFetch";
-import {
-  Table,
-  Thead,
-  Tbody,
- Select,
-  Th,
-  Td,
-  TableContainer,
-  Checkbox,
-} from "@chakra-ui/react";
-const body = [
-  {
-    id: 1,
-    user: "10233233",
-    name: "Daniel Moses",
-    email: "daniel.lorchain@gmail.com",
-    position: "Super Admin",
-    date: "10:08pm - Feb 3, 2023",
-    action: "Login",
-  },
-  {
-    id: 2,
-    user: "1023344",
-    name: "Daniel Moses",
-    email: "daniel.lorchain@gmail.com",
-    position: "Super Admin",
-    date: "10:08pm - Feb 3, 2023",
-    action: "Login",
-  },
-  {
-    id: 3,
-    user: "10233233",
-    name: "Daniel Moses",
-    email: "daniel.lorchain@gmail.com",
-    position: "Super Admin",
-    date: "10:08pm - Feb 3, 2023",
-    action: "Login",
-  },
-  {
-    id: 4,
-    user: "1023344",
-    name: "Daniel Moses",
-    email: "daniel.lorchain@gmail.com",
-    position: "Super Admin",
-    date: "10:08pm - Feb 3, 2023",
-    action: "Login",
-  },
-  {
-    id: 5,
-    user: "10233233",
-    name: "Daniel Moses",
-    email: "daniel.lorchain@gmail.com",
-    position: "Super Admin",
-    date: "10:08pm - Feb 3, 2023",
-    action: "Login",
-  },
-  {
-    id: 6,
-    user: "1023344",
-    name: "Daniel Moses",
-    email: "daniel.lorchain@gmail.com",
-    position: "Super Admin",
-    date: "10:08pm - Feb 3, 2023",
-    action: "Login",
-  },
-  {
-    id: 7,
-    user: "10233233",
-    name: "Daniel Moses",
-    email: "daniel.lorchain@gmail.com",
-    position: "Super Admin",
-    date: "10:08pm - Feb 3, 2023",
-    action: "Login",
-  },
-  {
-    id: 8,
-    user: "1023344",
-    name: "Daniel Moses",
-    email: "daniel.lorchain@gmail.com",
-    position: "Super Admin",
-    date: "10:08pm - Feb 3, 2023",
-    action: "Login",
-  },
-  {
-    id: 9,
-    user: "10233233",
-    name: "Daniel Moses",
-    email: "daniel.lorchain@gmail.com",
-    position: "Super Admin",
-    date: "10:08pm - Feb 3, 2023",
-    action: "Login",
-  },
-  {
-    id: 10,
-    user: "1023344",
-    name: "Daniel Moses",
-    email: "daniel.lorchain@gmail.com",
-    position: "Super Admin",
-    date: "10:08pm - Feb 3, 2023",
-    action: "Login",
-  },
-];
 
 const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -115,27 +12,13 @@ const Dashboard = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
 
-  // const userDetails = localStorage.getItem("user_details");
-  // const user = JSON.parse(userDetails);
-
   const { data, pending, error } = useFetch(
     "https://lorchain-api.onrender.com/activities"
   );
 
-  // useEffect(() => {
-  //   const options = data?.map((post) => ({
-  //     value: post.user.full_name,
-  //     label: post.user.full_name,
-  //   }));
-  //   setUserOptions(options);
-  // }, [data]);
-
   console.log(data);
   // Get current posts
 
-  // const uniqueUsers = Array.from(
-  //   new Set(data?.map((post) => post.user.full_name))
-  // );
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchTerm(value);
@@ -146,12 +29,6 @@ const Dashboard = () => {
     );
     setFilteredData(results);
   };
-
-
-  // const handleSelect = (event) => {
-  //   setSelectedUser(event.target.value);
-  //   setSearchTerm(event.target.value);
-  // };
 
   const handleSelect = (event) => {
     const value = event.target.value;
@@ -172,8 +49,6 @@ const Dashboard = () => {
     uniqueUsers.map((user) => ({ label: user, value: user }))
   );
 
-
-  // const list = searchTerm ? filteredData : selectedUser ? filteredData : data;
 
   let list = data;
   if (searchTerm) {

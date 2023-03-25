@@ -29,7 +29,6 @@ const ActivityLog = ({
             pl={6}
             onChange={handleSearch}
           />
-          {/* <img src={ImSearch} alt="" /> */}
           <ImSearch className="relative -top-6 w-5 h-3 left-1 text-[#B9BBBE] " />
         </div>
         <div className="w-[30%]">
@@ -38,7 +37,6 @@ const ActivityLog = ({
           placeholder="Select action"
           value={selectedUser}
           onChange={handleSelect}
-          // style={{ width: "200px", marginLeft: "10px" }}
         >
           {allUsers.map((user) => (
             <option key={user.value} value={user.value}>
