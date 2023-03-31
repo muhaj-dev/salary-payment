@@ -66,7 +66,7 @@ const ActivityTable = ({ currentPosts }) => {
               </Td>
               {table?.map((item) => (
                 <Td  key={item.id}>
-                  <span className="flex gap-2 justify-center items-center">
+                  <span className="flex gap-2  items-center">
                   {item.head}
                   {item.img === arrowDown ? <img src={item?.img} alt="" /> : ""}
                   </span>
@@ -108,7 +108,7 @@ const ActivityTable = ({ currentPosts }) => {
                     >
                       {item.user.email}
                     </Link>
-                    <p> - {item.position}</p>
+                    <p> - {item.permission === null ? "Staff" : "Admin"}</p>
                   </div>
                 </Td>
                 <Td>{formatDate(item.time)} </Td>

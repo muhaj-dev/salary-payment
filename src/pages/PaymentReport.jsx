@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageHoc from "../components/PageHoc";
 import Pagination from "../common/Pagination";
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import PaymentTable from "../components/Report/PaymentTable";
-import TaxTable from "../components/Report/TaxTable";
+import useFetch from "../components/API/useFetch";
 import RepoLog from "../components/Report/RepoLog";
 
 const body = [
@@ -238,9 +237,14 @@ const PaymentReport = () => {
   const [filteredData, setFilteredData] = useState([]);
   const navigate = useNavigate();
 
+  const { data, pending, error } = useFetch(
+    `${process.env.REACT_APP_LORCHAIN_API}/records`,
+
+  );
+
   // Get current posts
 
-  let list = body;
+  let list = data?.records;
   if (searchTerm) {
     list = filteredData;
   }
@@ -250,7 +254,7 @@ const PaymentReport = () => {
     setSearchTerm(value);
     const results = list?.filter(
       (post) =>
-      post.name.toLowerCase().includes(value) 
+      post?.user.full_name.toLowerCase().includes(value) 
     );
     setFilteredData(results);
   };
@@ -259,7 +263,7 @@ const PaymentReport = () => {
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = list.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = list?.slice(indexOfFirstPost, indexOfLastPost);
 
   //Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -292,9 +296,19 @@ const PaymentReport = () => {
       <br />
 
       <PaymentTable currentPosts={currentPosts} />
+      {pending && (
+        <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
+          Loading...
+        </div>
+      )}
+      {error && (
+        <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
+          {error}There is an error in the server. pls check back later...
+        </div>
+      )}
       <Pagination
         postsPerPage={postsPerPage}
-        totalPosts={body.length}
+        totalPosts={data?.length}
         currentPage={currentPage}
         paginateBack={paginateBack}
         paginateFront={paginateFront}

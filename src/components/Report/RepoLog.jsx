@@ -14,7 +14,7 @@ const RepoLog = ({ searchTerm, handleSearch, placeholder }) => {
       </div>
       <div className="flex gap-3">
         <div className="flex relative">
-          <ImSearch className="relative top-4 h-[16px] w-[30px] left-[32px] text-[#B9BBBE] " />
+          <ImSearch className="relative top-3.5 h-[16px] w-[30px] left-[32px] text-[#B9BBBE] " />
           <Input
             type="text"
             placeholder={placeholder}
@@ -24,7 +24,7 @@ const RepoLog = ({ searchTerm, handleSearch, placeholder }) => {
             onChange={handleSearch}
           />
           <img
-            className="absolute right-1 top-2 h-[30px] w-[35px] my-auto bg-[#F8EEFF] py-2 px-3 rounded-md"
+            className="absolute right-1 top-1.5 h-[30px] w-[35px] my-auto bg-[#F8EEFF] py-2 px-3 rounded-md"
             src={SearchFill}
             alt=""
           />

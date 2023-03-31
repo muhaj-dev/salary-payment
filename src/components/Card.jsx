@@ -16,7 +16,6 @@ const Card = () => {
       `${process.env.REACT_APP_LORCHAIN_API}/teams`,
   
     );
-    console.log(team)
 
 
     const cards = [

@@ -43,6 +43,9 @@ const PermissionTable = ({ currentPosts }) => {
 
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
+
+ 
+  
   return (
     <div>
       <TableContainer>

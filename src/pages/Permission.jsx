@@ -95,6 +95,16 @@ const Permission = () => {
       <PermissionLog />
       <br />
       <PermissionTable currentPosts={currentPosts} />
+      {pending && (
+        <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
+          Loading...
+        </div>
+      )}
+      {error && (
+        <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
+          {error}There is an error in the server. pls check back later...
+        </div>
+      )}
       <Pagination
         postsPerPage={postsPerPage}
         totalPosts={data?.length}

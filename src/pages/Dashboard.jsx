@@ -5,8 +5,6 @@ import PageHoc from "../components/PageHoc";
 import Pagination from "../common/Pagination";
 import useFetch from "../components/API/useFetch";
 
-// import { Calendar } from 'react-big-calendar';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 
 const Dashboard = () => {
@@ -15,14 +13,14 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isCalendar, setIsCalendar] = useState(false);
 
 
   const { data, pending, error } = useFetch(
     `${process.env.REACT_APP_LORCHAIN_API}/activities`,
 
   );
-
   
 
   // Get current posts
@@ -58,10 +56,6 @@ const Dashboard = () => {
 
 
   
-  function handleSelectEvent(event) {
-    setSelectedDate(event.start);
-  }
-
   let list = data;
   if (searchTerm) {
     list = filteredData;
@@ -70,6 +64,13 @@ const Dashboard = () => {
     list = list.filter((post) => post.user.full_name === selectedUser);
   }
 
+  
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    selectedDate.toString()
+    console.log(date); // Logs the selected date value to the console
+    console.log(selectedDate); // Logs the selected date value to the console
+  };
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = list?.slice(indexOfFirstPost, indexOfLastPost);
@@ -87,18 +88,14 @@ const Dashboard = () => {
         selectedUser={selectedUser}
         handleSelect={handleSelect}
         allUsers={allUsers}
+        handleDateChange={handleDateChange}
+        setSelectedDate={setSelectedDate}
+        isCalendar={isCalendar}
+        setIsCalendar={setIsCalendar}
+        
       />
       <br />
-      {/* <div>
-      <Calendar
-        selectable
-        events={[]}
-        onSelectEvent={handleSelectEvent}
-      />
-      {selectedDate && (
-        <p>You selected: {selectedDate.toString()}</p>
-      )}
-    </div> */}
+    
     
       <ActivityTable currentPosts={currentPosts} />
       {pending && (

@@ -1,5 +1,5 @@
 import React from "react";
-import arrowDown from '../../assets/arrowDown.svg';
+import arrowDown from "../../assets/arrowDown.svg";
 import {
   Menu,
   MenuButton,
@@ -45,13 +45,11 @@ const table = [
     id: 6,
     head: "Salary",
     img: arrowDown,
-
   },
   {
     id: 7,
     head: "Total Paid",
     img: arrowDown,
-
   },
   {
     id: 8,
@@ -64,6 +62,18 @@ const PaymentTable = ({ currentPosts }) => {
 
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
+    return date.toLocaleDateString("en-US", options);
+  }
+
   return (
     <div>
       <TableContainer>
@@ -83,44 +93,56 @@ const PaymentTable = ({ currentPosts }) => {
                 </Checkbox>
               </Td>
               {table?.map((item) => (
-                <Td  key={item.id}>
-                <span className="flex gap-2 items-center justify-center">
-                {item.head}
-                {item.img === arrowDown ? <img src={item?.img} alt="" /> : ""}
-                </span>
-              </Td>
+                <Td key={item.id}>
+                  <span className="flex gap-2 items-center justify-center">
+                    {item.head}
+                    {item.img === arrowDown ? (
+                      <img src={item?.img} alt="" />
+                    ) : (
+                      ""
+                    )}
+                  </span>
+                </Td>
               ))}
             </Tr>
           </Thead>
           <Tbody>
             {currentPosts?.map((item) => (
-              <Tr key={item.id}>
+              <Tr key={item._id}>
                 <Td>
                   <Checkbox
-                    isChecked={checkedItems[item.id]}
+                    isChecked={checkedItems[item._id]}
                     className="accent-primary"
                     onChange={(e) =>
-                      setCheckedItems([e.target.checked, checkedItems[item.id]])
+                      setCheckedItems([
+                        e.target.checked,
+                        checkedItems[item._id],
+                      ])
                     }
                   >
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td className="underline">#{item.user}</Td>
+                <Td className="underline">#{item._id}</Td>
                 <Td>
-                  <p className="font-semibold text-[16px]">{item.name}</p>
+                  <p className="font-semibold text-[16px]">
+                    {item.user.full_name}
+                  </p>
 
-                  <p className="underline"> {item.wallet}</p>
+                  <p className="underline">
+                    {item?.address?.slice(0, 4)}...
+                    {item?.address?.slice(-3, item?.address.length)}
+                  </p>
                 </Td>
                 <Td>
                   <span className="bg-[#F7F7F7] px-3 py-1 rounded-md">
-                    {item.role}
+                    {item.user.job_role}
                   </span>
                 </Td>
-                <Td>{item.dateStated}</Td>
-                <Td>{item.status}</Td>
+                <Td> {formatDate(item.createdAt)}</Td>
+                <Td>{item.isPaid === false ? "Not paid" : "Paid"}</Td>
                 <Td>{item.salary}</Td>
-                <Td>{item.total}</Td>
+                <Td>{item.userTotalSalary}</Td>
                 <Td>
                   <Menu bg="primary">
                     <MenuButton
