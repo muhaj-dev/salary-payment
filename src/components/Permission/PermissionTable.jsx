@@ -80,10 +80,9 @@ const PermissionTable = ({ currentPosts }) => {
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td>{item.name}</Td>
+                <Td>{item.permission === null ? "" : item.full_name}</Td>
                 <Td>
-                  <p className="font-semibold text-[16px] mb-2">{item.name}</p>
-                  <p>{item.permission}</p>
+                  <p>{item.permission === null ? "" : item.permission} </p>
                 </Td>
                 <Td>
                   <span className="flex gap-2 bg-[#F7F7F7] w-fit rounded-md">

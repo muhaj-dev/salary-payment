@@ -5,18 +5,26 @@ import PageHoc from "../components/PageHoc";
 import Pagination from "../common/Pagination";
 import useFetch from "../components/API/useFetch";
 
+// import { Calendar } from 'react-big-calendar';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+
+
 const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(5);
+  const [postsPerPage] = useState(8);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
+
 
   const { data, pending, error } = useFetch(
-    "https://lorchain-api.onrender.com/activities"
+    `${process.env.REACT_APP_LORCHAIN_API}/activities`,
+
   );
 
-  console.log(data);
+  
+
   // Get current posts
 
   const handleSearch = (event) => {
@@ -32,7 +40,6 @@ const Dashboard = () => {
 
   const handleSelect = (event) => {
     const value = event.target.value;
-    // setSearchTerm(value);
     setSelectedUser(value);
 
     const results = data?.filter(
@@ -49,6 +56,11 @@ const Dashboard = () => {
     uniqueUsers.map((user) => ({ label: user, value: user }))
   );
 
+
+  
+  function handleSelectEvent(event) {
+    setSelectedDate(event.start);
+  }
 
   let list = data;
   if (searchTerm) {
@@ -77,7 +89,18 @@ const Dashboard = () => {
         allUsers={allUsers}
       />
       <br />
+      {/* <div>
+      <Calendar
+        selectable
+        events={[]}
+        onSelectEvent={handleSelectEvent}
+      />
+      {selectedDate && (
+        <p>You selected: {selectedDate.toString()}</p>
+      )}
+    </div> */}
     
+      <ActivityTable currentPosts={currentPosts} />
       {pending && (
         <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
           Loading...
@@ -85,10 +108,9 @@ const Dashboard = () => {
       )}
       {error && (
         <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
-          There is an error in the server. pls check back later...
+          {error}There is an error in the server. pls check back later...
         </div>
       )}
-      <ActivityTable currentPosts={currentPosts} />
       {!pending && (
         <Pagination
           postsPerPage={postsPerPage}

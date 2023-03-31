@@ -15,6 +15,8 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import { BsThreeDots } from "react-icons/bs";
+import arrowDown from '../../assets/arrowDown.svg';
+
 import download from "../../assets/download.svg";
 import Edit from "../../assets/Edit.svg";
 import Iicon from "../../assets/Iicon.svg";
@@ -39,6 +41,7 @@ const table = [
   {
     id: 5,
     head: "Date Created",
+    img: arrowDown,
   },
   {
     id: 6,
@@ -51,6 +54,13 @@ const TeamTable = ({ TeamcurrentPosts }) => {
 
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  }
+
   return (
     <div>
       <TableContainer>
@@ -70,16 +80,21 @@ const TeamTable = ({ TeamcurrentPosts }) => {
                 </Checkbox>
               </Td>
               {table?.map((item) => (
-                <Td key={item.id}>{item.head}</Td>
+                 <Td  key={item.id}>
+                 <span className="flex gap-2 items-center ">
+                 {item.head}
+                 {item.img === arrowDown ? <img src={item?.img} alt="" /> : ""}
+                 </span>
+               </Td>
               ))}
             </Tr>
           </Thead>
           <Tbody>
             {TeamcurrentPosts?.map((item) => (
-              <Tr key={item.id}>
+              <Tr key={item._id}>
                 <Td>
                   <Checkbox
-                    isChecked={checkedItems[item.id]}
+                    isChecked={checkedItems[item._id]}
                     className="accent-primary"
                     onChange={(e) =>
                       setCheckedItems([e.target.checked, checkedItems[item.id]])
@@ -88,16 +103,16 @@ const TeamTable = ({ TeamcurrentPosts }) => {
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td>{item.team}</Td>
+                <Td>{item.name}</Td>
 
                 <Td>
                   <span className="bg-[#F7F7F7] px-3 py-1 rounded-md">
-                    {item.staff}
+                    {item.members.length} staffs
                   </span>
                 </Td>
-                <Td>{item.agrsalary}</Td>
-                <Td>{item.total}</Td>
-                <Td>{item.dateCreated}</Td>
+                <Td>{item.aggregated_salary}</Td>
+                <Td>{item.total_salary}</Td>
+                <Td>{formatDate(item.createdAt)}</Td>
                 <Td>
                   <Td>
                     <Menu bg="primary">
@@ -110,7 +125,6 @@ const TeamTable = ({ TeamcurrentPosts }) => {
                       </MenuButton>
                       <MenuList>
                         <MenuItem
-                          //   onClick={() => alert("Kagebunshin")}
                           fontWeight="semi-bold"
                           _hover={{ color: "red" }}
                           display="flex"

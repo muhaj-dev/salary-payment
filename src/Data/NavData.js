@@ -5,13 +5,13 @@ export const NavMenu = [
       id: 1
     }, 
     {
-      link: "/managment",
+      link: "/management/staffs",
       id: 2,
       name:"Staff mgt",
     },
     {
       id: 3,
-      link: "/report",
+      link: "/payment/report",
       name:"Report",
     }, 
   

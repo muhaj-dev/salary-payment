@@ -1,4 +1,5 @@
 import React from "react";
+import arrowDown from '../../assets/arrowDown.svg';
 import {
   Menu,
   MenuButton,
@@ -34,6 +35,7 @@ const table = [
   {
     id: 4,
     head: "Date Stated",
+    img: arrowDown,
   },
   {
     id: 5,
@@ -42,10 +44,14 @@ const table = [
   {
     id: 6,
     head: "Salary",
+    img: arrowDown,
+
   },
   {
     id: 7,
     head: "Total Paid",
+    img: arrowDown,
+
   },
   {
     id: 8,
@@ -77,7 +83,12 @@ const PaymentTable = ({ currentPosts }) => {
                 </Checkbox>
               </Td>
               {table?.map((item) => (
-                <Td key={item.id}>{item.head}</Td>
+                <Td  key={item.id}>
+                <span className="flex gap-2 items-center justify-center">
+                {item.head}
+                {item.img === arrowDown ? <img src={item?.img} alt="" /> : ""}
+                </span>
+              </Td>
               ))}
             </Tr>
           </Thead>

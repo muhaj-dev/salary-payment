@@ -82,7 +82,7 @@ const Login = () => {
             ) : (
               <Button
                 isLoading
-                loadingText="Loading"
+                // loadingText="Please wait"
                 colorScheme="primary"
                 variant="outline"
                 spinnerPlacement="end"

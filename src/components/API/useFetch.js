@@ -35,10 +35,10 @@ const useFetch = (url) => {
         // console.log(data);
       })
       .catch((err) => {
-        console.log(err.message);
+        // console.log(err.message);
         setPending(false);
 
-        setError(err.message);
+        setError(err.message );
       });
   }, [url]);
 

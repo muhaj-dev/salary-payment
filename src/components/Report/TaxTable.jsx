@@ -17,6 +17,8 @@ import { BsThreeDots } from "react-icons/bs";
 import download from "../../assets/download.svg";
 import Edit from "../../assets/Edit.svg";
 import Iicon from "../../assets/Iicon.svg";
+import arrowDown from '../../assets/arrowDown.svg';
+
 
 const table = [
   {
@@ -34,14 +36,20 @@ const table = [
   {
     id: 4,
     head: "Tax paid",
+    img: arrowDown,
+
   },
   {
     id: 5,
     head: "Total tax",
+    img: arrowDown,
+
   },
   {
     id: 6,
     head: "Salary",
+    img: arrowDown,
+
   },
   {
     id: 7,
@@ -77,35 +85,40 @@ const TaxTable = ({ TeamcurrentPosts }) => {
                 </Checkbox>
               </Td>
               {table?.map((item) => (
-                <Td key={item.id}>{item.head}</Td>
+                  <Td  key={item.id}>
+                  <span className="flex gap-2 items-center ">
+                  {item.head}
+                  {item.img === arrowDown ? <img src={item?.img} alt="" /> : ""}
+                  </span>
+                </Td>
               ))}
             </Tr>
           </Thead>
           <Tbody>
             {TeamcurrentPosts?.map((item) => (
-              <Tr key={item.id}>
+              <Tr key={item._id}>
                 <Td>
                   <Checkbox
-                    isChecked={checkedItems[item.id]}
+                    isChecked={checkedItems[item._id]}
                     className="accent-primary"
                     onChange={(e) =>
-                      setCheckedItems([e.target.checked, checkedItems[item.id]])
+                      setCheckedItems([e.target.checked, checkedItems[item._id]])
                     }
                   >
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td className="underline">#{item.user}</Td>
-                <Td>{item.staff}</Td>
+                <Td className="underline">#{item._id}</Td>
+                <Td>{item.user.full_name}</Td>
                 <Td>
                   <span className="bg-[#F7F7F7] px-3 py-1 rounded-md">
-                    {item.role}
+                    {item.user.job_role}
                   </span>
                 </Td>
-                <Td>{item.taxPaid}</Td>
-                <Td>{item.totalTax}</Td>
+                <Td>{item.tax}</Td>
+                <Td>{item.userTotalTax}</Td>
                 <Td>{item.salary}</Td>
-                <Td>{item.status}</Td>
+                <Td>{item.is_paid === true ? "Paid" : "Not paid"}</Td>
                 <Td>
                   <Td>
                     <Menu bg="primary">

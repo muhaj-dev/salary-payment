@@ -21,7 +21,7 @@ const staff = [
 ];
 const CreateTeam = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  let [aboutTeam, setAboutTeam] = useState("");
+  const [aboutTeam, setAboutTeam] = useState("");
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;

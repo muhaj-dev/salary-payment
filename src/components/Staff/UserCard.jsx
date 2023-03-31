@@ -23,7 +23,8 @@ const UserCard = () => {
   const user = JSON.parse(userDetails);
 
   const { data, pending, error } = useFetch(
-    "https://lorchain-api.onrender.com/records/user/" + user._id
+    `${process.env.REACT_APP_LORCHAIN_API}/records/user/${user._id}`,
+
   );
 
   if (!data || data.length === 0) {

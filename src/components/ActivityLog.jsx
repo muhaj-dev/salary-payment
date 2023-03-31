@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import { Select } from "@chakra-ui/react";
 import calender from "../assets/calender.svg";
 import { ImSearch } from "react-icons/im";
@@ -11,6 +13,9 @@ const ActivityLog = ({
   handleSelect,
   allUsers,
 }) => {
+  const [value, onChange] = useState(new Date());
+
+
   return (
     <div className="flex flex-wrap justify-between">
       <div>
@@ -45,11 +50,15 @@ const ActivityLog = ({
           ))}
         </Select>
         </div>
-        <div className="flex items-center gap-2 h-[38px] rounded-md font-semibold border-2 border-[#EEEEEE] p-3">
+        <div className="flex w-[150px] px-3 items-center gap-2 h-[38px] rounded-md font-semibold border-2 border-[#EEEEEE]">
           <img src={calender} alt="" />
           <p>Date range</p>
         </div>
+
       </div>
+      <div>
+      <Calendar onChange={onChange} value={value} />
+    </div>
     </div>
   );
 };

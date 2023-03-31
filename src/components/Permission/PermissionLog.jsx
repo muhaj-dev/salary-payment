@@ -8,7 +8,7 @@ const PermissionLog = () => {
     <div className="flex gap-5 flex-wrap justify-between ">
       <div>
         <p className="font-[500] text-[20px] laptop:text-[25px]">
-        Payment History
+        Permission History
         </p>
         <p className="text-[14px] text-[#838383]">
         View and download payment history

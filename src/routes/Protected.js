@@ -3,9 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Managment from "../pages/Managment";
 import Permission from "../pages/Permission";
-import Report from "../pages/Report";
 import StaffDashboard from "../pages/StaffDashboard";
 import { useAuth } from "../components/API/AuthContext";
+import TeamMang from "../pages/TeamMang";
+import PaymentReport from "../pages/PaymentReport";
+import TaxReport from "../pages/TaxReport";
 
 const Protected = () => {
   const { isAuthenticated } = useAuth();
@@ -37,14 +39,14 @@ const Protected = () => {
             ) : (
               <>
                 <Route path="/admin/dashboard" element={<Dashboard />} />
-                <Route path="/managment" element={<Managment />} />
-                <Route path="/report" element={<Report />} />
+                <Route path="/management/staffs" element={<Managment />} />
+                <Route path="/management/teams" element={<TeamMang />} />
+                <Route path="/payment/report" element={<PaymentReport />} />
+                <Route path="/tax/report" element={<TaxReport />} />
                 <Route path="/permission" element={<Permission />} />
                 <Route index path="/admin/dashboard" element={<Dashboard />} />
               </>
             )}
-            {/* {user.permission ===  ? <Route index path="/admin/dashboard" element={<Dashboard />} /> */}
-            {/* : null } */}
           </Routes>
         ) : null}
       </div>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PageHoc from "../components/PageHoc";
 import Pagination from "../common/Pagination";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
@@ -142,7 +143,7 @@ const Teambody = [
   },
   {
     id: 3,
-    
+
     user: "1029333",
     staff: "Mosses Samuel",
     role: "Product Designer",
@@ -153,7 +154,7 @@ const Teambody = [
   },
   {
     id: 4,
-    
+
     user: "1029333",
     staff: "Mosses Samuel",
     role: "Product Designer",
@@ -164,7 +165,7 @@ const Teambody = [
   },
   {
     id: 5,
-    
+
     user: "1029333",
     staff: "Mosses Samuel",
     role: "Product Designer",
@@ -175,7 +176,7 @@ const Teambody = [
   },
   {
     id: 6,
-    
+
     user: "1029333",
     staff: "Mosses Samuel",
     role: "Product Designer",
@@ -186,7 +187,7 @@ const Teambody = [
   },
   {
     id: 7,
-    
+
     user: "1029333",
     staff: "Mosses Samuel",
     role: "Product Designer",
@@ -197,7 +198,7 @@ const Teambody = [
   },
   {
     id: 8,
-    
+
     user: "1029333",
     staff: "Mosses Samuel",
     role: "Product Designer",
@@ -208,7 +209,7 @@ const Teambody = [
   },
   {
     id: 9,
-    
+
     user: "1029333",
     staff: "Mosses Samuel",
     role: "Product Designer",
@@ -219,7 +220,7 @@ const Teambody = [
   },
   {
     id: 10,
-    
+
     user: "1029333",
     staff: "Mosses Samuel",
     role: "Product Designer",
@@ -230,18 +231,35 @@ const Teambody = [
   },
 ];
 
-const Report = () => {
+const PaymentReport = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const navigate = useNavigate();
 
   // Get current posts
-  const list = body;
-  const teamList = Teambody;
+
+  let list = body;
+  if (searchTerm) {
+    list = filteredData;
+  }
+  
+  const handleSearch = (event) => {
+    const value = event.target.value.toLowerCase();
+    setSearchTerm(value);
+    const results = list?.filter(
+      (post) =>
+      post.name.toLowerCase().includes(value) 
+    );
+    setFilteredData(results);
+  };
+
+
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = list.slice(indexOfFirstPost, indexOfLastPost);
-  const TeamcurrentPosts = teamList.slice(indexOfFirstPost, indexOfLastPost);
 
   //Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -250,60 +268,40 @@ const Report = () => {
 
   return (
     <div className="w-full bg-white rounded-[10px] p-6 mt-14">
-      <RepoLog />
+      <RepoLog searchTerm={searchTerm} handleSearch={handleSearch} placeholder={"Search with name"} />
       <br />
-      <Tabs pos={"relative"} bg="#fff" p="12px" rounded="sm" mt={4}>
-        <TabList
-          border="2px solid bgLight"
-          className="overflow-x-auto overflow-y-hidden h-fit"
+      <div className=" w-[97%] mx-auto flex gap-3 tablet:gap-4 items-center ">
+        <p
+          className={
+            "text-[20px] border-b-2 border-primary font-semibold cursor-pointer py-[17px] px-4  text-[#7D0BFE] "
+          }
         >
-          <Tab
-            mr={{ md: "0", lg: "4" }}
-            h="fit-content"
-            fontSize={"18px"}
-            fontWeight="600"
-            _selected={{ color: "#7D0BFE", borderBottom: "2px solid #7D0BFE" }}
-          >
-            Payment History
-          </Tab>
-          <Tab
-            mr={{ md: "0", lg: "4" }}
-            h="fit-content"
-            fontSize={"18px"}
-            fontWeight="600"
-            _selected={{ color: "#7D0BFE", borderBottom: "2px solid #7D0BFE" }}
-          >
-            Tax Summary
-          </Tab>
-        </TabList>
+          Permission History
+        </p>
+        <p
+          className={
+            "rounded text-[20px] font-semibold cursor-pointer py-[17px] px-4  "
+          }
+          onClick={() => {
+            navigate("/tax/report");
+          }}
+        >
+          Tax Summary
+        </p>
+      </div>
+      <br />
 
-        <TabPanels mt="20px">
-          <TabPanel>
-            <PaymentTable currentPosts={currentPosts} />
-            <Pagination
-              postsPerPage={postsPerPage}
-              totalPosts={body.length}
-              currentPage={currentPage}
-              paginateBack={paginateBack}
-              paginateFront={paginateFront}
-              paginate={paginate}
-            />
-          </TabPanel>
-          <TabPanel>
-            <TaxTable TeamcurrentPosts={TeamcurrentPosts} /> 
-            <Pagination
-              postsPerPage={postsPerPage}
-              totalPosts={Teambody.length}
-              currentPage={currentPage}
-              paginateBack={paginateBack}
-              paginateFront={paginateFront}
-              paginate={paginate}
-            /> 
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+      <PaymentTable currentPosts={currentPosts} />
+      <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={body.length}
+        currentPage={currentPage}
+        paginateBack={paginateBack}
+        paginateFront={paginateFront}
+        paginate={paginate}
+      />
     </div>
   );
 };
 
-export default PageHoc(Report);
+export default PageHoc(PaymentReport);

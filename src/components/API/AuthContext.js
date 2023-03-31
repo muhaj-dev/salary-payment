@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await fetch(
-        "https://lorchain-api.onrender.com/users/login",
+    `${process.env.REACT_APP_LORCHAIN_API}/users/login`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -43,7 +43,6 @@ const AuthProvider = ({ children }) => {
         localStorage.setItem("lorchaintoken", data.token);
 
         const user = JSON.stringify(data);
-
         localStorage.setItem("user_details", user);
 
         setIsAuthenticated(true);
@@ -77,7 +76,6 @@ const AuthProvider = ({ children }) => {
 
           navigate("/dashboard");
         }
-        console.log(user);
       } else {
         setIsAuthenticated(false);
 
@@ -104,10 +102,119 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  // const addStaff = async (
+  //   email,
+  //   full_name,
+  //   gender, 
+  //   nationality,
+  //   job_role,
+  //   address, 
+  //   phone_number,
+  //   group,
+  //   start_date,
+  //   images,
+
+  //   ) => {
+  //   try {
+  //     const response = await fetch(
+  //   `${process.env.REACT_APP_LORCHAIN_API}/users/register`,
+
+        
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({ 
+  //           email,
+  //           full_name,
+  //           gender, 
+  //           nationality,
+  //           job_role,
+  //           address, 
+  //           phone_number,
+  //           group,
+  //           start_date,
+  //           images,
+  //          }),
+  //       }
+  //     );
+
+  //     const data = await response.json();
+  //     // console.log(data)
+  //     // console.log(data.token)
+
+
+  //     if (response.ok) {
+  //       // setLoading(true)
+  //       localStorage.setItem("lorchaintoken", data.token);
+
+  //       const user = JSON.stringify(data);
+  //       // console.log(user)
+  //       // console.log(user.token)
+
+  //       localStorage.setItem("user_details", user);
+
+  //       // setIsAuthenticated(true);
+
+  //       toast({
+  //         position: "top-right",
+  //         render: () => (
+  //           <Flex
+  //             color="primary"
+  //             p={3}
+  //             bg="white"
+  //             w="fit-content"
+  //             className="gap-2  items-center font-semibold shadow-card "
+  //             rounded={"md"}
+  //           >
+  //             <BsCheckCircleFill className="text-[#16A34A] " />
+  //             Successfuly created
+  //           </Flex>
+  //         ),
+  //       });
+  //     //   if (data.permission) {
+  //     //     setIsAdmin(true);
+  //     //     setIsStaff(false);
+  //     //     setLoading(false);
+
+  //     //     navigate("/admin/dashboard");
+  //     //   } else {
+  //     //     setIsStaff(true);
+  //     //     setIsAdmin(false);
+  //     //     setLoading(false);
+
+  //     //     navigate("/dashboard");
+  //     //   }
+  //     // } else {
+  //       // setIsAuthenticated(false);
+
+  //       toast({
+  //         position: "top-right",
+  //         render: () => (
+  //           <Flex
+  //             color="white"
+  //             p={3}
+  //             bg="red"
+  //             w="fit-content"
+  //             className="gap-2 items-center font-semibold shadow-card "
+  //             rounded={"md"}
+  //           >
+  //             <BsCheckCircleFill className="text-white " />
+  //             Staff not Successfuly created
+  //           </Flex>
+  //         ),
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     throw error;
+  //   }
+  // };
+
   const contextValue = {
     user,
     setUser,
     login,
+    // addStaff,
     isAuthenticated,
     setIsAuthenticated,
     IsLoggedIn,

@@ -1,10 +1,10 @@
 import React from "react";
+import arrowDown from '../assets/arrowDown.svg';
 import {
   Table,
   Thead,
   Tbody,
   Tr,
-  Th,
   Td,
   TableContainer,
   Checkbox,
@@ -23,6 +23,7 @@ const table = [
   {
     id: 3,
     head: "Time & Date",
+    img: arrowDown
   },
   {
     id: 4,
@@ -33,28 +34,21 @@ const table = [
 const ActivityTable = ({ currentPosts }) => {
   const [checkedItems, setCheckedItems] = React.useState([false, false]);
 
-  
-
-  const dateStr = "2023-02-03T22:08:00.000Z";
-  const dateObj = new Date(dateStr);
-
-  const timeString = dateObj.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-  });
-  const dateString = dateObj.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-  const formattedDate = `${timeString.toLowerCase()} - ${dateString}`;
-
+  function formatDate(time) {
+    const date = new Date(time);
+    const hours = date.getHours() % 12 || 12; // convert to 12-hour format
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const amOrPm = date.getHours() < 12 ? "am" : "pm";
+    const month = date.toLocaleString("default", { month: "short" });
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return `${hours}:${minutes} ${amOrPm} - ${month} ${day}, ${year}`;
+  }
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
   return (
     <div>
       <TableContainer>
-        
         <Table variant="simple">
           <Thead>
             <Tr className="font-[500] text-[18px]">
@@ -71,7 +65,12 @@ const ActivityTable = ({ currentPosts }) => {
                 </Checkbox>
               </Td>
               {table?.map((item) => (
-                <Td key={item.id}>{item.head}</Td>
+                <Td  key={item.id}>
+                  <span className="flex gap-2 justify-center items-center">
+                  {item.head}
+                  {item.img === arrowDown ? <img src={item?.img} alt="" /> : ""}
+                  </span>
+                </Td>
               ))}
             </Tr>
           </Thead>
@@ -112,8 +111,8 @@ const ActivityTable = ({ currentPosts }) => {
                     <p> - {item.position}</p>
                   </div>
                 </Td>
-                <Td>{formattedDate}</Td>
-                <Td>{item.ip}</Td>
+                <Td>{formatDate(item.time)} </Td>
+                <Td>{item.action}</Td>
               </Tr>
             ))}
           </Tbody>
