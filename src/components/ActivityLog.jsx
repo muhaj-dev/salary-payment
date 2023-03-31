@@ -15,13 +15,10 @@ const ActivityLog = ({
   selectedDate,
   setSelectedDate,
   handleDateChange,
+  handleDateClick,
   setIsCalendar,
   isCalendar,
-
 }) => {
-
-
-
   return (
     <div className="flex flex-wrap justify-between relative">
       <div>
@@ -45,7 +42,7 @@ const ActivityLog = ({
         <div className="w-[30%] ">
           <Select
             fontWeight={"500"}
-            placeholder="Select action"
+            placeholder=""
             value={selectedUser}
             onChange={handleSelect}
           >
@@ -79,9 +76,9 @@ const ActivityLog = ({
         )}
       </div>
       {isCalendar && (
-        <div className="right-0 top-12 absolute">
-          <Calendar onChange={handleDateChange} value={selectedDate} />
-          <p>Selected Date: {selectedDate} </p>
+          <div className="right-0 top-12 z-50 shadow-xl absolute">
+          <Calendar onChange={handleDateClick} value={selectedDate} />
+          {/* <p>Selected Date: {selectedDate && selectedDate.length > 0 && selectedDate[0].time}</p> */}
         </div>
       )}
     </div>

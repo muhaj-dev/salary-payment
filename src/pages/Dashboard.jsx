@@ -13,7 +13,7 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
   const [isCalendar, setIsCalendar] = useState(false);
 
 
@@ -21,7 +21,6 @@ const Dashboard = () => {
     `${process.env.REACT_APP_LORCHAIN_API}/activities`,
 
   );
-  
 
   // Get current posts
 
@@ -46,6 +45,15 @@ const Dashboard = () => {
     setFilteredData(results);
   };
 
+  const handleDateClick = (date) => {
+    const filteredArray = data?.filter(item => {
+      const startDate = new Date(item.time).toDateString();
+      return startDate === date?.toDateString();
+    });
+    setSelectedDate(filteredArray)
+  }
+  
+
   const uniqueUsers = [
     ...new Set(data?.map((post) => post.user.full_name)),
   ];
@@ -59,18 +67,15 @@ const Dashboard = () => {
   let list = data;
   if (searchTerm) {
     list = filteredData;
-  }
-  if (selectedUser) {
+  } else if (selectedUser) {
     list = list.filter((post) => post.user.full_name === selectedUser);
+  } else if (selectedDate) {
+    list = selectedDate;
   }
 
+
   
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    selectedDate.toString()
-    console.log(date); // Logs the selected date value to the console
-    console.log(selectedDate); // Logs the selected date value to the console
-  };
+ 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = list?.slice(indexOfFirstPost, indexOfLastPost);
@@ -88,12 +93,14 @@ const Dashboard = () => {
         selectedUser={selectedUser}
         handleSelect={handleSelect}
         allUsers={allUsers}
-        handleDateChange={handleDateChange}
+        handleDateClick={handleDateClick}
+        // handleDateChange={handleDateChange}
         setSelectedDate={setSelectedDate}
         isCalendar={isCalendar}
         setIsCalendar={setIsCalendar}
         
       />
+      
       <br />
     
     
