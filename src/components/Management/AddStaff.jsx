@@ -90,8 +90,11 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().required("Email is required"),
   nationality: Yup.string().required("This field is required"),
   gender: Yup.string().required("This field is required"),
+  //it should be an object not an array
   file: Yup.array().min(1, "At least one image is required"),
   team: Yup.string().required("Required"),
+  tax: Yup.number().required("This field is required"),
+  salary: Yup.number().required("This field is required"),
   state_date: Yup.string().required("This field is required"),
   job_role: Yup.string().required("This field is required"),
   address: Yup.string().required("This field is required"),
@@ -103,6 +106,7 @@ const AddStaff = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { addStaff, setLoading } = useAuth();
   const [images, setImages] = useState([]);
+  //it should be an object not an array useState({})
   const [file, setFile] = useState([]);
 
   const options = { day: "numeric", month: "short", year: "numeric" };
@@ -114,14 +118,15 @@ const AddStaff = (props) => {
     year: "numeric",
   });
 
-  // console.log(dateStr);
-
   const initialValues = {
     full_name: "",
     email: "",
     nationality: "",
     gender: "",
-    // images: [],
+    tax: "",
+    salary: "",
+
+    //change the file to {} not []
     file: [],
     team: "",
     state_date: dateStr,
@@ -133,39 +138,46 @@ const AddStaff = (props) => {
 
   const formik = useFormik({
     initialValues,
-    validationSchema,
-    onSubmit: (values) => {
-      console.log("done");
+    // validationSchema,
+    onSubmit: async (values) => {
+      setLoading(true);
+
       const formData = new FormData();
-      
-      formData.append("name", values.full_name);
+
+      formData.append("full_name", values.full_name);
       formData.append("email", values.email);
       formData.append("gender", values.gender);
-      formData.append("team", values.team);
-      formData.append("stated_date", values.state_date);
+      formData.append("nationality", values.nationality);
+      // formData.append("team", values.team);
+      // formData.append("stated_date", values.state_date);
+      formData.append("salary", values.salary);
+      formData.append("tax_rate", values.tax);
       formData.append("job_role", values.job_role);
       formData.append("address", values.address);
-      formData.append("address", values.wallet_address);
+      formData.append("wallet_address", values.wallet_address);
       formData.append("phone_number", values.phone_number);
-      
-      console.log(formData);
-      // values.images.forEach((image) => {
-      //   formData.append("images[]", image);
-      // });
-      // console.log(formData);
-      onClose();
+      //after changing the file to object not array change if from values.file[0] to values.file
+      formData.append("file", values.file[0]);
 
-      // const response = await fetch(
-      //   `${process.env.REACT_APP_LORCHAIN_API}/users/register`,
-      //   {
-      //     method: "POST",
-      //     body: formData,
-      //   }
-      // );
-
-      // const data = await response.json();
-
-      // console.log(data);
+      let token = localStorage.getItem("lorchaintoken");
+      fetch(`${process.env.REACT_APP_LORCHAIN_API}/users/register`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setLoading(false);
+          //these is where u will handle any logic once it is successful
+          console.log(data);
+        })
+        .catch((err) => {
+          setLoading(false);
+          //handle any error here
+          console.log(err);
+        });
     },
   });
 
@@ -178,11 +190,13 @@ const AddStaff = (props) => {
   //   formik.setFieldValue("images", formik.values.images.concat(acceptedFiles));
   // };
 
+  // /it should be a single file not an array
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       "image/*": [],
     },
     onDrop: (acceptedFile) => {
+      //single file not array
       setFile(
         acceptedFile.map((file) =>
           Object.assign(file, {
@@ -216,7 +230,6 @@ const AddStaff = (props) => {
     return () => file.forEach((file) => URL.revokeObjectURL(file.preview));
   }, []);
 
-
   return (
     <div>
       <button
@@ -248,7 +261,10 @@ const AddStaff = (props) => {
         <form className=" py-6" onSubmit={formik.handleSubmit}>
           <div className="flex justify-between ">
             <p className="font-[500] text-[22px]">Add Staff</p>
-            <button className="px-5 py-2 text-white bg-primary h-fit border-2 border-primary rounded-lg">
+            <button
+              type="submit"
+              className="px-5 py-2 text-white bg-primary h-fit border-2 border-primary rounded-lg"
+            >
               Save information
             </button>
           </div>
@@ -391,7 +407,6 @@ const AddStaff = (props) => {
             </div>
 
             <div className="w-full tablet:w-[48%]">
-
               <FormControl
                 id="nationality"
                 mt="5"
@@ -492,7 +507,9 @@ const AddStaff = (props) => {
                 id="job_role"
                 mt="5"
                 mb={4}
-                isInvalid={formik.errors.wallet_address && formik.touched.wallet_address}
+                isInvalid={
+                  formik.errors.wallet_address && formik.touched.wallet_address
+                }
               >
                 <FormLabel>Wallet Address</FormLabel>
                 <Input
