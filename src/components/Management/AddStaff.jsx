@@ -90,11 +90,12 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().required("Email is required"),
   nationality: Yup.string().required("This field is required"),
   gender: Yup.string().required("This field is required"),
-  files: Yup.array().min(1, "At least one image is required"),
+  file: Yup.array().min(1, "At least one image is required"),
   team: Yup.string().required("Required"),
   state_date: Yup.string().required("This field is required"),
   job_role: Yup.string().required("This field is required"),
   address: Yup.string().required("This field is required"),
+  wallet_address: Yup.string().required("This field is required"),
   phone_number: Yup.string().required("This field is required"),
 });
 
@@ -102,7 +103,7 @@ const AddStaff = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { addStaff, setLoading } = useAuth();
   const [images, setImages] = useState([]);
-  const [files, setFiles] = useState([]);
+  const [file, setFile] = useState([]);
 
   const options = { day: "numeric", month: "short", year: "numeric" };
   const currentDate = new Date().toLocaleDateString("en-US", options);
@@ -121,11 +122,12 @@ const AddStaff = (props) => {
     nationality: "",
     gender: "",
     // images: [],
-    files: [],
+    file: [],
     team: "",
     state_date: dateStr,
     job_role: "",
     address: "",
+    wallet_address: "",
     phone_number: "",
   };
 
@@ -143,6 +145,7 @@ const AddStaff = (props) => {
       formData.append("stated_date", values.state_date);
       formData.append("job_role", values.job_role);
       formData.append("address", values.address);
+      formData.append("address", values.wallet_address);
       formData.append("phone_number", values.phone_number);
       
       console.log(formData);
@@ -179,19 +182,19 @@ const AddStaff = (props) => {
     accept: {
       "image/*": [],
     },
-    onDrop: (acceptedFiles) => {
-      setFiles(
-        acceptedFiles.map((file) =>
+    onDrop: (acceptedFile) => {
+      setFile(
+        acceptedFile.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
           })
         )
       );
-      formik.setFieldValue("files", formik.values.files.concat(acceptedFiles));
+      formik.setFieldValue("file", formik.values.file.concat(acceptedFile));
     },
   });
 
-  const thumbs = files.map((file) => (
+  const thumbs = file.map((file) => (
     <div className="absolute top-3" style={thumb} key={file.name}>
       <div style={thumbInner}>
         <img
@@ -210,7 +213,7 @@ const AddStaff = (props) => {
 
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+    return () => file.forEach((file) => URL.revokeObjectURL(file.preview));
   }, []);
 
 
@@ -316,19 +319,6 @@ const AddStaff = (props) => {
             </aside>
           </section>
 
-          {/* <div className="relative ">
-            <div className=" w-full flex gap-3 mt-20 rounded-xl items-center bg-[#F7F7F7] p-3">
-              <div>
-                <img className="w-[50px]" src={avatar} alt="" />
-              </div>
-              <div>
-                <p className="font-semibold ">
-                  Upload staff picture or drag and drop
-                </p>
-                <p className="text-[14px]">only files in PNG or JPG upto 3MB</p>
-              </div>
-            </div>
-          </div> */}
           <div className="flex items-center mt-10 gap-2 h-[38px] rounded-md font-semibold border-2 border-[#EEEEEE] p-3">
             <img src={calender} alt="" />
             <p>{dateStr}</p>
@@ -369,7 +359,7 @@ const AddStaff = (props) => {
                 </FormErrorMessage>
               </FormControl>
 
-              <div className="mt-6">
+              {/* <div className="mt-6">
                 <label>Email address</label>
                 <Input
                   label="email"
@@ -379,10 +369,7 @@ const AddStaff = (props) => {
                   placeholder="enter company mail"
                   mt={1}
                 />
-              </div>
-            </div>
-
-            <div className="w-full tablet:w-[48%]">
+              </div> */}
               <FormControl
                 id="gender"
                 mt="5"
@@ -401,6 +388,9 @@ const AddStaff = (props) => {
                 </Select>
                 <FormErrorMessage>{formik.errors.gender}</FormErrorMessage>
               </FormControl>
+            </div>
+
+            <div className="w-full tablet:w-[48%]">
 
               <FormControl
                 id="nationality"
@@ -422,7 +412,7 @@ const AddStaff = (props) => {
                 <FormErrorMessage>{formik.errors.nationality}</FormErrorMessage>
               </FormControl>
 
-              {/* <FormControl
+              <FormControl
                 id="text"
                 mt="5"
                 mb={4}
@@ -437,7 +427,7 @@ const AddStaff = (props) => {
                 <FormErrorMessage className="absolute -bottom-5">
                   {formik.errors.address}
                 </FormErrorMessage>
-              </FormControl> */}
+              </FormControl>
             </div>
           </div>
 
@@ -502,16 +492,16 @@ const AddStaff = (props) => {
                 id="job_role"
                 mt="5"
                 mb={4}
-                isInvalid={formik.errors.address && formik.touched.address}
+                isInvalid={formik.errors.wallet_address && formik.touched.wallet_address}
               >
                 <FormLabel>Wallet Address</FormLabel>
                 <Input
                   type="text"
                   placeholder="0xC57c4384f0eE6E4Ca8FE7FA834a6D525477fC6B5"
-                  {...formik.getFieldProps("address")}
+                  {...formik.getFieldProps("wallet_address")}
                 />
                 <FormErrorMessage className="absolute -bottom-5">
-                  {formik.errors.address}
+                  {formik.errors.wallet_address}
                 </FormErrorMessage>
               </FormControl>
             </div>

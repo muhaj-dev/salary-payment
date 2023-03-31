@@ -20,7 +20,7 @@ const ActivityLog = ({
   isCalendar,
 }) => {
   return (
-    <div className="flex flex-wrap justify-between relative">
+    <div className="flex gap-4 flex-wrap justify-between relative">
       <div>
         <p className="font-[500] text-[20px] laptop:text-[25px]">
           Activity log
@@ -76,7 +76,7 @@ const ActivityLog = ({
         )}
       </div>
       {isCalendar && (
-          <div className="right-0 top-12 z-50 shadow-xl absolute">
+          <div className="right-0 top-28 laptop:top-12 z-50 shadow-xl absolute">
           <Calendar onChange={handleDateClick} value={selectedDate} />
           {/* <p>Selected Date: {selectedDate && selectedDate.length > 0 && selectedDate[0].time}</p> */}
         </div>
