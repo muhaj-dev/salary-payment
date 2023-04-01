@@ -5,8 +5,6 @@ import PageHoc from "../components/PageHoc";
 import Pagination from "../common/Pagination";
 import useFetch from "../components/API/useFetch";
 
-
-
 const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(8);
@@ -16,11 +14,10 @@ const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isCalendar, setIsCalendar] = useState(false);
 
-
   const { data, pending, error } = useFetch(
-    `${process.env.REACT_APP_LORCHAIN_API}/activities`,
-
+    `${process.env.REACT_APP_LORCHAIN_API}/activities`
   );
+  console.log(data)
 
   // Get current posts
 
@@ -29,8 +26,8 @@ const Dashboard = () => {
     setSearchTerm(value);
     const results = data?.filter(
       (post) =>
-        post.user.full_name.toLowerCase().includes(value) ||
-        post.user.email.toLowerCase().includes(value)
+        post?.user.full_name.toLowerCase().includes(value) ||
+        post?.user.email.toLowerCase().includes(value)
     );
     setFilteredData(results);
   };
@@ -40,42 +37,34 @@ const Dashboard = () => {
     setSelectedUser(value);
 
     const results = data?.filter(
-      (post) => post.user.full_name.toLowerCase() === value.toLowerCase()
+      (post) => post?.user.full_name.toLowerCase() === value.toLowerCase()
     );
     setFilteredData(results);
   };
 
   const handleDateClick = (date) => {
-    const filteredArray = data?.filter(item => {
+    const filteredArray = data?.filter((item) => {
       const startDate = new Date(item.time).toDateString();
       return startDate === date?.toDateString();
     });
-    setSelectedDate(filteredArray)
-  }
-  
+    setSelectedDate(filteredArray);
+  };
 
-  const uniqueUsers = [
-    ...new Set(data?.map((post) => post.user.full_name)),
-  ];
-  
+  const uniqueUsers = [...new Set(data?.map((post) => post?.user.full_name))];
+
   const allUsers = [{ label: "All", value: "" }].concat(
-    uniqueUsers.map((user) => ({ label: user, value: user }))
+    uniqueUsers?.map((user) => ({ label: user, value: user }))
   );
 
-
-  
   let list = data;
   if (searchTerm) {
     list = filteredData;
   } else if (selectedUser) {
-    list = list.filter((post) => post.user.full_name === selectedUser);
+    list = list?.filter((post) => post.user.full_name === selectedUser);
   } else if (selectedDate) {
     list = selectedDate;
   }
 
-
-  
- 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = list?.slice(indexOfFirstPost, indexOfLastPost);
@@ -87,23 +76,20 @@ const Dashboard = () => {
 
   return (
     <div className="w-full bg-white rounded-[10px] p-6 mt-14">
-      <ActivityLog 
-        searchTerm={searchTerm} 
-        handleSearch={handleSearch} 
+      <ActivityLog
+        searchTerm={searchTerm}
+        handleSearch={handleSearch}
         selectedUser={selectedUser}
         handleSelect={handleSelect}
         allUsers={allUsers}
         handleDateClick={handleDateClick}
-        // handleDateChange={handleDateChange}
         setSelectedDate={setSelectedDate}
         isCalendar={isCalendar}
         setIsCalendar={setIsCalendar}
-        
       />
-      
+
       <br />
-    
-    
+
       <ActivityTable currentPosts={currentPosts} />
       {pending && (
         <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">

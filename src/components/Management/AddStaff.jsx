@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { useToast, Flex } from "@chakra-ui/react";
+import { BsCheckCircleFill } from "react-icons/bs";
 import Dropzone from "react-dropzone";
 import ModalWrapper from "../../common/ModalWrapper";
 import avatar from "../../assets/avatar.svg";
@@ -91,7 +93,10 @@ const validationSchema = Yup.object().shape({
   nationality: Yup.string().required("This field is required"),
   gender: Yup.string().required("This field is required"),
   //it should be an object not an array
-  file: Yup.array().min(1, "At least one image is required"),
+  // file: Yup.object().min("At least one image is required"),
+  file: Yup.object().shape({
+    preview: Yup.string().required('Image is required'),
+  }).required('At least one image is required'),
   team: Yup.string().required("Required"),
   tax: Yup.number().required("This field is required"),
   salary: Yup.number().required("This field is required"),
@@ -104,10 +109,11 @@ const validationSchema = Yup.object().shape({
 
 const AddStaff = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { addStaff, setLoading } = useAuth();
-  const [images, setImages] = useState([]);
+  const { setLoading } = useAuth();
+  const toast = useToast();
+
   //it should be an object not an array useState({})
-  const [file, setFile] = useState([]);
+  const [file, setFile] = useState({});
 
   const options = { day: "numeric", month: "short", year: "numeric" };
   const currentDate = new Date().toLocaleDateString("en-US", options);
@@ -127,7 +133,7 @@ const AddStaff = (props) => {
     salary: "",
 
     //change the file to {} not []
-    file: [],
+    file: {},
     team: "",
     state_date: dateStr,
     job_role: "",
@@ -138,7 +144,7 @@ const AddStaff = (props) => {
 
   const formik = useFormik({
     initialValues,
-    // validationSchema,
+    validationSchema,
     onSubmit: async (values) => {
       setLoading(true);
 
@@ -148,8 +154,6 @@ const AddStaff = (props) => {
       formData.append("email", values.email);
       formData.append("gender", values.gender);
       formData.append("nationality", values.nationality);
-      // formData.append("team", values.team);
-      // formData.append("stated_date", values.state_date);
       formData.append("salary", values.salary);
       formData.append("tax_rate", values.tax);
       formData.append("job_role", values.job_role);
@@ -157,7 +161,7 @@ const AddStaff = (props) => {
       formData.append("wallet_address", values.wallet_address);
       formData.append("phone_number", values.phone_number);
       //after changing the file to object not array change if from values.file[0] to values.file
-      formData.append("file", values.file[0]);
+      formData.append("file", values.file);
 
       let token = localStorage.getItem("lorchaintoken");
       fetch(`${process.env.REACT_APP_LORCHAIN_API}/users/register`, {
@@ -170,25 +174,49 @@ const AddStaff = (props) => {
         .then((res) => res.json())
         .then((data) => {
           setLoading(false);
+          toast({
+            position: "top-right",
+            render: () => (
+              <Flex
+                color="primary"
+                p={3}
+                bg="white"
+                w="fit-content"
+                className="gap-2  items-center font-semibold shadow-card "
+                rounded={"md"}
+              >
+                <BsCheckCircleFill className="text-[#16A34A] " />
+                Staff created successfuly
+              </Flex>
+            ),
+          });
+          onClose()
           //these is where u will handle any logic once it is successful
           console.log(data);
         })
         .catch((err) => {
           setLoading(false);
+          toast({
+            position: "top-right",
+            render: () => (
+              <Flex
+                color="white"
+                p={3}
+                bg="red"
+                w="fit-content"
+                className="gap-2 items-center font-semibold shadow-card "
+                rounded={"md"}
+              >
+                <BsCheckCircleFill className="text-white " />
+                Staff not created
+              </Flex>
+            ),
+          });
           //handle any error here
           console.log(err);
         });
     },
   });
-
-  // const handleDrop = (acceptedFiles) => {
-  //   formik.setFieldValue("images", formik.values.images.concat(acceptedFiles));
-  // };
-
-  // const onDrop = (acceptedFiles) => {
-  //   // setImages([...images, ...acceptedFiles]);
-  //   formik.setFieldValue("images", formik.values.images.concat(acceptedFiles));
-  // };
 
   // /it should be a single file not an array
   const { getRootProps, getInputProps } = useDropzone({
@@ -197,25 +225,20 @@ const AddStaff = (props) => {
     },
     onDrop: (acceptedFile) => {
       //single file not array
-      setFile(
-        acceptedFile.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
-      );
-      formik.setFieldValue("file", formik.values.file.concat(acceptedFile));
+      const file = Object.assign(acceptedFile[0], {
+        preview: URL.createObjectURL(acceptedFile[0]),
+      });
+      setFile(file);
+      formik.setFieldValue("file", file);
     },
   });
 
-  const thumbs = file.map((file) => (
+  const thumbs = file ? (
     <div className="absolute top-3" style={thumb} key={file.name}>
       <div style={thumbInner}>
         <img
           src={file.preview}
-          // className="w-[50px] h-[50px]"
           style={img}
-          // Revoke data uri after image is loaded
           onLoad={() => {
             URL.revokeObjectURL(file.preview);
           }}
@@ -223,11 +246,11 @@ const AddStaff = (props) => {
         />
       </div>
     </div>
-  ));
+  ) : null;
 
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-    return () => file.forEach((file) => URL.revokeObjectURL(file.preview));
+    // return () => file.forEach((file) => URL.revokeObjectURL(file.preview));
   }, []);
 
   return (
@@ -268,46 +291,6 @@ const AddStaff = (props) => {
               Save information
             </button>
           </div>
-
-          {/* <div>
-            <label htmlFor="images">Images:</label>
-            <Dropzone onDrop={handleDrop}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <p>Drag and drop some files here, or click to select files</p>
-                </div>
-              )}
-            </Dropzone>
-            {formik.values.images.length > 0 && (
-              <div>
-                <h4>Selected Images:</h4>
-                <ul>
-                  {formik.values.images.map((image) => (
-                    <li key={image.name} className='w-[50px]'>
-                      {image.name}
-                      <div  key={image.name}>
-
-                      <div style={thumbInner}>
-                        <img
-                          src={image.preview}
-                          // className="w-[50px] h-[50px]"
-                          style={img}
-                          // Revoke data uri after image is loaded
-                          onLoad={() => {
-                            URL.revokeObjectURL(image.preview);
-                          }}
-                          alt="jk"
-                        />
-                      </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              
-              </div>
-            )}
-          </div> */}
 
           <section className="container mt-5 relative">
             <div {...getRootProps({ className: "dropzone" })}>
@@ -374,18 +357,27 @@ const AddStaff = (props) => {
                   {formik.errors.full_name}
                 </FormErrorMessage>
               </FormControl>
-
-              {/* <div className="mt-6">
-                <label>Email address</label>
+              <FormControl
+                id="phonr_number"
+                mt="5"
+                mb={4}
+                isInvalid={formik.errors.phone_number && formik.touched.phone_number}
+              >
+                <FormLabel>Phone number</FormLabel>
                 <Input
-                  label="email"
-                  type="email"
-                  // value={regFormData.email}
-                  // onChange={(e) => setRegFormData({...regFormData, email: e.target.value})}
-                  placeholder="enter company mail"
-                  mt={1}
+                  type="number"
+                  placeholder="Enter staff phone no"
+                  {...formik.getFieldProps("phone_number")}
                 />
-              </div> */}
+                <FormErrorMessage className="absolute -bottom-5">
+                  {formik.errors.phone_number}
+                </FormErrorMessage>
+              </FormControl>
+
+
+            </div>
+
+            <div className="w-full tablet:w-[48%]">
               <FormControl
                 id="gender"
                 mt="5"
@@ -404,9 +396,6 @@ const AddStaff = (props) => {
                 </Select>
                 <FormErrorMessage>{formik.errors.gender}</FormErrorMessage>
               </FormControl>
-            </div>
-
-            <div className="w-full tablet:w-[48%]">
               <FormControl
                 id="nationality"
                 mt="5"
