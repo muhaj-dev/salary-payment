@@ -132,7 +132,7 @@ const TeamTable = ({ TeamcurrentPosts }) => {
                         >
                           <div>
 
-                          <EditTeam item={item}/>
+                          <EditTeam item={item} />
                           </div>
                         </MenuItem>
                         <MenuItem

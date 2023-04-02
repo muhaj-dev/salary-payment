@@ -12,13 +12,12 @@ import Iicon from "../../assets/Iicon.svg";
 
 const EditTeam = ({ item }) => {
   const { data } = useFetch(
-    `${process.env.REACT_APP_LORCHAIN_API}/teams/${item.lead}`
+    `${process.env.REACT_APP_LORCHAIN_API}/users`,
   );
   const members = data;
-  console.log(members)
   const toast = useToast();
   console.log(item)
-  console.log(item.lead)
+  console.log(item._id)
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [aboutTeam, setAboutTeam] = useState("");
@@ -50,7 +49,7 @@ const EditTeam = ({ item }) => {
   };
 
   const filteredUsers = members?.filter((user) =>
-    user.full_name.toLowerCase().includes(searchTerm.toLowerCase())
+    user?.full_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // For Team Lead
@@ -98,10 +97,10 @@ const EditTeam = ({ item }) => {
     // console.log(team)
 
     let token = localStorage.getItem("lorchaintoken");
-    fetch(`${process.env.REACT_APP_LORCHAIN_API}/teams/${item.lead}`, {
+    fetch(`${process.env.REACT_APP_LORCHAIN_API}/teams/${item._id}`, {
       method: "PUT",
       headers: {
-        // "Content-Type": "application/json",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     //   body: teams,

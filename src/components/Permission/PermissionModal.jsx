@@ -21,13 +21,17 @@ const PermissionModal = () => {
   };
 
   const AdminCheckbox = [
-    { id: 1, label: "Add Staff" },
-    { id: 2, label: "Edit staff" },
-    { id: 3, label: "Delete staff" },
+    { id: 1, label: "Read" },
+    { id: 2, label: "Edit" },
+    { id: 3, label: "Delete" },
+    { id: 4, label: "Create" },
   ];
 
   const HRCheckbox = [
-    { id: 1, label: "Add Staff" },
+    { id: 1, label: "Read" },
+    { id: 2, label: "Edit" },
+    { id: 3, label: "Delete" },
+    { id: 4, label: "Create" },
   ];
 
   return (
@@ -65,7 +69,7 @@ const PermissionModal = () => {
                   </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4}>
-                <div className="flex flex-col">
+                  <div className="flex flex-col">
                     {AdminCheckbox.map((item) => (
                       <label
                         key={item.id}
@@ -88,8 +92,18 @@ const PermissionModal = () => {
               <AccordionItem mt={6} rounded="4xl">
                 <h2>
                   <AccordionButton bg="#F7F7F7">
-                    <Box as="span" flex="1" textAlign="left">
-                      HR Admin
+                    <Box flex="1" textAlign="left">
+                      <div className=" w-full">
+                        <input
+                          label="text"
+                          type="text"
+                          id="search-box"
+                          // onChange={handleTeamName}
+                          placeholder="Permission Name"
+                          mt={1}
+                          pl={3}
+                        />
+                      </div>
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
@@ -118,12 +132,13 @@ const PermissionModal = () => {
             </Accordion>
           </div>
           <div className="mt-10 w-full">
-            <button 
-            onClick={(e) => {
-              e.preventDefault()
-              onClose()
-            }}
-            className="flex w-full justify-center items-center gap-2 px-5 py-3 font-semibold h-fit  text-primary border-2 border-primary rounded-lg">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                onClose();
+              }}
+              className="flex w-full justify-center items-center gap-2 px-5 py-3 font-semibold h-fit  text-primary border-2 border-primary rounded-lg"
+            >
               Create permission
             </button>
           </div>
