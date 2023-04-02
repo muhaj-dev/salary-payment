@@ -13,7 +13,7 @@ import {
   TableContainer,
   Checkbox,
 } from "@chakra-ui/react";
-import { BsThreeDots } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import download from "../../assets/download.svg";
 import Edit from "../../assets/Edit.svg";
 import Iicon from "../../assets/Iicon.svg";
@@ -101,13 +101,13 @@ const StaffTable = ({ currentPosts }) => {
                       bg="transparent"
                       _hover={{ bg: "transparent" }}
                     >
-                      <BsThreeDots className="cursor-pointerml-auto text-[grey]" />
+                      <BsThreeDotsVerticalVertical className="cursor-pointerml-auto text-[grey]" />
                     </MenuButton>
                     <MenuList>
                       <MenuItem
                         //   onClick={() => alert("Kagebunshin")}
                         fontWeight="semi-bold"
-                        _hover={{ color: "red" }}
+                        
                         display="flex"
                         justifyContent={"space-between"}
                       >
@@ -120,7 +120,7 @@ const StaffTable = ({ currentPosts }) => {
                       <MenuItem
                         //   onClick={() => alert("Kagebunshin")}
                         fontWeight="semi-bold"
-                        _hover={{ color: "red" }}
+                        
                       >
                         <div className="flex gap-2">
                           <img src={download} alt="" />

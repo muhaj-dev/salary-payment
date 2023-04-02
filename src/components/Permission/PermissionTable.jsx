@@ -14,7 +14,7 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import Edit from "../../assets/Edit.svg";
-import { BsThreeDots } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import download from "../../assets/download.svg";
 import Iicon from "../../assets/Iicon.svg";
 import EditPermission from "./EditPermission";
@@ -99,13 +99,13 @@ const PermissionTable = ({ currentPosts }) => {
                       bg="transparent"
                       _hover={{ bg: "transparent" }}
                     >
-                      <BsThreeDots className="cursor-pointerml-auto text-[grey]" />
+                      <BsThreeDotsVertical className="cursor-pointerml-auto text-[grey]" />
                     </MenuButton>
                     <MenuList>
                       <MenuItem
                         //   onClick={() => alert("Kagebunshin")}
                         fontWeight="semi-bold"
-                        _hover={{ color: "red" }}
+                        
                         display="flex"
                         justifyContent={"space-between"}
                       >
@@ -118,7 +118,7 @@ const PermissionTable = ({ currentPosts }) => {
                       <MenuItem
                         //   onClick={() => alert("Kagebunshin")}
                         fontWeight="semi-bold"
-                        _hover={{ color: "red" }}
+                        
                       >
                         <div className="flex gap-2">
                           <img src={download} alt="" />

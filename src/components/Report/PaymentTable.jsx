@@ -14,7 +14,7 @@ import {
   TableContainer,
   Checkbox,
 } from "@chakra-ui/react";
-import { BsThreeDots } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import download from "../../assets/download.svg";
 import Edit from "../../assets/Edit.svg";
 import Iicon from "../../assets/Iicon.svg";
@@ -123,16 +123,20 @@ const PaymentTable = ({ currentPosts }) => {
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td className="underline">#{item._id}</Td>
+                <Td>
+                <a href={item.transaction_url} target='_blank'  rel="noreferrer"  className="underline">
+                  #{item._id}
+                  </a>
+                </Td>
                 <Td>
                   <p className="font-semibold text-[16px]">
                     {item.user.full_name}
                   </p>
 
-                  <p className="underline">
+                  <a href={item.transaction_url} target='_blank'  rel="noreferrer"  className="underline">
                     {item?.address?.slice(0, 4)}...
                     {item?.address?.slice(-3, item?.address.length)}
-                  </p>
+                  </a>
                 </Td>
                 <Td>
                   <span className="bg-[#F7F7F7] px-3 py-1 rounded-md">
@@ -150,13 +154,13 @@ const PaymentTable = ({ currentPosts }) => {
                       bg="transparent"
                       _hover={{ bg: "transparent" }}
                     >
-                      <BsThreeDots className="cursor-pointerml-auto text-[grey]" />
+                      <BsThreeDotsVertical className="cursor-pointerml-auto text-[grey]" />
                     </MenuButton>
                     <MenuList>
                       <MenuItem
                         //   onClick={() => alert("Kagebunshin")}
                         fontWeight="semi-bold"
-                        _hover={{ color: "red" }}
+                        
                         display="flex"
                         justifyContent={"space-between"}
                       >
@@ -169,7 +173,7 @@ const PaymentTable = ({ currentPosts }) => {
                       <MenuItem
                         //   onClick={() => alert("Kagebunshin")}
                         fontWeight="semi-bold"
-                        _hover={{ color: "red" }}
+                        
                       >
                         <div className="flex gap-2">
                           <img src={download} alt="" />

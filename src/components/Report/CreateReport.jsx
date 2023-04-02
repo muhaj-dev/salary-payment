@@ -16,11 +16,11 @@ const CreateReport = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [salary, setSetSalary] = useState("");
-  const [trans, setTrans] = useState("");
   const [wallet, setWallet] = useState("");
   const [selectedLead, setSelectedLead] = useState(null);
   const [searchLead, setSearchLead] = useState("");
-
+  const [trans, setTrans] = useState(selectedLead);
+  
   const [selectedDate, setSelectedDate] = useState('212222');
   const [isCalendar, setIsCalendar] = useState(false);
 
@@ -182,6 +182,7 @@ const CreateReport = () => {
                         user.full_name,
                         user.email,
                         user.image.url,
+                        user?.transaction_url
                       ])
                     }
                     className="flex cursor-pointer justify-between mb-3"
@@ -224,6 +225,7 @@ const CreateReport = () => {
                 label="text"
                 type="text"
                 id="wallet"
+                value={selectedLead}
                 // onChange={handleTeamName}
                 placeholder="wallet"
                 mt={1}

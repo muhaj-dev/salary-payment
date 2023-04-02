@@ -280,7 +280,7 @@ const PaymentReport = () => {
             "text-[20px] border-b-2 border-primary font-semibold cursor-pointer py-[17px] px-4  text-[#7D0BFE] "
           }
         >
-          Permission History
+          Payment History
         </p>
         <p
           className={

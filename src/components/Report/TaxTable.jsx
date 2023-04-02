@@ -13,7 +13,7 @@ import {
   TableContainer,
   Checkbox,
 } from "@chakra-ui/react";
-import { BsThreeDots } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import download from "../../assets/download.svg";
 import Edit from "../../assets/Edit.svg";
 import Iicon from "../../assets/Iicon.svg";
@@ -120,20 +120,19 @@ const TaxTable = ({ TeamcurrentPosts }) => {
                 <Td>{item.salary}</Td>
                 <Td>{item.is_paid === true ? "Paid" : "Not paid"}</Td>
                 <Td>
-                  <Td>
                     <Menu bg="primary">
                       <MenuButton
                         as={Button}
                         bg="transparent"
                         _hover={{ bg: "transparent" }}
                       >
-                        <BsThreeDots className="cursor-pointerml-auto text-[grey]" />
+                        <BsThreeDotsVertical className="cursor-pointerml-auto text-[grey]" />
                       </MenuButton>
                       <MenuList>
                         <MenuItem
                           //   onClick={() => alert("Kagebunshin")}
                           fontWeight="semi-bold"
-                          _hover={{ color: "red" }}
+                          
                           display="flex"
                           justifyContent={"space-between"}
                         >
@@ -146,7 +145,7 @@ const TaxTable = ({ TeamcurrentPosts }) => {
                         <MenuItem
                           //   onClick={() => alert("Kagebunshin")}
                           fontWeight="semi-bold"
-                          _hover={{ color: "red" }}
+                          
                         >
                           <div className="flex gap-2">
                             <img src={download} alt="" />
@@ -155,7 +154,6 @@ const TaxTable = ({ TeamcurrentPosts }) => {
                         </MenuItem>
                       </MenuList>
                     </Menu>
-                  </Td>
                 </Td>
               </Tr>
             ))}

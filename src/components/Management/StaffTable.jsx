@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import arrowDown from '../../assets/arrowDown.svg';
+import arrowDown from "../../assets/arrowDown.svg";
 import {
   Box,
   Menu,
@@ -16,11 +16,11 @@ import {
   TableContainer,
   Checkbox,
 } from "@chakra-ui/react";
-import { BsThreeDots } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import download from "../../assets/download.svg";
 import Edit from "../../assets/Edit.svg";
 import Iicon from "../../assets/Iicon.svg";
-
+import EditStaff from "./EditStaff";
 
 const table = [
   {
@@ -39,7 +39,6 @@ const table = [
     id: 4,
     head: "Date Stated",
     img: arrowDown,
-
   },
   {
     id: 5,
@@ -64,8 +63,13 @@ const StaffTable = ({ currentPosts }) => {
 
   function formatDate(dateString) {
     const date = new Date(dateString);
-    const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
+    return date.toLocaleDateString("en-US", options);
   }
 
   return (
@@ -87,12 +91,16 @@ const StaffTable = ({ currentPosts }) => {
                 </Checkbox>
               </Td>
               {table?.map((item) => (
-               <Td  key={item.id}>
-               <span className="flex gap-2 items-center justify-center">
-               {item.head}
-               {item.img === arrowDown ? <img src={item?.img} alt="" /> : ""}
-               </span>
-             </Td>
+                <Td key={item.id}>
+                  <span className="flex gap-2 items-center justify-center">
+                    {item.head}
+                    {item.img === arrowDown ? (
+                      <img src={item?.img} alt="" />
+                    ) : (
+                      ""
+                    )}
+                  </span>
+                </Td>
               ))}
             </Tr>
           </Thead>
@@ -104,7 +112,10 @@ const StaffTable = ({ currentPosts }) => {
                     isChecked={checkedItems[item._id]}
                     className="accent-primary"
                     onChange={(e) =>
-                      setCheckedItems([e.target.checked, checkedItems[item._id]])
+                      setCheckedItems([
+                        e.target.checked,
+                        checkedItems[item._id],
+                      ])
                     }
                   >
                     {" "}
@@ -112,15 +123,24 @@ const StaffTable = ({ currentPosts }) => {
                 </Td>
                 <Td>{item._id} </Td>
                 <Td display={"flex"} gap={2} alignItems="center">
-                  <img className="h-[40px] rounded-full w-[40px]" src={item?.image?.url} alt="" />
+                  <img
+                    className="h-[40px] rounded-full w-[40px]"
+                    src={item?.image?.url}
+                    alt=""
+                  />
                   <div>
-                    <p className="font-semibold text-[16px]">{item.full_name}</p>
+                    <p className="font-semibold text-[16px]">
+                      {item.full_name}
+                    </p>
                     <div className="flex gap-2">
                       <p>{item.email} -</p>
-                      <p className="underline"> 
-                      {item.wallet_address.slice(0, 4)}...{item.wallet_address.slice(-3, item.wallet_address.length)}
-                       </p>
-
+                      <p className="underline">
+                        {item.wallet_address.slice(0, 4)}...
+                        {item.wallet_address.slice(
+                          -3,
+                          item.wallet_address.length
+                        )}
+                      </p>
                     </div>
                   </div>
                 </Td>
@@ -143,27 +163,13 @@ const StaffTable = ({ currentPosts }) => {
                       bg="transparent"
                       _hover={{ bg: "transparent" }}
                     >
-                      <BsThreeDots className="cursor-pointerml-auto text-[grey]" />
+                      <BsThreeDotsVertical className="cursor-pointerml-auto text-[grey]" />
                     </MenuButton>
                     <MenuList>
-                      <MenuItem
-                        //   onClick={() => alert("Kagebunshin")}
-                        fontWeight="semi-bold"
-                        _hover={{ color: "red" }}
-                        display="flex"
-                        justifyContent={"space-between"}
-                      >
-                        <div className="flex gap-2">
-                          <img src={Edit} alt="" />
-                          <span>Edit</span>
-                        </div>
-                        <img src={Iicon} alt="" />
+                      <MenuItem fontWeight="semi-bold">
+                        <EditStaff item={item} />
                       </MenuItem>
-                      <MenuItem
-                        //   onClick={() => alert("Kagebunshin")}
-                        fontWeight="semi-bold"
-                        _hover={{ color: "red" }}
-                      >
+                      <MenuItem fontWeight="semi-bold">
                         <div className="flex gap-2">
                           <img src={download} alt="" />
                           <span>Payment history</span>

@@ -20,6 +20,8 @@ import {
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import Edit from "../../assets/Edit.svg";
+import Iicon from "../../assets/Iicon.svg";
 
 const radio = [
   {
@@ -84,34 +86,10 @@ const img = {
   height: "50px",
 };
 
-const validationSchema = Yup.object().shape({
-  full_name: Yup.string().required("This field is required"),
-  email: Yup.string().required("Email is required"),
-  nationality: Yup.string().required("This field is required"),
-  gender: Yup.string().required("This field is required"),
-  //it should be an object not an array
-  // file: Yup.object().min("At least one image is required"),
-  file: Yup.object()
-    .shape({
-      preview: Yup.string().required("Image is required"),
-    })
-    .required("At least one image is required"),
-  team: Yup.string().required("Required"),
-  tax: Yup.number().required("This field is required"),
-  salary: Yup.number().required("This field is required"),
-  state_date: Yup.string().required("This field is required"),
-  job_role: Yup.string().required("This field is required"),
-  address: Yup.string().required("This field is required"),
-  wallet_address: Yup.string().required("This field is required"),
-  phone_number: Yup.string().required("This field is required"),
-});
-
-const AddStaff = (props) => {
+const EditStaff = ({ item }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { setLoading } = useAuth();
   const toast = useToast();
-
-  //it should be an object not an array useState({})
   const [file, setFile] = useState({});
 
   const options = { day: "numeric", month: "short", year: "numeric" };
@@ -124,24 +102,23 @@ const AddStaff = (props) => {
   });
 
   const initialValues = {
-    full_name: "",
-    email: "",
-    nationality: "",
-    gender: "",
-    tax: "",
-    salary: "",
+    full_name: item.full_name,
+    email: item.email,
+    nationality: item.nationality,
+    gender: item.gender,
+    tax: item.tax_rate,
+    salary: item.salary,
     file: {},
-    team: "",
-    state_date: dateStr,
-    job_role: "",
-    address: "",
-    wallet_address: "",
-    phone_number: "",
+    team: item.team,
+    state_date: item.state_date,
+    job_role: item.job_role,
+    address: item.address,
+    wallet_address: item.wallet_address,
+    phone_number: item.phone_number,
   };
 
   const formik = useFormik({
     initialValues,
-    // validationSchema,
     onSubmit: async (values) => {
       setLoading(true);
 
@@ -161,16 +138,17 @@ const AddStaff = (props) => {
       formData.append("file", values.file);
 
       let token = localStorage.getItem("lorchaintoken");
-      fetch(`${process.env.REACT_APP_LORCHAIN_API}/users/register`, {
-        method: "POST",
+      fetch(`${process.env.REACT_APP_LORCHAIN_API}/users/${item._id}`, {
+        method: "PUT",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: formData,
       })
         .then((res) => res.json())
         .then((data) => {
-          setLoading(false);
+          //   setLoading(false);
           toast({
             position: "top-right",
             render: () => (
@@ -252,12 +230,13 @@ const AddStaff = (props) => {
 
   return (
     <div>
-      <button
-        onClick={onOpen}
-        className="px-5 py-2 text-white bg-primary border-2 border-primary rounded-lg"
-      >
-        Add Staff
-      </button>
+      <div onClick={onOpen} className=" w-full flex justify-between">
+        <div className="flex gap-2">
+          <img src={Edit} alt="" />
+          <span>Edit</span>
+        </div>
+        {/* <img className="" src={Iicon} alt="" /> */}
+      </div>
       <ModalWrapper
         isOpen={isOpen}
         size={"4xl"}
@@ -279,7 +258,7 @@ const AddStaff = (props) => {
             <div {...getRootProps({ className: "dropzone" })}>
               <input {...getInputProps()} />
 
-              <div className="flex gap-3 bg-[#F7F7F7] py-3 pl-4  w-full  rounded-xl">
+              <div className="flex gap-3 cursor-pointer bg-[#F7F7F7] py-3 pl-4  w-full  rounded-xl">
                 <div>
                   <img className="w-[50px]" src={avatar} alt="" />
                 </div>
@@ -319,9 +298,9 @@ const AddStaff = (props) => {
                   placeholder="name@example.com"
                   {...formik.getFieldProps("email")}
                 />
-                <FormErrorMessage className="absolute -bottom-5">
+                {/* <FormErrorMessage className="absolute -bottom-5">
                   {formik.errors.email}
-                </FormErrorMessage>
+                </FormErrorMessage> */}
               </FormControl>
 
               <FormControl
@@ -435,7 +414,7 @@ const AddStaff = (props) => {
                 <div className="flex flex-wrap gap-4 justify-between">
                   {radio.map((option) => (
                     <Box
-                    key={option.title}
+                      key={option.title}
                       w={{ base: "40%", md: "30%", lg: "30%" }}
                       className="shadow-md rounded-lg p-4"
                     >
@@ -544,4 +523,4 @@ const AddStaff = (props) => {
   );
 };
 
-export default AddStaff;
+export default EditStaff;

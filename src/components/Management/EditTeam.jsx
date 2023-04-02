@@ -5,23 +5,27 @@ import { BsCheckCircleFill } from "react-icons/bs";
 import { useDisclosure, Input, Textarea } from "@chakra-ui/react";
 import ModalWrapper from "../../common/ModalWrapper";
 import search from "../../assets/search.svg";
-import user from "../../assets/user.png";
-import deleteIcon from "../../assets/deleteIcon.svg";
+import Edit from "../../assets/Edit.svg";
+import Iicon from "../../assets/Iicon.svg";
 
 
-const CreateTeam = () => {
-  const { data, pending, error } = useFetch(
-    `${process.env.REACT_APP_LORCHAIN_API}/users`
+
+const EditTeam = ({ item }) => {
+  const { data } = useFetch(
+    `${process.env.REACT_APP_LORCHAIN_API}/teams/${item.lead}`
   );
   const members = data;
+  console.log(members)
   const toast = useToast();
+  console.log(item)
+  console.log(item.lead)
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [aboutTeam, setAboutTeam] = useState("");
   const [teamName, setTeamName] = useState("");
   // const [checkedMembers, setCheckedMembers] = useState([])
   const [checkedUserIds, setCheckedUserIds] = useState([]);
- 
+
   const [selectedLead, setSelectedLead] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchLead, setSearchLead] = useState("");
@@ -76,88 +80,90 @@ const CreateTeam = () => {
     const inputValue = e.target.value;
     setTeamName(inputValue);
   };
-     
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // const _id = selectedLead[0]
-    const leadId = selectedLead[0]
-    const membersId = checkedUserIds
-    const about = aboutTeam
-    const name = teamName
+    // const _id = selectedLead[0];
+    const leadId = selectedLead[1];
+    const membersId = checkedUserIds;
+    const about = aboutTeam;
+    const name = teamName;
     const teams = {
+    
       name,
       leadId,
       membersId,
       about,
-    }
+    };
     // console.log(team)
 
     let token = localStorage.getItem("lorchaintoken");
-    fetch(`${process.env.REACT_APP_LORCHAIN_API}/teams`, {
-      method: "POST",
+    fetch(`${process.env.REACT_APP_LORCHAIN_API}/teams/${item.lead}`, {
+      method: "PUT",
       headers: {
-        "Content-Type": "application/json",
+        // "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      // body: teams,
+    //   body: teams,
       body: JSON.stringify(teams),
-    }).then((res) => res.json())
-    .then((data) => {
-      toast({
-        position: "top-right",
-        render: () => (
-          <Flex
-            color="primary"
-            p={3}
-            bg="white"
-            w="fit-content"
-            className="gap-2  items-center font-semibold shadow-card "
-            rounded={"md"}
-          >
-            <BsCheckCircleFill className="text-[#16A34A] " />
-            Team created successfuly
-          </Flex>
-        ),
-      });
-      onClose()
-      
-      // setIsPending(false);
     })
-    .catch((err) => {
-      // setLoading(false);
-      toast({
-        position: "top-right",
-        render: () => (
-          <Flex
-            color="white"
-            p={3}
-            bg="red"
-            w="fit-content"
-            className="gap-2 items-center font-semibold shadow-card "
-            rounded={"md"}
-          >
-            <BsCheckCircleFill className="text-white " />
-            Team not created
-          </Flex>
-        ),
+      .then((res) => res.json())
+      .then((data) => {
+        toast({
+          position: "top-right",
+          render: () => (
+            <Flex
+              color="primary"
+              p={3}
+              bg="white"
+              w="fit-content"
+              className="gap-2  items-center font-semibold shadow-card "
+              rounded={"md"}
+            >
+              <BsCheckCircleFill className="text-[#16A34A] " />
+              Team created successfuly
+            </Flex>
+          ),
+        });
+        onClose();
+
+        // setIsPending(false);
+      })
+      .catch((err) => {
+        // setLoading(false);
+        toast({
+          position: "top-right",
+          render: () => (
+            <Flex
+              color="white"
+              p={3}
+              bg="red"
+              w="fit-content"
+              className="gap-2 items-center font-semibold shadow-card "
+              rounded={"md"}
+            >
+              <BsCheckCircleFill className="text-white " />
+              Team not created
+            </Flex>
+          ),
+        });
+        //handle any error here
+        console.log(err);
       });
-      //handle any error here
-      console.log(err);
-    });
   };
-
-
-
- 
 
   return (
     <div>
-      <button
+      <div
         onClick={onOpen}
-        className="px-5 py-2 text-primary border-2 border-primary rounded-lg"
+        className="w-full flex gap-10 tablet:gap-16 justify-between"
       >
-        Create team
-      </button>
+        <div className="  flex gap-2">
+          <img src={Edit} alt="" />
+          <span>Edit</span>
+        </div>
+        <img src={Iicon} alt="" />
+      </div>
       <ModalWrapper
         isOpen={isOpen}
         size={"xl"}
@@ -180,6 +186,7 @@ const CreateTeam = () => {
               <Input
                 label="text"
                 type="text"
+                // value={item.name}
                 id="search-box"
                 onChange={handleTeamName}
                 placeholder="chose team name"
@@ -191,6 +198,7 @@ const CreateTeam = () => {
               <Input
                 label="text"
                 type="text"
+                // value={item.lead}
                 id="search-box"
                 onChange={handleSearchLead}
                 placeholder="Search Lead"
@@ -259,6 +267,7 @@ const CreateTeam = () => {
             <label className="font-semibold mb-3">About team</label>
             <Textarea
               // value={setAboutTeam}
+            //   value={item.about}
               onChange={handleInputChange}
               placeholder=""
               size="sm"
@@ -271,6 +280,7 @@ const CreateTeam = () => {
             <Input
               label="text"
               type="text"
+            //   value={item.members[1]}
               id="search-box"
               onChange={handleSearchChange}
               placeholder="Search member"
@@ -316,4 +326,4 @@ const CreateTeam = () => {
   );
 };
 
-export default CreateTeam;
+export default EditTeam;
