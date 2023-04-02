@@ -44,7 +44,8 @@ const PermissionTable = ({ currentPosts }) => {
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
 
- 
+  const adminPermit = currentPosts?.filter(employee => employee.permission);
+
   
   return (
     <div>
@@ -70,7 +71,7 @@ const PermissionTable = ({ currentPosts }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {currentPosts?.map((item) => (
+            {adminPermit?.map((item) => (
               <Tr key={item.id}>
                 <Td>
                   <Checkbox
@@ -83,9 +84,9 @@ const PermissionTable = ({ currentPosts }) => {
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td>{item.permission === null ? "" : item.full_name}</Td>
+                <Td>{item.permission === undefined ? "" : item.full_name}</Td>
                 <Td>
-                  <p>{item.permission === null ? "" : item.permission} </p>
+                  <p>{item.permission === undefined ? "" : item.permission} </p>
                 </Td>
                 <Td>
                   <span className="flex gap-2 bg-[#F7F7F7] w-fit rounded-md">
