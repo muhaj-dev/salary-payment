@@ -40,13 +40,11 @@ const table = [
 
 const PermissionTable = ({ currentPosts }) => {
   const [checkedItems, setCheckedItems] = React.useState([false, false]);
-
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
 
-  const adminPermit = currentPosts?.filter(employee => employee.permission);
-
-  
+  const adminPermit = currentPosts?.filter((employee) => employee.permission);
+  // console.log(adminPermit);
   return (
     <div>
       <TableContainer>
@@ -90,7 +88,11 @@ const PermissionTable = ({ currentPosts }) => {
                 </Td>
                 <Td>
                   <span className="flex gap-2 bg-[#F7F7F7] w-fit rounded-md">
-                    <EditPermission audit={item.audit} />
+                    <EditPermission
+                      audit={item.audit}
+                      userId={item._id}
+                      permissionId={item.permission}
+                    />
                   </span>
                 </Td>
                 <Td>
@@ -106,7 +108,6 @@ const PermissionTable = ({ currentPosts }) => {
                       <MenuItem
                         //   onClick={() => alert("Kagebunshin")}
                         fontWeight="semi-bold"
-                        
                         display="flex"
                         justifyContent={"space-between"}
                       >
@@ -119,7 +120,6 @@ const PermissionTable = ({ currentPosts }) => {
                       <MenuItem
                         //   onClick={() => alert("Kagebunshin")}
                         fontWeight="semi-bold"
-                        
                       >
                         <div className="flex gap-2">
                           <img src={download} alt="" />

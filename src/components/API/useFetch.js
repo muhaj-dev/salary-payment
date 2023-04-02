@@ -1,23 +1,20 @@
 import { useState, useEffect } from "react";
-
+import { useAuth } from "../API/AuthContext";
 const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [pending, setPending] = useState(true);
   const [error, setError] = useState(null);
-
+  const { refresh } = useAuth();
   const userToken = localStorage.getItem("lorchaintoken");
-
 
   const headers = {
     Authorization: `Bearer ${userToken}`,
     "Content-Type": "application/json",
   };
 
-  
   const options = {
     headers: headers,
   };
-
 
   useEffect(() => {
     fetch(url, options)
@@ -38,9 +35,9 @@ const useFetch = (url) => {
         // console.log(err.message);
         setPending(false);
 
-        setError(err.message );
+        setError(err.message);
       });
-  }, [url]);
+  }, [url, refresh]);
 
   return { data, pending, error };
 };

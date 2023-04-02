@@ -13,7 +13,7 @@ const AuthProvider = ({ children }) => {
   const [isStaff, setIsStaff] = useState(false);
   const [IsLoggedIn, setIsLoggedIn] = useState(null);
   const [Loading, setLoading] = useState(false);
-
+  const [refresh, setRefresh] = useState(false);
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await fetch(
-    `${process.env.REACT_APP_LORCHAIN_API}/users/login`,
+        `${process.env.REACT_APP_LORCHAIN_API}/users/login`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -101,7 +101,6 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-
   const contextValue = {
     user,
     setUser,
@@ -115,6 +114,8 @@ const AuthProvider = ({ children }) => {
     isStaff,
     setIsStaff,
     Loading,
+    refresh,
+    setRefresh,
     setLoading,
   };
 

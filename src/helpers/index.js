@@ -17,4 +17,24 @@ const getAllPermissions = () => {
       });
   });
 };
-export { getAllPermissions };
+
+const updateStaff = (userId, formData) => {
+  return new Promise((resolve, reject) => {
+    fetch(`${appUrl}/users/${userId}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export { getAllPermissions, updateStaff };

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useDisclosure, Input, Select } from "@chakra-ui/react";
+import { useDisclosure, Input, Select, useToast } from "@chakra-ui/react";
 import ModalWrapper from "../../common/ModalWrapper";
 import Edit from "../../assets/Edit.svg";
-import { getAllPermissions } from "../../helpers";
-const EditPermission = ({ audit }) => {
+import { getAllPermissions, updateStaff } from "../../helpers";
+import { successToastMessage } from "../../helpers/toast";
+import { useAuth } from "../API/AuthContext";
+const EditPermission = ({ audit, permissionId, userId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [permission, setPermission] = useState([]);
-  const [selectedPermission, setSelectedPermission] = useState("");
+  const [selectedPermission, setSelectedPermission] = useState(permissionId);
+  const { loading, setLoading, setRefresh, refresh } = useAuth();
+  const toast = useToast();
   useEffect(() => {
     getAllPermissions()
       .then((data) => {
@@ -16,11 +20,29 @@ const EditPermission = ({ audit }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [refresh]);
 
   const handleSave = (e) => {
     e.preventDefault();
-    console.log(selectedPermission);
+    setLoading(true);
+    if (selectedPermission !== permissionId) {
+      console.log(selectedPermission);
+      console.log(userId);
+      let formData = new FormData();
+      formData.append("permission", selectedPermission);
+      updateStaff(userId, formData)
+        .then((data) => {
+          setRefresh(!refresh);
+          setLoading(false);
+          onClose();
+          successToastMessage(toast, "Permission updated successfully");
+          console.log(data);
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.log(err);
+        });
+    }
   };
   return (
     <div>
