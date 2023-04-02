@@ -242,7 +242,6 @@ const Report = () => {
     `${process.env.REACT_APP_LORCHAIN_API}/records`
   );
 
-console.log(data)
   
   let teamList = data;
   if (searchTerm) {

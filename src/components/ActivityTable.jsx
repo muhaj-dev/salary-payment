@@ -94,7 +94,7 @@ const ActivityTable = ({ currentPosts }) => {
                 <Td>{item.user._id}</Td>
                 <Td>
                   <p className="font-semibold text-[16px] mb-2">
-                    {item.user.full_name}
+                    {item?.user?.full_name}
                   </p>
                   <div className="flex gap-2">
                     {/* <a href={`mailto:${item.user.email}`}>{item.user.email}</a> */}

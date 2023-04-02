@@ -110,7 +110,7 @@ const StaffTable = ({ currentPosts }) => {
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td>{item._id}</Td>
+                <Td>{item._id} </Td>
                 <Td display={"flex"} gap={2} alignItems="center">
                   <img className="h-[40px] rounded-full w-[40px]" src={item?.image?.url} alt="" />
                   <div>

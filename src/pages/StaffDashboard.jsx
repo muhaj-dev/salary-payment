@@ -108,6 +108,7 @@ const StaffDashboard = () => {
       <br />
       <br />
 
+      {currentPosts && <StaffTable currentPosts={currentPosts} />}
       {pending && (
         <div className="text-primary italic text-center bg-[red-500] font-bold text-[20px]">
           Loading...
@@ -118,7 +119,6 @@ const StaffDashboard = () => {
           There is an error in the server. pls check back later...
         </div>
       )}
-      {currentPosts && <StaffTable currentPosts={currentPosts} />}
       <Pagination
         postsPerPage={postsPerPage}
         totalPosts={data?.length}

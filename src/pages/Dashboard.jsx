@@ -17,7 +17,6 @@ const Dashboard = () => {
   const { data, pending, error } = useFetch(
     `${process.env.REACT_APP_LORCHAIN_API}/activities`
   );
-  console.log(data)
 
   // Get current posts
 
@@ -26,8 +25,8 @@ const Dashboard = () => {
     setSearchTerm(value);
     const results = data?.filter(
       (post) =>
-        post?.user.full_name.toLowerCase().includes(value) ||
-        post?.user.email.toLowerCase().includes(value)
+        post?.user?.full_name.toLowerCase().includes(value) ||
+        post?.user?.email.toLowerCase().includes(value)
     );
     setFilteredData(results);
   };
@@ -50,7 +49,7 @@ const Dashboard = () => {
     setSelectedDate(filteredArray);
   };
 
-  const uniqueUsers = [...new Set(data?.map((post) => post?.user.full_name))];
+  const uniqueUsers = [...new Set(data?.map((post) => post?.user?.full_name))];
 
   const allUsers = [{ label: "All", value: "" }].concat(
     uniqueUsers?.map((user) => ({ label: user, value: user }))
@@ -60,7 +59,7 @@ const Dashboard = () => {
   if (searchTerm) {
     list = filteredData;
   } else if (selectedUser) {
-    list = list?.filter((post) => post.user.full_name === selectedUser);
+    list = list?.filter((post) => post?.user.full_name === selectedUser);
   } else if (selectedDate) {
     list = selectedDate;
   }

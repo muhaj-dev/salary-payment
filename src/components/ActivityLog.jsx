@@ -76,11 +76,17 @@ const ActivityLog = ({
         )}
       </div>
       {isCalendar && (
-          <div className="right-0 top-28 laptop:top-12 z-50 shadow-xl absolute">
+        <>
+        
+          <div className="-right-10 top-28 laptop:top-12 z-50 shadow-xl absolute">
           <Calendar onChange={handleDateClick} value={selectedDate} />
           {/* <p>Selected Date: {selectedDate && selectedDate.length > 0 && selectedDate[0].time}</p> */}
         </div>
-      )}
+          <div  onClick={() => {
+              setIsCalendar(false);
+            }} className=" z-10 h-[110vh] w-[98vw] absolute -top-[61vh] right-0 -left-20"/>
+        </>
+      )}{selectedDate}
     </div>
   );
 };

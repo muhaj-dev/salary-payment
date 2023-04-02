@@ -3,6 +3,7 @@ import { Input } from "@chakra-ui/react";
 import SearchFill from "../../assets/SearchFill.svg";
 import { ImSearch } from "react-icons/im";
 import downloadw from "../../assets/downloadw.svg"
+import CreateReport from "./CreateReport";
 
 const RepoLog = ({ searchTerm, handleSearch, placeholder }) => {
   return (
@@ -38,9 +39,7 @@ const RepoLog = ({ searchTerm, handleSearch, placeholder }) => {
           />
           Download
           </button>
-          <button className="px-5 py-2 text-primary border-2 border-primary rounded-lg">
-          Record payment
-          </button>
+          <CreateReport />
         </div>
       </div>
     </div>

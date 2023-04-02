@@ -1,8 +1,7 @@
-import { useCallback, useMemo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useToast, Flex } from "@chakra-ui/react";
 import { BsCheckCircleFill } from "react-icons/bs";
-import Dropzone from "react-dropzone";
 import ModalWrapper from "../../common/ModalWrapper";
 import avatar from "../../assets/avatar.svg";
 import calender from "../../assets/calender.svg";
@@ -18,8 +17,6 @@ import {
   Box,
   Radio,
   RadioGroup,
-  Button,
-  Image,
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
@@ -94,9 +91,11 @@ const validationSchema = Yup.object().shape({
   gender: Yup.string().required("This field is required"),
   //it should be an object not an array
   // file: Yup.object().min("At least one image is required"),
-  file: Yup.object().shape({
-    preview: Yup.string().required('Image is required'),
-  }).required('At least one image is required'),
+  file: Yup.object()
+    .shape({
+      preview: Yup.string().required("Image is required"),
+    })
+    .required("At least one image is required"),
   team: Yup.string().required("Required"),
   tax: Yup.number().required("This field is required"),
   salary: Yup.number().required("This field is required"),
@@ -131,8 +130,6 @@ const AddStaff = (props) => {
     gender: "",
     tax: "",
     salary: "",
-
-    //change the file to {} not []
     file: {},
     team: "",
     state_date: dateStr,
@@ -144,7 +141,7 @@ const AddStaff = (props) => {
 
   const formik = useFormik({
     initialValues,
-    validationSchema,
+    // validationSchema,
     onSubmit: async (values) => {
       setLoading(true);
 
@@ -190,9 +187,9 @@ const AddStaff = (props) => {
               </Flex>
             ),
           });
-          onClose()
+          onClose();
           //these is where u will handle any logic once it is successful
-          console.log(data);
+          // console.log(data);
         })
         .catch((err) => {
           setLoading(false);
@@ -267,20 +264,6 @@ const AddStaff = (props) => {
         onOpen={onOpen}
         onClose={onClose}
       >
-        {/* 
-        <Image
-          src={URL.createObjectURL(formik.values.image)}
-          alt="Image preview"
-          boxSize="200px"
-          objectFit="cover"
-          display={formik.values.image ? "block" : "none"}
-        /> */}
-        {/* 
-        <div>
-          {" "}
-          <pre>{JSON.stringify(formik.values, null, 2)}</pre>
-        </div> */}
-
         <form className=" py-6" onSubmit={formik.handleSubmit}>
           <div className="flex justify-between ">
             <p className="font-[500] text-[22px]">Add Staff</p>
@@ -361,7 +344,9 @@ const AddStaff = (props) => {
                 id="phonr_number"
                 mt="5"
                 mb={4}
-                isInvalid={formik.errors.phone_number && formik.touched.phone_number}
+                isInvalid={
+                  formik.errors.phone_number && formik.touched.phone_number
+                }
               >
                 <FormLabel>Phone number</FormLabel>
                 <Input
@@ -373,8 +358,6 @@ const AddStaff = (props) => {
                   {formik.errors.phone_number}
                 </FormErrorMessage>
               </FormControl>
-
-
             </div>
 
             <div className="w-full tablet:w-[48%]">
