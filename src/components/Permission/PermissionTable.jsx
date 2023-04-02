@@ -84,9 +84,9 @@ const PermissionTable = ({ currentPosts }) => {
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td>{item.permission === undefined ? "" : item.full_name}</Td>
+                <Td>{ item.full_name}</Td>
                 <Td>
-                  <p>{item.permission === undefined ? "" : item.permission} </p>
+                  <p>{item.permission} </p>
                 </Td>
                 <Td>
                   <span className="flex gap-2 bg-[#F7F7F7] w-fit rounded-md">

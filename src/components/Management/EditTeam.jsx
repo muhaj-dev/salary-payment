@@ -8,21 +8,14 @@ import search from "../../assets/search.svg";
 import Edit from "../../assets/Edit.svg";
 import Iicon from "../../assets/Iicon.svg";
 
-
-
 const EditTeam = ({ item }) => {
-  const { data } = useFetch(
-    `${process.env.REACT_APP_LORCHAIN_API}/users`,
-  );
+  const { data } = useFetch(`${process.env.REACT_APP_LORCHAIN_API}/users`);
   const members = data;
   const toast = useToast();
-  console.log(item)
-  console.log(item._id)
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [aboutTeam, setAboutTeam] = useState("");
   const [teamName, setTeamName] = useState("");
-  // const [checkedMembers, setCheckedMembers] = useState([])
   const [checkedUserIds, setCheckedUserIds] = useState([]);
 
   const [selectedLead, setSelectedLead] = useState(null);
@@ -49,7 +42,7 @@ const EditTeam = ({ item }) => {
   };
 
   const filteredUsers = members?.filter((user) =>
-    user?.full_name.toLowerCase().includes(searchTerm.toLowerCase())
+    user?.full_name?.toLowerCase()?.includes(searchTerm.toLowerCase())
   );
 
   // For Team Lead
@@ -82,19 +75,16 @@ const EditTeam = ({ item }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // const _id = selectedLead[0];
-    const leadId = selectedLead[1];
+    const lead = selectedLead[1];
     const membersId = checkedUserIds;
     const about = aboutTeam;
     const name = teamName;
     const teams = {
-    
       name,
-      leadId,
+      lead,
       membersId,
       about,
     };
-    // console.log(team)
 
     let token = localStorage.getItem("lorchaintoken");
     fetch(`${process.env.REACT_APP_LORCHAIN_API}/teams/${item._id}`, {
@@ -103,7 +93,6 @@ const EditTeam = ({ item }) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    //   body: teams,
       body: JSON.stringify(teams),
     })
       .then((res) => res.json())
@@ -125,6 +114,8 @@ const EditTeam = ({ item }) => {
           ),
         });
         onClose();
+      window.location.reload(false);
+        
 
         // setIsPending(false);
       })
@@ -266,7 +257,7 @@ const EditTeam = ({ item }) => {
             <label className="font-semibold mb-3">About team</label>
             <Textarea
               // value={setAboutTeam}
-            //   value={item.about}
+              //   value={item.about}
               onChange={handleInputChange}
               placeholder=""
               size="sm"
@@ -279,7 +270,7 @@ const EditTeam = ({ item }) => {
             <Input
               label="text"
               type="text"
-            //   value={item.members[1]}
+              //   value={item.members[1]}
               id="search-box"
               onChange={handleSearchChange}
               placeholder="Search member"
@@ -299,7 +290,7 @@ const EditTeam = ({ item }) => {
                 <input
                   type="checkbox"
                   value={user._id}
-                  checked={checkedUserIds.includes(user._id)}
+                  checked={checkedUserIds?.includes(user._id)}
                   onChange={handleCheckboxChange}
                   className="my-auto mt-3"
                 />

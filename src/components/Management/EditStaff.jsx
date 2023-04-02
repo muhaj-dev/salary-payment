@@ -22,33 +22,8 @@ import { useDisclosure } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import Edit from "../../assets/Edit.svg";
 import Iicon from "../../assets/Iicon.svg";
+import useFetch from "../API/useFetch";
 
-const radio = [
-  {
-    title: "Design",
-    des: "The design team is responsible for creating visual and interactive experiences for the organization's products, services.",
-  },
-  {
-    title: "Engineering",
-    des: "The engineering team is responsible for developing and maintaining the organization's products and services.",
-  },
-  {
-    title: "Community",
-    des: "Responsible for promoting the organization's products and services to customers and stakeholders. ",
-  },
-  {
-    title: "Marketing",
-    des: "The design team is responsible for creating visual and interactive experiences for the organization's products, services, and brand.",
-  },
-  {
-    title: "Operations",
-    des: "The engineering team is responsible for developing and maintaining the organization's products and services.",
-  },
-  {
-    title: "Culture",
-    des: "Responsible for creating and maintaining a positive and strong culture requires intentional effort and investment.",
-  },
-];
 
 const thumbsContainer = {
   positon: "relative",
@@ -91,6 +66,11 @@ const EditStaff = ({ item }) => {
   const { setLoading } = useAuth();
   const toast = useToast();
   const [file, setFile] = useState({});
+
+  const { data, pending, error } = useFetch(
+    `${process.env.REACT_APP_LORCHAIN_API}/teams`
+  );
+
 
   const options = { day: "numeric", month: "short", year: "numeric" };
   const currentDate = new Date().toLocaleDateString("en-US", options);
@@ -141,7 +121,7 @@ const EditStaff = ({ item }) => {
       fetch(`${process.env.REACT_APP_LORCHAIN_API}/users/${item._id}`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
+        //   "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: formData,
@@ -166,6 +146,8 @@ const EditStaff = ({ item }) => {
             ),
           });
           onClose();
+          window.location.reload(false);
+
           //these is where u will handle any logic once it is successful
           // console.log(data);
         })
@@ -230,12 +212,12 @@ const EditStaff = ({ item }) => {
 
   return (
     <div>
-      <div onClick={onOpen} className=" w-full flex justify-between">
+      <div onClick={onOpen} className="gap-16 w-full flex justify-between">
         <div className="flex gap-2">
           <img src={Edit} alt="" />
           <span>Edit</span>
         </div>
-        {/* <img className="" src={Iicon} alt="" /> */}
+        <img className="" src={Iicon} alt="" />
       </div>
       <ModalWrapper
         isOpen={isOpen}
@@ -412,18 +394,18 @@ const EditStaff = ({ item }) => {
                 }}
               >
                 <div className="flex flex-wrap gap-4 justify-between">
-                  {radio.map((option) => (
+                {data?.map((option) => (
                     <Box
-                      key={option.title}
+                    key={option._id}
                       w={{ base: "40%", md: "30%", lg: "30%" }}
                       className="shadow-md rounded-lg p-4"
                     >
-                      <Radio value={option.title}>
+                      <Radio value={option.name}>
                         <p className="text-gray-900 font-[500]">
-                          {option.title}
+                          {option.name}
                         </p>
-                        <p className="text-[13px] leading-4 text-gray-700">
-                          {option.des}
+                        <p className="text-[13px] w-fit leading-4 text-gray-700">
+                          {option.about}
                         </p>
                       </Radio>
                     </Box>
