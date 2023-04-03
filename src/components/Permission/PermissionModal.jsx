@@ -114,22 +114,28 @@ const PermissionModal = () => {
   const handleSave = (e) => {
     e.preventDefault();
     setLoading(true);
+    let isUpdated = false;
+    let errorMsg = "";
     let updatePermissionData = convertData(checkedItems);
-    console.log(updatePermissionData);
+
     updatePermissionData.forEach((data) => {
       updateStaffPermission(data.id, JSON.stringify({ roles: data.roles }))
         .then((data) => {
-          onClose();
-          setLoading(false);
-          setRefresh(!refresh);
-          successToastMessage(toast, "Permission updated successfully");
+          isUpdated = true;
         })
         .catch((err) => {
-          setLoading(false);
-          errorToastMessage(toast, err.message);
-          onClose();
+          errorMsg = err.message;
         });
     });
+    if (isUpdated) {
+      setLoading(false);
+      setRefresh(!refresh);
+      successToastMessage(toast, "Permission updated successfully");
+    } else {
+      setLoading(false);
+      errorToastMessage(toast, errorMsg);
+    }
+    onClose();
   };
 
   const handleCreateChange = (e) => {
