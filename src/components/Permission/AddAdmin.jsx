@@ -35,7 +35,6 @@ const AddAdmin = () => {
     getAllPermissions()
       .then((data) => {
         setPermission(data);
-        console.log(data);
       })
       .catch((err) => {
         console.log(err);

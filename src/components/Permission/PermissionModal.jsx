@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   useDisclosure,
   Box,
@@ -10,21 +10,21 @@ import {
 } from "@chakra-ui/react";
 import ModalWrapper from "../../common/ModalWrapper";
 import EditP from "../../assets/EditP.svg";
+import { getAllPermissions, updateStaff } from "../../helpers";
+import { successToastMessage } from "../../helpers/toast";
+import { useAuth } from "../API/AuthContext";
 
 const PermissionModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [checkedItems, setCheckedItems] = useState({});
+  const [checkedItems, setCheckedItems] = useState([]);
 
-  const handleChange = (event) => {
-    const { name, checked } = event.target;
-    setCheckedItems({ ...checkedItems, [name]: checked });
-  };
-
-  const AdminCheckbox = [
-    { id: 1, label: "Read" },
-    { id: 2, label: "Edit" },
-    { id: 3, label: "Delete" },
-    { id: 4, label: "Create" },
+  const [permissions, setPermission] = useState([]);
+  const { loading, setLoading, setRefresh, refresh } = useAuth();
+  const fullPermissionOptions = [
+    { id: 1, label: "read" },
+    { id: 4, label: "create" },
+    { id: 2, label: "edit" },
+    { id: 3, label: "delete" },
   ];
 
   const HRCheckbox = [
@@ -33,6 +33,54 @@ const PermissionModal = () => {
     { id: 3, label: "Delete" },
     { id: 4, label: "Create" },
   ];
+  useEffect(() => {
+    getAllPermissions()
+      .then((data) => {
+        setPermission(data);
+        const newCheckedItems = data.map((permission) => {
+          const checkedRoles = {};
+          for (const role of permission.roles) {
+            checkedRoles[role] = true;
+          }
+          return {
+            id: permission._id,
+            checkedRoles,
+          };
+        });
+        setCheckedItems(newCheckedItems);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [refresh]);
+
+  const handleChange = (event, permissionId) => {
+    const { name, checked } = event.target;
+    setCheckedItems((prev) => {
+      const permissionIndex = prev.findIndex(
+        (permission) => permission.id === permissionId
+      );
+      const permission = prev[permissionIndex];
+      const newCheckedRoles = {
+        ...permission.checkedRoles,
+        [name]: checked,
+      };
+      return [
+        ...prev.slice(0, permissionIndex),
+        {
+          ...permission,
+          checkedRoles: newCheckedRoles,
+        },
+        ...prev.slice(permissionIndex + 1),
+      ];
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    console.log(checkedItems);
+  };
 
   return (
     <div>
@@ -49,7 +97,7 @@ const PermissionModal = () => {
         onOpen={onOpen}
         onClose={onClose}
       >
-        <form className=" py-6">
+        <form onSubmit={handleSubmit} className=" py-6">
           <div className="flex justify-between ">
             <p className="font-[500] text-[22px]">Permissions</p>
             <button className="px-5 py-1 text-white bg-primary h-fit border-2 border-primary rounded-lg">
@@ -59,35 +107,47 @@ const PermissionModal = () => {
 
           <div className="mt-10">
             <Accordion allowToggle>
-              <AccordionItem>
-                <h2>
-                  <AccordionButton bg="#F7F7F7">
-                    <Box as="span" flex="1" textAlign="left">
-                      Super Admin
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                  <div className="flex flex-col">
-                    {AdminCheckbox.map((item) => (
-                      <label
-                        key={item.id}
-                        className="inline-flex justify-between items-center mt-3"
-                      >
-                        <span className="ml-2 text-gray-700">{item.label}</span>
-                        <input
-                          type="checkbox"
-                          name={item.label}
-                          className="form-checkbox accent-primary h-5 w-5 text-gray-600 transition duration-150 ease-in-out"
-                          checked={checkedItems[item.label]}
-                          onChange={handleChange}
-                        />
-                      </label>
-                    ))}
-                  </div>
-                </AccordionPanel>
-              </AccordionItem>
+              {permissions &&
+                permissions?.map((permission) => (
+                  <AccordionItem className="mt-2">
+                    <h2>
+                      <AccordionButton bg="#F7F7F7">
+                        <Box as="span" flex="1" textAlign="left">
+                          {permission.name}
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                      <div className="flex flex-col">
+                        {fullPermissionOptions.map((item, index) => (
+                          <label
+                            key={item.id}
+                            className="inline-flex justify-between items-center mt-3"
+                          >
+                            <span className="ml-2 text-gray-700">
+                              {item.label}
+                            </span>
+                            <input
+                              type="checkbox"
+                              name={item.label}
+                              className="form-checkbox accent-primary h-5 w-5 text-gray-600 transition duration-150 ease-in-out"
+                              checked={checkedItems
+                                .find(
+                                  (permission) =>
+                                    permission._id === permission._id
+                                )
+                                ?.roles?.includes(item.label)}
+                              onChange={(e) =>
+                                handleChange(e, permission._id, item.label)
+                              }
+                            />
+                          </label>
+                        ))}
+                      </div>
+                    </AccordionPanel>
+                  </AccordionItem>
+                ))}
 
               <AccordionItem mt={6} rounded="4xl">
                 <h2>
