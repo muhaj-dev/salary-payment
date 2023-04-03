@@ -45,6 +45,7 @@ const AuthProvider = ({ children }) => {
         localStorage.setItem("user_details", user);
 
         setIsAuthenticated(true);
+        setLoading(true);
 
         toast({
           position: "top-right",
@@ -94,6 +95,7 @@ const AuthProvider = ({ children }) => {
             </Flex>
           ),
         });
+      setLoading(false)
       }
     } catch (error) {
       console.error(error);

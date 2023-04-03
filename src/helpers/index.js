@@ -37,6 +37,7 @@ const updateStaff = (userId, formData) => {
   });
 };
 
+
 const revertStaffPermission = (userId, permissionId) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -75,6 +76,7 @@ const createStaffPermission = (formData) => {
     }
   });
 };
+
 
 const updateStaffPermission = (permissionId, formData) => {
   return new Promise(async (resolve, reject) => {

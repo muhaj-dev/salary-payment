@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../components/API/AuthContext";
 import LoginHoc from "../components/LoginHoc";
 import { Button } from "@chakra-ui/react";
+import { BsEyeSlashFill, BsEyeFill } from "react-icons/bs";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -12,18 +13,19 @@ const LoginSchema = Yup.object().shape({
 
 const Login = () => {
   const { login, Loading, setLoading } = useAuth();
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    
+
     validationSchema: LoginSchema,
     onSubmit: (values) => {
-      setLoading(true)
+      setLoading(true);
       login(values.email, values.password);
-      
     },
   });
 
@@ -51,7 +53,7 @@ const Login = () => {
             ) : null}
           </div>
 
-          <div className="my-3">
+          <div className="my-3 relative">
             <label
               htmlFor="password"
               className="block font-semibold text-[16px]"
@@ -59,7 +61,7 @@ const Login = () => {
               Password
             </label>
             <input
-              type="password"
+              type={show ? "text" : "password"}
               id="password"
               name="password"
               value={formik.values.password}
@@ -72,6 +74,9 @@ const Login = () => {
                 {formik.errors.password}
               </div>
             ) : null}
+            <div className="absolute top-10 right-4" onClick={handleClick}>
+              {show ? <BsEyeFill /> : <BsEyeSlashFill />}
+            </div>
           </div>
 
           <div className="w-full">

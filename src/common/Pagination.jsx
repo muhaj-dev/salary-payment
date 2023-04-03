@@ -22,7 +22,7 @@ const Pagination = ({
 
   return (
     <div className="flex justify-between  mt-14">
-      <div className="flex gap-2 items-center mr-4">
+      {/* <div className="flex gap-2 items-center mr-4">
         <p className="font-semibold ">Show</p>
         <div className="w-[60px]">
         <Select fontWeight={"500"} placeholder="5">
@@ -33,7 +33,7 @@ const Pagination = ({
           <option value="10">10</option>
         </Select>
         </div>
-      </div>
+      </div> */}
       <div className="py-2 flex w-fit ">
         <div className="flex">
           <nav

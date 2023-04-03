@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 
 import { IoIosArrowDown } from "react-icons/io";
@@ -43,7 +43,11 @@ const StaffNav = () => {
             </div>
           </MenuButton>
           <MenuList>
-            <MenuItem>Change password</MenuItem>
+            <MenuItem>
+            <NavLink to='/reset-password'>
+            Change password
+            </NavLink>
+            </MenuItem>
             <MenuItem onClick={logout}>Logout</MenuItem>
           </MenuList>
         </Menu>
@@ -60,7 +64,9 @@ const StaffNav = () => {
           </MenuButton>
           <MenuList>
             <MenuItem>
-             Change password
+            <NavLink to='/reset-password'>
+            Change password
+            </NavLink>
             </MenuItem>
             <MenuItem  onClick={logout}>Logout</MenuItem>
           </MenuList>

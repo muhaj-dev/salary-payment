@@ -29,7 +29,6 @@ const Navbar = () => {
   const userDetails = localStorage.getItem("user_details");
   const user = JSON.parse(userDetails);
 
-
   const logout = () => {
     localStorage.clear();
     navigate("/login");
@@ -37,7 +36,7 @@ const Navbar = () => {
 
   const home = () => {
     navigate("/user/dashboard");
-  }
+  };
 
   return (
     <nav className="p-3 my-2 flex justify-between w-[95%] mx-auto max-w-[1512px]">
@@ -68,7 +67,7 @@ const Navbar = () => {
         </NavLink>
         <Menu>
           <MenuButton pos="relative">
-          <div className="flex gap-3">
+            <div className="flex gap-3">
               <IoIosArrowDown className="w-[30px] h-[20px] absolute -right-6 top-2" />
               <div className="rounded-full border-2 overflow-hidden ">
                 <img className="h-[45px]" src={user.image.url} alt="logo" />
@@ -80,7 +79,9 @@ const Navbar = () => {
             </div>
           </MenuButton>
           <MenuList>
-            <MenuItem>Change password</MenuItem>
+            <MenuItem>
+              <NavLink to="/reset-password">Change password</NavLink>
+            </MenuItem>
             <MenuItem onClick={logout}>Logout</MenuItem>
           </MenuList>
         </Menu>
@@ -91,15 +92,21 @@ const Navbar = () => {
       <div className="flex laptop_l:hidden mr-5 ml-auto ">
         <Menu>
           <MenuButton pos="relative">
-          <div className="flex">
+            <div className="flex">
               <div className="rounded-full border-2 overflow-hidden">
-                <img className=" h-[35px] w-[35px] " src={user.image.url} alt="logo" />
+                <img
+                  className=" h-[35px] w-[35px] "
+                  src={user.image.url}
+                  alt="logo"
+                />
               </div>
               <IoIosArrowDown className="w-[30px] h-[24px] my-auto" />
             </div>
           </MenuButton>
           <MenuList>
-            <MenuItem>Change password</MenuItem>
+            <MenuItem>
+              <NavLink to="/reset-password">Change password</NavLink>
+            </MenuItem>
             <MenuItem onClick={logout}>Logout</MenuItem>
           </MenuList>
         </Menu>

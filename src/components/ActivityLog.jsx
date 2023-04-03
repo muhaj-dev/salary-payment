@@ -5,6 +5,7 @@ import { Select } from "@chakra-ui/react";
 import calender from "../assets/calender.svg";
 import { ImSearch } from "react-icons/im";
 import { Input } from "@chakra-ui/react";
+import { CiCalendar } from 'react-icons/ci'
 
 const ActivityLog = ({
   searchTerm,
@@ -27,7 +28,7 @@ const ActivityLog = ({
         </p>
         <p className="">View and download activity log</p>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap">
         <div className="">
           <Input
             type="text"
@@ -58,20 +59,22 @@ const ActivityLog = ({
             onClick={() => {
               setIsCalendar(true);
             }}
-            className="flex cursor-pointer w-[150px] px-3 items-center gap-2 h-[38px] rounded-md font-semibold border-2 border-[#EEEEEE]"
+            className="flex cursor-pointer w-fit  px-2 items-center gap-2 h-[38px] rounded-md  border-2 border-[#EEEEEE]"
+
           >
-            <img src={calender} alt="" />
-            <p>Date range</p>
+            <CiCalendar className="font-bold" />
+            <p className="text-sm tablet:text-[16px] font-semibold">Date range</p>
           </div>
         ) : (
           <div
             onClick={() => {
               setIsCalendar(false);
             }}
-            className="flex cursor-pointer w-[150px] px-3 items-center gap-2 h-[38px] rounded-md font-semibold border-2 border-[#EEEEEE]"
+            className="flex cursor-pointer w-fit  px-2 items-center gap-2 h-[38px] rounded-md  border-2 border-[#EEEEEE]"
+
           >
-            <img src={calender} alt="" />
-            <p>Date range</p>
+            <CiCalendar className="font-bold" />
+            <p className="text-sm tablet:text-[16px] font-semibold">Date range</p>
           </div>
         )}
       </div>
