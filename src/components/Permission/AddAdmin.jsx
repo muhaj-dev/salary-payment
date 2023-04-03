@@ -112,7 +112,7 @@ const AddAdmin = () => {
 
           <div className="mt-10">
             <div className="mt-6 w-full relative">
-              <div>
+              <div className="relative">
                 <label className="font-semibold">Search staff</label>
                 <Input
                   label="text"

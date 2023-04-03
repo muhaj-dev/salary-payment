@@ -1,5 +1,4 @@
 import React from "react";
-import Card from "../Card";
 import Hero from "../Hero";
 import Navbar from "../../components/NavBar";
 import PermissionCard from "./PermissionCard";
