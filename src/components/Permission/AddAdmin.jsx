@@ -4,7 +4,7 @@ import { ImSearch } from "react-icons/im";
 import search from "../../assets/search.svg";
 import { useDisclosure, Input, Select, useToast } from "@chakra-ui/react";
 import { getAllPermissions, updateStaff } from "../../helpers";
-import { successToastMessage } from "../../helpers/toast";
+import { successToastMessage, errorToastMessage } from "../../helpers/toast";
 import { useAuth } from "../API/AuthContext";
 import useFetch from "../API/useFetch";
 import profile from "../../assets/profile.png";
@@ -58,6 +58,8 @@ const AddAdmin = () => {
     getAllPermissions()
       .then((data) => {
         setPermission(data);
+
+        setSelectedPermission(data[0]?._id);
       })
       .catch((err) => {
         console.log(err);
@@ -67,26 +69,23 @@ const AddAdmin = () => {
   const handleSave = (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(selectedLead);
-    console.log(selectedLead[0]);
-    // if (selectedPermission !== permissionId) {
-    //   console.log(selectedPermission);
-    //   console.log(userId);
-    //   let formData = new FormData();
-    //   formData.append("permission", selectedPermission);
-    //   updateStaff(userId, formData)
-    //     .then((data) => {
-    //       setRefresh(!refresh);
-    //       setLoading(false);
-    //       onClose();
-    //       successToastMessage(toast, "Permission updated successfully");
-    //       console.log(data);
-    //     })
-    //     .catch((err) => {
-    //       setLoading(false);
-    //       console.log(err);
-    //     });
-    // }
+    let userId = selectedLead[0];
+    console.log(selectedPermission);
+    let formData = new FormData();
+    formData.append("permission", selectedPermission);
+    updateStaff(userId, formData)
+      .then((data) => {
+        setRefresh(!refresh);
+        setLoading(false);
+        console.log(data);
+        onClose();
+        successToastMessage(toast, "Permission updated successfully");
+      })
+      .catch((err) => {
+        setLoading(false);
+        onClose();
+        errorToastMessage(toast, err.message);
+      });
   };
 
   return (
