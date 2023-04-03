@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ModalWrapper from "../../common/ModalWrapper";
 import { ImSearch } from "react-icons/im";
-import user from "../../assets/user.png";
+import search from "../../assets/search.svg";
 import { useDisclosure, Input, Select, useToast } from "@chakra-ui/react";
 import { getAllPermissions, updateStaff } from "../../helpers";
 import { successToastMessage } from "../../helpers/toast";
@@ -115,7 +115,7 @@ const AddAdmin = () => {
           <div className="mt-10">
             <div className="mt-6 w-full relative">
               <div>
-                <label className="font-semibold">Team Lead</label>
+                <label className="font-semibold">Search staff</label>
                 <Input
                   label="text"
                   type="text"
@@ -127,7 +127,7 @@ const AddAdmin = () => {
                 />
                 <img
                   className="absolute bottom-[10px] left-2"
-                  // src={search}
+                  src={search}
                   alt=""
                 />
               </div>
