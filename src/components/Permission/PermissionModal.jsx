@@ -13,7 +13,7 @@ import ModalWrapper from "../../common/ModalWrapper";
 import EditP from "../../assets/EditP.svg";
 import {
   getAllPermissions,
-  updateStaff,
+  updateStaffPermission,
   createStaffPermission,
 } from "../../helpers";
 import { successToastMessage, errorToastMessage } from "../../helpers/toast";
@@ -23,6 +23,7 @@ const PermissionModal = () => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [checkedItems, setCheckedItems] = useState([]);
+
   const [checkedNewRoles, setCheckedNewRoles] = useState([]);
   const [permissions, setPermission] = useState([]);
   const [newPermissionName, setNewPermissionName] = useState("");
@@ -40,6 +41,7 @@ const PermissionModal = () => {
     { id: 3, label: "Delete" },
     { id: 4, label: "Create" },
   ];
+
   useEffect(() => {
     getAllPermissions()
       .then((data) => {
@@ -65,15 +67,18 @@ const PermissionModal = () => {
 
   const handleChange = (event, permissionId) => {
     const { name, checked } = event.target;
+
     setCheckedItems((prev) => {
       const permissionIndex = prev.findIndex(
         (permission) => permission.id === permissionId
       );
+
       const permission = prev[permissionIndex];
       const newCheckedRoles = {
         ...permission.checkedRoles,
         [name]: checked,
       };
+      console.log(newCheckedRoles);
       return [
         ...prev.slice(0, permissionIndex),
         {
@@ -85,10 +90,46 @@ const PermissionModal = () => {
     });
   };
 
+  const convertData = (data) => {
+    const newData = [];
+
+    data.forEach((item) => {
+      const roles = [];
+
+      Object.keys(item.checkedRoles).forEach((key) => {
+        if (item.checkedRoles[key]) {
+          roles.push(key);
+        }
+      });
+
+      newData.push({
+        id: item.id,
+        roles,
+      });
+    });
+
+    return newData;
+  };
+
   const handleSave = (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(checkedItems);
+    let updatePermissionData = convertData(checkedItems);
+    console.log(updatePermissionData);
+    updatePermissionData.forEach((data) => {
+      updateStaffPermission(data.id, JSON.stringify({ roles: data.roles }))
+        .then((data) => {
+          onClose();
+          setLoading(false);
+          setRefresh(!refresh);
+          successToastMessage(toast, "Permission updated successfully");
+        })
+        .catch((err) => {
+          setLoading(false);
+          errorToastMessage(toast, err.message);
+          onClose();
+        });
+    });
   };
 
   const handleCreateChange = (e) => {
@@ -121,6 +162,7 @@ const PermissionModal = () => {
       .then((data) => {
         onClose();
         setLoading(false);
+        setRefresh(!refresh);
         successToastMessage(toast, "Permission created successfully");
       })
       .catch((err) => {
@@ -157,7 +199,7 @@ const PermissionModal = () => {
             <Accordion allowToggle>
               {permissions &&
                 permissions?.map((permission) => (
-                  <AccordionItem className="mt-2">
+                  <AccordionItem key={permission._id} className="mt-2">
                     <h2>
                       <AccordionButton bg="#F7F7F7">
                         <Box as="span" flex="1" textAlign="left">
@@ -180,14 +222,15 @@ const PermissionModal = () => {
                               type="checkbox"
                               name={item.label}
                               className="form-checkbox accent-primary h-5 w-5 text-gray-600 transition duration-150 ease-in-out"
-                              checked={checkedItems
-                                .find(
-                                  (permission) =>
-                                    permission._id === permission._id
-                                )
-                                ?.roles?.includes(item.label)}
                               onChange={(e) =>
                                 handleChange(e, permission._id, item.label)
+                              }
+                              checked={
+                                checkedItems.find(
+                                  (checkedItem) =>
+                                    checkedItem.id === permission._id &&
+                                    checkedItem.checkedRoles[item.label]
+                                ) || false
                               }
                             />
                           </label>
