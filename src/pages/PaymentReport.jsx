@@ -303,7 +303,7 @@ const PaymentReport = () => {
       )}
       {error && (
         <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
-          {error}There is an error in the server. pls check back later...
+          There is an error in the server. pls check back later...
         </div>
       )}
       <Pagination

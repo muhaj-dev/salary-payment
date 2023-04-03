@@ -8,6 +8,7 @@ import { useAuth } from "../components/API/AuthContext";
 import TeamMang from "../pages/TeamMang";
 import PaymentReport from "../pages/PaymentReport";
 import TaxReport from "../pages/TaxReport";
+import ChangePassword from "../pages/ChangePassword";
 
 const Protected = () => {
   const { isAuthenticated } = useAuth();
@@ -23,7 +24,6 @@ const Protected = () => {
 
   useEffect(() => {
     checkUserToken();
-  
   }, []);
 
   const userDetails = localStorage.getItem("user_details");
@@ -35,10 +35,14 @@ const Protected = () => {
         {isAuthenticated ? (
           <Routes>
             {!user.permission ? (
-              <Route path="/dashboard" element={<StaffDashboard />} />
+              <>
+                <Route path="/dashboard" element={<StaffDashboard />} />
+                <Route path="/reset-password" element={<ChangePassword />} />
+              </>
             ) : (
               <>
                 <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route path="/reset-password" element={<ChangePassword />} />
                 <Route path="/management/staffs" element={<Managment />} />
                 <Route path="/management/teams" element={<TeamMang />} />
                 <Route path="/payment/report" element={<PaymentReport />} />

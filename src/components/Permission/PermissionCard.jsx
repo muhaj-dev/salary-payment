@@ -13,7 +13,7 @@ const PermissionCard = () => {
 
   return (
     <div className="w-full  bg-white rounded-[10px] p-6">
-    {pending && <div className="italic text-center mb-3">Pls wait...</div>}
+    {pending && <div className="italic text-center mb-3">Please wait...</div>}
     {error && <div className="italic text-center mb-3">Internal server error</div>}
       <div className="flex justify-around gap-y-3 flex-wrap ">
         <div className="rounded-lg p-5 shadow-card w-[200px] laptop:w-[30%]">
