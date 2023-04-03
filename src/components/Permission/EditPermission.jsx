@@ -3,7 +3,7 @@ import { useDisclosure, Input, Select, useToast } from "@chakra-ui/react";
 import ModalWrapper from "../../common/ModalWrapper";
 import Edit from "../../assets/Edit.svg";
 import { getAllPermissions, updateStaff } from "../../helpers";
-import { successToastMessage } from "../../helpers/toast";
+import { successToastMessage, errorToastMessage } from "../../helpers/toast";
 import { useAuth } from "../API/AuthContext";
 const EditPermission = ({ audit, permissionId, userId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -32,14 +32,15 @@ const EditPermission = ({ audit, permissionId, userId }) => {
       updateStaff(userId, formData)
         .then((data) => {
           setRefresh(!refresh);
+
           setLoading(false);
           onClose();
           successToastMessage(toast, "Permission updated successfully");
-          console.log(data);
         })
         .catch((err) => {
           setLoading(false);
-          console.log(err);
+          onClose();
+          errorToastMessage(toast, err.message);
         });
     }
   };
