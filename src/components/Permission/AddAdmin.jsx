@@ -6,30 +6,53 @@ import { useDisclosure, Input, Select, useToast } from "@chakra-ui/react";
 import { getAllPermissions, updateStaff } from "../../helpers";
 import { successToastMessage } from "../../helpers/toast";
 import { useAuth } from "../API/AuthContext";
-
-const staff = [
-  {
-    id: 1,
-    img: user,
-    name: "Moses Samule",
-    email: "samuel.lorchain@gmail.com",
-    position: "Product Design",
-  },
-  {
-    id: 2,
-    img: user,
-    name: "Moses Samule",
-    email: "samuel.lorchain@gmail.com",
-    position: "Product Design",
-  },
-];
+import useFetch from "../API/useFetch";
+import profile from "../../assets/profile.png";
 
 const AddAdmin = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [permission, setPermission] = useState([]);
   const [selectedPermission, setSelectedPermission] = useState("");
   const { loading, setLoading, setRefresh, refresh } = useAuth();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+
+  const [selectedLead, setSelectedLead] = useState(null);
+  const [searchLead, setSearchLead] = useState("");
+
+  const [selectedUser, setSelectedUser] = useState(null);
+
   const toast = useToast();
+
+  const { data, pending, error } = useFetch(
+    `${process.env.REACT_APP_LORCHAIN_API}/users`
+  );
+
+  const handleSearch = (event) => {
+    const value = event.target.value.toLowerCase();
+    setSearchTerm(value);
+    const results = data?.filter((post) =>
+      post.full_name.toLowerCase().includes(value)
+    );
+    setFilteredData(results);
+  };
+
+  let list = data;
+  if (searchTerm) {
+    list = filteredData;
+  }
+
+  const handleSelectLead = (leadId) => {
+    setSelectedLead(leadId);
+  };
+
+  const handleSearchLead = (event) => {
+    setSearchLead(event.target.value);
+  };
+
+  const filteredLeads = list?.filter((lead) =>
+    lead.full_name.toLowerCase().includes(searchLead.toLowerCase())
+  );
 
   useEffect(() => {
     getAllPermissions()
@@ -45,6 +68,8 @@ const AddAdmin = () => {
   const handleSave = (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log(selectedLead);
+    console.log(selectedLead[0]);
     // if (selectedPermission !== permissionId) {
     //   console.log(selectedPermission);
     //   console.log(userId);
@@ -88,33 +113,78 @@ const AddAdmin = () => {
           </div>
 
           <div className="mt-10">
-            <label className="font-semibold text-18px">Search Staff</label>
-
-            <div className="">
-              <input
-                placeholder="Search"
-                type="text"
-                // value="search"
-                // onChange={onChange}
-                className="border-[1.5px] pl-8 w-full text-[16px] border-[black] outline-[1.5px] outline-primary px-3 py-2 mt-1 rounded-md"
-              />
-              <ImSearch className="relative -top-7 left-3 text-[#B9BBBE] " />
-            </div>
-            <div className="mt-5 h-[150px] overflow-y-scroll">
-              {staff?.map((list) => (
-                <div key={list.id} className="flex justify-between mb-3">
-                  <div className="flex gap-3 mb-3">
-                    <img className="w-[40px] h-[40px]" src={list.img} alt="" />
-                    <div>
-                      <p className="font-semibold mt-1">{list.name}</p>
-                      <div className="flex gap-2">
-                        <p className="-mt-2">{list.email}</p>
-                        <p className="-mt-2">{list.position}</p>
+            <div className="mt-6 w-full relative">
+              <div>
+                <label className="font-semibold">Team Lead</label>
+                <Input
+                  label="text"
+                  type="text"
+                  id="search-box"
+                  onChange={handleSearchLead}
+                  placeholder="Search Lead"
+                  mt={1}
+                  pl={8}
+                />
+                <img
+                  className="absolute bottom-[10px] left-2"
+                  // src={search}
+                  alt=""
+                />
+              </div>
+              {selectedLead && (
+                <div className="border-b-2 border-primary mt-4">
+                  <div className="flex justify-between mb-3">
+                    <div className="flex gap-3 mb-3">
+                      <img
+                        className="w-[40px] h-[40px] rounded-full"
+                        src={selectedLead[3]}
+                        alt=""
+                      />
+                      <div className="">
+                        <p className="font-semibold mt- text-start">
+                          {selectedLead[1]}
+                        </p>
+                        <p className="-mt-2 text-start">{selectedLead[2]}</p>
                       </div>
                     </div>
                   </div>
                 </div>
-              ))}
+              )}
+              <ul className="mt-6 h-[150px] overflow-y-scroll">
+                {filteredLeads?.map((user) => (
+                  <li key={user._id} className="flex gap-3 items-center">
+                    <div
+                      onClick={() =>
+                        handleSelectLead([
+                          user._id,
+                          user.full_name,
+                          user.email,
+                          user.image.url,
+                        ])
+                      }
+                      className="flex cursor-pointer justify-between mb-3"
+                    >
+                      <div className="flex gap-3 mb-3">
+                        <img
+                          className="w-[40px] h-[40px] rounded-full"
+                          src={
+                            user.image?.url === undefined
+                              ? profile
+                              : user.image?.url
+                          }
+                          alt=""
+                        />
+                        <div className="">
+                          <p className="font-semibold mt- text-start">
+                            {user.full_name}
+                          </p>
+                          <p className="-mt-2 text-start">{user.email}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div className="mt-6 w-full">
               <label className="font-semibold text-18px">

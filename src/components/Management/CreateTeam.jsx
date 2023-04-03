@@ -222,7 +222,7 @@ const CreateTeam = () => {
                 </div>
               </div>
             )}
-            <ul className="mt-6">
+            <ul className="mt-6  h-[150px] overflow-y-scroll">
               {filteredLeads?.map((user) => (
                 <li key={user._id} className="flex gap-3 items-center">
                   <div

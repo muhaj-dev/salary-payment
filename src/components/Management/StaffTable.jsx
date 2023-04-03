@@ -11,16 +11,16 @@ import {
   Thead,
   Tbody,
   Tr,
-  Th,
+
   Td,
   TableContainer,
   Checkbox,
 } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import download from "../../assets/download.svg";
-import Edit from "../../assets/Edit.svg";
-import Iicon from "../../assets/Iicon.svg";
 import EditStaff from "./EditStaff";
+import profile from '../../assets/profile.png'
+
 
 const table = [
   {
@@ -125,7 +125,7 @@ const StaffTable = ({ currentPosts }) => {
                 <Td display={"flex"} gap={2} alignItems="center">
                   <img
                     className="h-[40px] rounded-full w-[40px]"
-                    src={item?.image?.url}
+                    src={item?.image?.url === undefined ? profile : item?.image?.url}
                     alt=""
                   />
                   <div>

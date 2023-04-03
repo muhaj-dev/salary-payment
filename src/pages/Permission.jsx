@@ -5,68 +5,6 @@ import Pagination from "../common/Pagination";
 import PermissionTable from "../components/Permission/PermissionTable";
 import useFetch from "../components/API/useFetch";
 
-const body = [
-  {
-    id: 1,
-    name: "Daniel Moses",
-    permission: "HR Permissions",
-    audit: "Jan 21, 2:19pm",
-  },
-  {
-    id: 2,
-    name: "Daniel Moses",
-    permission: "HR Permissions",
-    audit: "Jan 21, 2:19pm",
-  },
-  {
-    id: 3,
-    name: "Daniel Moses",
-    permission: "HR Permissions",
-    audit: "Jan 21, 2:19pm",
-  },
-  {
-    id: 4,
-    name: "Daniel Moses",
-    permission: "HR Permissions",
-    audit: "Jan 21, 2:19pm",
-  },
-  {
-    id: 5,
-    name: "Daniel Moses",
-    permission: "HR Permissions",
-    audit: "Jan 21, 2:19pm",
-  },
-  {
-    id: 6,
-    name: "Daniel Moses",
-    permission: "HR Permissions",
-    audit: "Jan 21, 2:19pm",
-  },
-  {
-    id: 7,
-    name: "Daniel Moses",
-    permission: "HR Permissions",
-    audit: "Jan 21, 2:19pm",
-  },
-  {
-    id: 8,
-    name: "Daniel Moses",
-    permission: "HR Permissions",
-    audit: "Jan 21, 2:19pm",
-  },
-  {
-    id: 9,
-    name: "Daniel Moses",
-    permission: "HR Permissions",
-    audit: "Jan 21, 2:19pm",
-  },
-  {
-    id: 10,
-    name: "Daniel Moses",
-    permission: "HR Permissions",
-    audit: "Jan 21, 2:19pm",
-  },
-];
 
 const Permission = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -78,7 +16,6 @@ const Permission = () => {
   );
 
   // Get current posts
-  // const list = data;
   const list = data?.filter(item => item.permission !== null);
 
   const indexOfLastPost = currentPage * postsPerPage;
