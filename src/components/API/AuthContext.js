@@ -102,8 +102,13 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("lorchaintoken");
+    navigate("/login");
+  };
   const contextValue = {
     user,
+    logout,
     setUser,
     login,
     isAuthenticated,

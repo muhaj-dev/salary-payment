@@ -4,18 +4,18 @@ import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 
 import { IoIosArrowDown } from "react-icons/io";
 import Plogo from "../../assets/Plogo.png";
+import { useAuth } from "../API/AuthContext";
+
 
 const StaffNav = () => {
+  const { logout } = useAuth();
+
   const navigate = useNavigate();
+  
 
   const userDetails = localStorage.getItem("user_details");
   const user = JSON.parse(userDetails);
 
-
-  const logout = () => {
-    localStorage.clear();
-    navigate("/login");
-  };
 
   const home = () => {
     navigate("/user/dashboard");

@@ -13,26 +13,21 @@ import {
   DrawerCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-
 import { AiOutlineMenu } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
 import Plogo from "../assets/Plogo.png";
-import user from "../assets/user.png";
 import MobileNav from "./MobileNav";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "./API/AuthContext";
 
 const Navbar = () => {
+  const { logout } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
   const navigate = useNavigate();
 
   const userDetails = localStorage.getItem("user_details");
   const user = JSON.parse(userDetails);
-
-  const logout = () => {
-    localStorage.clear();
-    navigate("/login");
-  };
 
   const home = () => {
     navigate("/user/dashboard");
