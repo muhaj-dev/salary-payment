@@ -18,6 +18,8 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import download from "../../assets/download.svg";
 import Iicon from "../../assets/Iicon.svg";
 import EditPermission from "./EditPermission";
+import DeletePermission from "./DeletePermission";
+
 
 const table = [
   {
@@ -106,25 +108,12 @@ const PermissionTable = ({ currentPosts }) => {
                     </MenuButton>
                     <MenuList>
                       <MenuItem
-                        //   onClick={() => alert("Kagebunshin")}
                         fontWeight="semi-bold"
                         display="flex"
                         justifyContent={"space-between"}
                       >
-                        <div className="flex gap-2">
-                          <img src={Edit} alt="" />
-                          <span>Delete</span>
-                        </div>
-                        <img src={Iicon} alt="" />
-                      </MenuItem>
-                      <MenuItem
-                        //   onClick={() => alert("Kagebunshin")}
-                        fontWeight="semi-bold"
-                      >
-                        <div className="flex gap-2">
-                          <img src={download} alt="" />
-                          <span>Payment history</span>
-                        </div>
+                        
+                      <DeletePermission />
                       </MenuItem>
                     </MenuList>
                   </Menu>
