@@ -18,6 +18,24 @@ const getAllPermissions = () => {
   });
 };
 
+const getAllUsers = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let response = await fetch(`${appUrl}/users`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      let data = await response.json();
+      if (response.ok) resolve(data);
+      throw new Error(data.message);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 const updateStaff = (userId, formData) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -37,18 +55,18 @@ const updateStaff = (userId, formData) => {
   });
 };
 
-
 const revertStaffPermission = (userId, permissionId) => {
   return new Promise(async (resolve, reject) => {
     try {
       let response = await fetch(`${appUrl}/users/${userId}/${permissionId}`, {
-        method: "DELETE",
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       let data = await response.json();
       if (response.ok) resolve(data);
+      console.log(data);
       throw new Error(data.message);
     } catch (error) {
       reject(error);
@@ -76,7 +94,6 @@ const createStaffPermission = (formData) => {
     }
   });
 };
-
 
 const updateStaffPermission = (permissionId, formData) => {
   return new Promise(async (resolve, reject) => {
@@ -123,4 +140,5 @@ export {
   updateStaffPermission,
   deleteStaffPermission,
   revertStaffPermission,
+  getAllUsers,
 };

@@ -20,7 +20,6 @@ import Iicon from "../../assets/Iicon.svg";
 import EditPermission from "./EditPermission";
 import DeletePermission from "./DeletePermission";
 
-
 const table = [
   {
     id: 1,
@@ -112,8 +111,10 @@ const PermissionTable = ({ currentPosts }) => {
                         display="flex"
                         justifyContent={"space-between"}
                       >
-                        
-                      <DeletePermission />
+                        <DeletePermission
+                          userId={item._id}
+                          permissionId={item.permission._id}
+                        />
                       </MenuItem>
                     </MenuList>
                   </Menu>
