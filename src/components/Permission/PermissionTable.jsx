@@ -82,16 +82,16 @@ const PermissionTable = ({ currentPosts }) => {
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td>{ item.full_name}</Td>
+                <Td>{item.full_name}</Td>
                 <Td>
-                  <p>{item.permission} </p>
+                  <p>{item.permission.name} </p>
                 </Td>
                 <Td>
                   <span className="flex gap-2 bg-[#F7F7F7] w-fit rounded-md">
                     <EditPermission
                       audit={item.audit}
                       userId={item._id}
-                      permissionId={item.permission}
+                      permissionId={item.permission._id}
                     />
                   </span>
                 </Td>
