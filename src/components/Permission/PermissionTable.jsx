@@ -113,7 +113,7 @@ const PermissionTable = ({ currentPosts }) => {
                       >
                         <div className="flex gap-2">
                           <img src={Edit} alt="" />
-                          <span>Edit</span>
+                          <span>Delete</span>
                         </div>
                         <img src={Iicon} alt="" />
                       </MenuItem>

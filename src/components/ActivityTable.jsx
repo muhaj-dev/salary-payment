@@ -48,8 +48,9 @@ const ActivityTable = ({ currentPosts }) => {
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
   return (
     <div>
+      
       <TableContainer>
-        <Table variant="simple">
+        <Table variant="simple" id="table-to-pdf" w={'100%'}>
           <Thead>
             <Tr className="font-[500] text-[18px]">
               <Td>
@@ -66,7 +67,7 @@ const ActivityTable = ({ currentPosts }) => {
               </Td>
               {table?.map((item) => (
                 <Td  key={item.id}>
-                  <span className="flex gap-2  items-center">
+                  <span className="flex gap-2 text-[14px]  items-center">
                   {item.head}
                   {item.img === arrowDown ? <img src={item?.img} alt="" /> : ""}
                   </span>
@@ -91,16 +92,16 @@ const ActivityTable = ({ currentPosts }) => {
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td>{item.user._id}</Td>
+                <Td className=" text-[14px] ">{item.user._id}</Td>
                 <Td>
-                  <p className="font-semibold text-[16px] mb-2">
+                  <p className="font-semibold text-[14px] mb-1">
                     {item?.user?.full_name}
                   </p>
                   <div className="flex gap-2">
                     {/* <a href={`mailto:${item.user.email}`}>{item.user.email}</a> */}
                     <Link
                       to="#"
-                      className="underline"
+                      className="underline  text-[14px] "
                       onClick={(e) => {
                         window.location.href = `mailto:${item.user.email}`;
                         e.preventDefault();
@@ -108,11 +109,11 @@ const ActivityTable = ({ currentPosts }) => {
                     >
                       {item.user.email}
                     </Link>
-                    <p> - {item.permission === null ? "Staff" : "Admin"}</p>
+                    <p className=" text-[14px] "> - {item.permission === null ? "Staff" : "Admin"}</p>
                   </div>
                 </Td>
-                <Td>{formatDate(item.time)} </Td>
-                <Td>{item.action}</Td>
+                <Td className=" text-[14px] ">{formatDate(item.time)} </Td>
+                <Td className=" text-[14px] ">{item.action}</Td>
               </Tr>
             ))}
           </Tbody>

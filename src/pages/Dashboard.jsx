@@ -4,6 +4,10 @@ import ActivityTable from "../components/ActivityTable";
 import PageHoc from "../components/PageHoc";
 import Pagination from "../common/Pagination";
 import useFetch from "../components/API/useFetch";
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
+import * as FileSaver from 'file-saver';
+
 
 const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,6 +22,47 @@ const Dashboard = () => {
     `${process.env.REACT_APP_LORCHAIN_API}/activities`
   );
 
+
+  // Download table in PDF
+  // const handleDownloadPDF = () => {
+  //   const input = document.getElementById('table-to-pdf');
+  //   html2canvas(input)
+  //     .then((canvas) => {
+  //       const imgData = canvas.toDataURL('image/png');
+  //       const pdf = new jsPDF({
+  //         orientation: 'landscape',
+  //         unit: 'in',
+  //         format: [11, 8.5]
+  //       });
+  //       pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+  //       pdf.save('table.pdf');
+  //     })
+  // };
+
+  const handleDownloadPDF = () => {
+    const input = document.getElementById('table-to-pdf');
+    html2canvas(input, { scale: 0.8 })
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'pt', [canvas.width, canvas.height]);
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.save('table.pdf');
+      })
+  };
+  
+  
+  // const handleDownloadPDF = () => {
+  //   const input = document.getElementById('table-to-pdf');
+  //   html2canvas(input)
+  //     .then((canvas) => {
+  //       const imgData = canvas.toDataURL('image/png');
+  //       const pdf = new jsPDF('p', 'pt', [canvas.width, canvas.height]);
+  //       pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+  //       pdf.save('table.pdf');
+  //     })
+  // };
+  
+  
   // Get current posts
 
   const handleSearch = (event) => {
@@ -85,6 +130,7 @@ const Dashboard = () => {
         setSelectedDate={setSelectedDate}
         isCalendar={isCalendar}
         setIsCalendar={setIsCalendar}
+        handleDownloadPDF={handleDownloadPDF}
       />
 
       <br />

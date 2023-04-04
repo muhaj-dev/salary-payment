@@ -5,6 +5,8 @@ import Pagination from "../common/Pagination";
 import PaymentTable from "../components/Report/PaymentTable";
 import useFetch from "../components/API/useFetch";
 import RepoLog from "../components/Report/RepoLog";
+import * as FileSaver from 'file-saver';
+import html2canvas from 'html2canvas';
 
 const body = [
   {
@@ -241,6 +243,18 @@ const PaymentReport = () => {
     `${process.env.REACT_APP_LORCHAIN_API}/records`,
 
   );
+
+  const handleDownloadPDF = () => {
+    const input = document.getElementById('table-to-pdf');
+    html2canvas(input)
+      .then((canvas) => {
+        const pdf = canvas.toDataURL('image/png');
+        const blob = new Blob([pdf], { type: 'application/pdf' });
+        FileSaver.saveAs(blob, 'Activity log.pdf');
+        console.log(blob)
+      });
+  };
+  
 
   // Get current posts
 

@@ -19,6 +19,7 @@ const ActivityLog = ({
   handleDateClick,
   setIsCalendar,
   isCalendar,
+  handleDownloadPDF,
 }) => {
   return (
     <div className="flex gap-4 flex-wrap justify-between relative">
@@ -26,7 +27,7 @@ const ActivityLog = ({
         <p className="font-[500] text-[20px] laptop:text-[25px]">
           Activity log
         </p>
-        <p className="">View and download activity log</p>
+        <p className="">View and <span className="underline cursor-pointer" onClick={handleDownloadPDF}>download</span> activity log</p>
       </div>
       <div className="flex gap-2 flex-wrap">
         <div className="">
