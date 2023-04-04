@@ -122,19 +122,15 @@ const PermissionModal = () => {
       updateStaffPermission(data.id, JSON.stringify({ roles: data.roles }))
         .then((data) => {
           isUpdated = true;
+          setLoading(false);
+          setRefresh(!refresh);
+          successToastMessage(toast, "Permission updated successfully");
         })
         .catch((err) => {
-          errorMsg = err.message;
+          setLoading(false);
+          errorToastMessage(toast, err.message);
         });
     });
-    if (isUpdated) {
-      setLoading(false);
-      setRefresh(!refresh);
-      successToastMessage(toast, "Permission updated successfully");
-    } else {
-      setLoading(false);
-      errorToastMessage(toast, errorMsg);
-    }
     onClose();
   };
 
