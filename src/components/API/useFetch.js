@@ -19,7 +19,6 @@ const useFetch = (url) => {
   useEffect(() => {
     fetch(url, options)
       .then((res) => {
-        // console.log(res);
         if (!res.ok) {
           throw Error("could not fetch");
         }
@@ -27,20 +26,17 @@ const useFetch = (url) => {
       })
       .then((data) => {
         setData(data);
-        setRefresh(!refresh);
         setPending(false);
         setError(null);
-        // console.log(data);
       })
       .catch((err) => {
-        // console.log(err.message);
         setPending(false);
-
+        
         setError(err.message);
       });
-  }, [url, refresh]);
-
-  return { data, pending, error };
-};
+    }, [url, refresh]);
+    
+    return { data, pending, error };
+  };
 
 export default useFetch;
