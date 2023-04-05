@@ -21,13 +21,14 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "./API/AuthContext";
 
 const Navbar = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
   const navigate = useNavigate();
 
-  const userDetails = localStorage.getItem("user_details");
-  const user = JSON.parse(userDetails);
+  // const userDetails = localStorage.getItem("user_details");
+  // const user = JSON.parse(userDetails);
+  console.log(user)
 
   const home = () => {
     navigate("/user/dashboard");

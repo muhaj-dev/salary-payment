@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../API/useFetch";
+import { useAuth } from "../API/AuthContext";
 
 const calculateDuration = (startDate, endDate) => {
   const diffInMs = new Date(endDate) - new Date(startDate);
@@ -19,8 +20,9 @@ const calculateDuration = (startDate, endDate) => {
 };
 
 const UserCard = () => {
-  const userDetails = localStorage.getItem("user_details");
-  const user = JSON.parse(userDetails);
+  const { user } = useAuth()
+  // const userDetails = localStorage.getItem("user_details");
+  // const user = JSON.parse(userDetails);
 
   const { data, pending, error } = useFetch(
     `${process.env.REACT_APP_LORCHAIN_API}/records/user/${user._id}`,

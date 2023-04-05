@@ -18,6 +18,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const IsLoggedIn = localStorage.getItem("lorchaintoken");
+    localStorage.getItem('user_details')
     if (IsLoggedIn) {
       setIsAuthenticated(true);
     } else {
@@ -26,6 +27,8 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
+  return new Promise(async (resolve, reject) => {
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_LORCHAIN_API}/users/login`,
@@ -43,6 +46,7 @@ const AuthProvider = ({ children }) => {
 
         const user = JSON.stringify(data);
         localStorage.setItem("user_details", user);
+        
         setUser(data);
         setIsAuthenticated(true);
         setLoading(true);
@@ -75,9 +79,9 @@ const AuthProvider = ({ children }) => {
 
           navigate("/dashboard");
         }
-      } else {
+      }  else {
         setIsAuthenticated(false);
-
+        resolve(data);
         toast({
           position: "top-right",
           render: () => (
@@ -90,17 +94,25 @@ const AuthProvider = ({ children }) => {
               rounded={"md"}
             >
               <BsCheckCircleFill className="text-white " />
-              Incorrect Email or password
+              {data.error}
             </Flex>
           ),
         });
         setLoading(false);
+        console.log(data.error)
+        // throw new Error(data.message);
       }
     } catch (error) {
+      setLoading(false);
+      reject(error);
+
+      console.error(error.message);
       console.error(error);
       throw error;
     }
-  };
+  })
+}
+
 
   const logout = () => {
     localStorage.removeItem("lorchaintoken");

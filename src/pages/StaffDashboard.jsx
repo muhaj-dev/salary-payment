@@ -4,86 +4,16 @@ import Pagination from "../common/Pagination";
 import StaffLog from "../components/Staff/StaffLog";
 import StaffTable from "../components/Staff/StaffTable";
 import useFetch from "../components/API/useFetch";
-
-// const body = [
-//   {
-//     id: 1,
-//     paymentID: "10233233",
-//     salary: "$800.00",
-//     date: "Saturday, 11 March",
-//     note: "You did great",
-//   },
-//   {
-//     id: 2,
-//     paymentID: "1023344",
-//     salary: "$800.00",
-//     date: "Saturday, 11 March",
-//     note: "You did great",
-//   },
-//   {
-//     id: 3,
-//     paymentID: "10233233",
-//     salary: "$800.00",
-//     date: "Saturday, 11 March",
-//     note: "You did great",
-//   },
-//   {
-//     id: 4,
-//     paymentID: "1023344",
-//     salary: "$800.00",
-//     date: "Saturday, 11 March",
-//     note: "You did great",
-//   },
-//   {
-//     id: 5,
-//     paymentID: "10233233",
-//     salary: "$800.00",
-//     date: "Saturday, 11 March",
-//     note: "You did great",
-//   },
-//   {
-//     id: 6,
-//     paymentID: "1023344",
-//     salary: "$800.00",
-//     date: "Saturday, 11 March",
-//     note: "You did great",
-//   },
-//   {
-//     id: 7,
-//     paymentID: "10233233",
-//     salary: "$800.00",
-//     date: "Saturday, 11 March",
-//     note: "You did great",
-//   },
-//   {
-//     id: 8,
-//     paymentID: "1023344",
-//     salary: "$800.00",
-//     date: "Saturday, 11 March",
-//     note: "You did great",
-//   },
-//   {
-//     id: 9,
-//     paymentID: "10233233",
-//     salary: "$800.00",
-//     date: "Saturday, 11 March",
-//     note: "You did great",
-//   },
-//   {
-//     id: 10,
-//     paymentID: "1023344",
-//     salary: "$800.00",
-//     date: "Saturday, 11 March",
-//     note: "You did great",
-//   },
-// ];
+import { useAuth } from "../components/API/AuthContext";
 
 const StaffDashboard = () => {
+  const {  user } = useAuth();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
 
-  const userDetails = localStorage.getItem("user_details");
-  const user = JSON.parse(userDetails);
+  // const userDetails = localStorage.getItem("user_details");
+  // const user = JSON.parse(userDetails);
 
   const { data, pending, error } = useFetch(
     `${process.env.REACT_APP_LORCHAIN_API}/records/user/${user._id}`,

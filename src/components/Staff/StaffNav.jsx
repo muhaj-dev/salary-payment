@@ -8,13 +8,13 @@ import { useAuth } from "../API/AuthContext";
 
 
 const StaffNav = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
   const navigate = useNavigate();
   
 
-  const userDetails = localStorage.getItem("user_details");
-  const user = JSON.parse(userDetails);
+  // const userDetails = localStorage.getItem("user_details");
+  // const user = JSON.parse(userDetails);
 
 
   const home = () => {

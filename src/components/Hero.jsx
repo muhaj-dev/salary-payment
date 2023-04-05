@@ -1,11 +1,10 @@
 import React from "react";
+import { useAuth } from "./API/AuthContext";
 
 const Hero = () => {
+  const { user } = useAuth();
 
   
-  const userDetails = localStorage.getItem("user_details");
-  const user = JSON.parse(userDetails);
-
   return (
     <div className="bg-primary w-full">
       <div className="flex w-[90%] max-w-[1512px] mx-auto text-white justify-between pt-14 pb-20">
