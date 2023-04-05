@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Select } from "@chakra-ui/react";
-import calender from "../assets/calender.svg";
 import { ImSearch } from "react-icons/im";
 import { Input } from "@chakra-ui/react";
 import { CiCalendar } from 'react-icons/ci'

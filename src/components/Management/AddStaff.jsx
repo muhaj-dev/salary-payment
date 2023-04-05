@@ -21,7 +21,8 @@ import {
 import { useDisclosure } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import useFetch from "../API/useFetch";
-
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 const thumbsContainer = {
   positon: "relative",
@@ -86,17 +87,20 @@ const AddStaff = (props) => {
   const { setLoading } = useAuth();
   const toast = useToast();
 
+  const [file, setFile] = useState({});
+  const [date, setDate] = useState(new Date());
+  const [isCalendar, setIsCalendar] = useState(false);
+
   const { data, pending, error } = useFetch(
     `${process.env.REACT_APP_LORCHAIN_API}/teams`
   );
 
   //it should be an object not an array useState({})
-  const [file, setFile] = useState({});
+  const onChange = (date) => {
+    setDate(date);
+  };
 
-  const options = { day: "numeric", month: "short", year: "numeric" };
-  const currentDate = new Date().toLocaleDateString("en-US", options);
-
-  const dateStr = new Date(currentDate).toLocaleDateString("en-US", {
+  const formattedDate = date.toLocaleString("default", {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -111,7 +115,7 @@ const AddStaff = (props) => {
     salary: "",
     file: {},
     team: "",
-    state_date: dateStr,
+    state_date: date,
     job_role: "",
     address: "",
     wallet_address: "",
@@ -279,10 +283,31 @@ const AddStaff = (props) => {
               {thumbs}
             </aside>
           </section>
+        
+          <div className="relative">
+            {isCalendar &&
+            <>
+              <div className="right-10 top-28 laptop:top-12 z-50 shadow-xl absolute"></div>
+              <div
+                onClick={() => {
+                  setIsCalendar(false);
+                }}
+                className=" z-10 h-[100vh] w-[105vw] absolute -top-[34vh] right-0 -left-40"
+              />
+              <div className="absolute z-50 top-10 ">
+                <Calendar onChange={onChange} value={date} />
+              </div>
+              </>
 
-          <div className="flex items-center mt-10 gap-2 h-[38px] rounded-md font-semibold border-2 border-[#EEEEEE] p-3">
-            <img src={calender} alt="" />
-            <p>{dateStr}</p>
+            }
+            <div 
+             onClick={() => {
+              setIsCalendar(true);
+            }}
+            className="cursor-pointer flex items-center mt-10 gap-2 h-[38px] rounded-md font-semibold border-2 border-[#EEEEEE] p-3">
+              <img src={calender} alt="" />
+              <p>{formattedDate}</p>
+            </div>
           </div>
           <div className="flex gap-5 justify-between">
             <div className="w-full tablet:w-[48%]">
@@ -414,7 +439,7 @@ const AddStaff = (props) => {
                 <div className="flex flex-wrap gap-4 justify-between">
                   {data?.map((option) => (
                     <Box
-                    key={option._id}
+                      key={option._id}
                       w={{ base: "40%", md: "30%", lg: "30%" }}
                       className="shadow-md rounded-lg p-4"
                     >
