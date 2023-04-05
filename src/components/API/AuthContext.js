@@ -46,7 +46,6 @@ const AuthProvider = ({ children }) => {
 
         const user = JSON.stringify(data);
         localStorage.setItem("user_details", user);
-        
         setUser(data);
         setIsAuthenticated(true);
         setLoading(true);
