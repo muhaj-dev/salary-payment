@@ -5,232 +5,9 @@ import Pagination from "../common/Pagination";
 import PaymentTable from "../components/Report/PaymentTable";
 import useFetch from "../components/API/useFetch";
 import RepoLog from "../components/Report/RepoLog";
-import * as FileSaver from 'file-saver';
-import html2canvas from 'html2canvas';
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
-const body = [
-  {
-    id: 1,
-    user: "10233233",
-    name: "Moses Samuel",
-    status: "Paid",
-    wallet: "0x1725...5d8136",
-    role: "Product Designer",
-    total: "USD $5400.00",
-    dateStated: "Saturday, 11 March ",
-    salary: "USD $5800.00",
-  },
-  {
-    id: 2,
-    user: "1023344",
-    name: "Daniel Moses",
-    status: "Paid",
-    wallet: "0x1725...5d8136",
-    role: "Product Designer",
-    total: "USD $5400.00",
-    dateStated: "Saturday, 11 March ",
-    salary: "USD $5800.00",
-  },
-  {
-    id: 3,
-    user: "10233233",
-    name: "Daniel Moses",
-    status: "Paid",
-    wallet: "0x1725...5d8136",
-    role: "Product Designer",
-    total: "USD $5400.00",
-    dateStated: "Saturday, 11 March ",
-    salary: "USD $5800.00",
-  },
-  {
-    id: 4,
-    user: "1023344",
-    name: "Daniel Moses",
-    status: "Paid",
-    wallet: "0x1725...5d8136",
-    role: "Product Designer",
-    total: "USD $5400.00",
-    dateStated: "Saturday, 11 March ",
-    salary: "USD $5800.00",
-  },
-  {
-    id: 5,
-    user: "10233233",
-    name: "Daniel Moses",
-    status: "Paid",
-    wallet: "0x1725...5d8136",
-    role: "Product Designer",
-    total: "USD $5400.00",
-    dateStated: "Saturday, 11 March ",
-    salary: "USD $5800.00",
-  },
-  {
-    id: 6,
-    user: "1023344",
-    name: "Daniel Moses",
-    status: "Paid",
-    wallet: "0x1725...5d8136",
-    role: "Product Designer",
-    total: "USD $5400.00",
-    dateStated: "Saturday, 11 March ",
-    salary: "USD $5800.00",
-  },
-  {
-    id: 7,
-    user: "10233233",
-    name: "Daniel Moses",
-    status: "Paid",
-    wallet: "0x1725...5d8136",
-    role: "Product Designer",
-    total: "USD $5400.00",
-    dateStated: "Saturday, 11 March ",
-    salary: "USD $5800.00",
-  },
-  {
-    id: 8,
-    user: "1023344",
-    name: "Daniel Moses",
-    status: "Paid",
-    wallet: "0x1725...5d8136",
-    role: "Product Designer",
-    total: "USD $5400.00",
-    dateStated: "Saturday, 11 March ",
-    salary: "USD $5800.00",
-  },
-  {
-    id: 9,
-    user: "10233233",
-    name: "Daniel Moses",
-    status: "Paid",
-    wallet: "0x1725...5d8136",
-    role: "Product Designer",
-    total: "USD $5400.00",
-    dateStated: "Saturday, 11 March ",
-    salary: "USD $5800.00",
-  },
-  {
-    id: 10,
-    user: "1023344",
-    name: "Daniel Moses",
-    status: "Paid",
-    wallet: "0x1725...5d8136",
-    role: "Product Designer",
-    total: "USD $5400.00",
-    dateStated: "Saturday, 11 March ",
-    salary: "USD $5800.00",
-  },
-];
-
-const Teambody = [
-  {
-    id: 1,
-    user: "1029333",
-    staff: "Mosses Samuel",
-    role: "Product Designer",
-    taxPaid: "USD $40.00",
-    totalTax: "$400.00",
-    salary: "USD $5400.00",
-    status: "Paid",
-  },
-  {
-    id: 2,
-    user: "1029333",
-    staff: "Mosses Samuel",
-    role: "Product Designer",
-    taxPaid: "USD $40.00",
-    totalTax: "$400.00",
-    salary: "USD $5400.00",
-    status: "Paid",
-  },
-  {
-    id: 3,
-
-    user: "1029333",
-    staff: "Mosses Samuel",
-    role: "Product Designer",
-    taxPaid: "USD $40.00",
-    totalTax: "$400.00",
-    salary: "USD $5400.00",
-    status: "Paid",
-  },
-  {
-    id: 4,
-
-    user: "1029333",
-    staff: "Mosses Samuel",
-    role: "Product Designer",
-    taxPaid: "USD $40.00",
-    totalTax: "$400.00",
-    salary: "USD $5400.00",
-    status: "Paid",
-  },
-  {
-    id: 5,
-
-    user: "1029333",
-    staff: "Mosses Samuel",
-    role: "Product Designer",
-    taxPaid: "USD $40.00",
-    totalTax: "$400.00",
-    salary: "USD $5400.00",
-    status: "Paid",
-  },
-  {
-    id: 6,
-
-    user: "1029333",
-    staff: "Mosses Samuel",
-    role: "Product Designer",
-    taxPaid: "USD $40.00",
-    totalTax: "$400.00",
-    salary: "USD $5400.00",
-    status: "Paid",
-  },
-  {
-    id: 7,
-
-    user: "1029333",
-    staff: "Mosses Samuel",
-    role: "Product Designer",
-    taxPaid: "USD $40.00",
-    totalTax: "$400.00",
-    salary: "USD $5400.00",
-    status: "Paid",
-  },
-  {
-    id: 8,
-
-    user: "1029333",
-    staff: "Mosses Samuel",
-    role: "Product Designer",
-    taxPaid: "USD $40.00",
-    totalTax: "$400.00",
-    salary: "USD $5400.00",
-    status: "Paid",
-  },
-  {
-    id: 9,
-
-    user: "1029333",
-    staff: "Mosses Samuel",
-    role: "Product Designer",
-    taxPaid: "USD $40.00",
-    totalTax: "$400.00",
-    salary: "USD $5400.00",
-    status: "Paid",
-  },
-  {
-    id: 10,
-
-    user: "1029333",
-    staff: "Mosses Samuel",
-    role: "Product Designer",
-    taxPaid: "USD $40.00",
-    totalTax: "$400.00",
-    salary: "USD $5400.00",
-    status: "Paid",
-  },
-];
 
 const PaymentReport = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -244,17 +21,26 @@ const PaymentReport = () => {
 
   );
 
-  const handleDownloadPDF = () => {
-    const input = document.getElementById('table-to-pdf');
-    html2canvas(input)
-      .then((canvas) => {
-        const pdf = canvas.toDataURL('image/png');
-        const blob = new Blob([pdf], { type: 'application/pdf' });
-        FileSaver.saveAs(blob, 'Activity log.pdf');
-        console.log(blob)
-      });
+  const generatePDF = () => {
+    // Get the table element
+    const table = document.getElementById("payment-table");
+
+    // Use html2canvas to create a canvas from the table
+    html2canvas(table).then((canvas) => {
+      // Create a new PDF document
+      const doc = new jsPDF();
+
+      // Add the canvas to the PDF document
+      const imgData = canvas.toDataURL("image/png");
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 20;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(imgData, "PNG", 10, 10, pdfWidth, pdfHeight);
+
+      // Save the PDF document
+      doc.save("Payment.pdf");
+    });
   };
-  
 
   // Get current posts
 
@@ -286,7 +72,7 @@ const PaymentReport = () => {
 
   return (
     <div className="w-full bg-white rounded-[10px] p-6 mt-14">
-      <RepoLog searchTerm={searchTerm} handleSearch={handleSearch} placeholder={"Search with name"} />
+      <RepoLog generatePDF={generatePDF} searchTerm={searchTerm} handleSearch={handleSearch} placeholder={"Search with name"} />
       <br />
       <div className=" w-[97%] mx-auto flex gap-3 tablet:gap-4 items-center ">
         <p

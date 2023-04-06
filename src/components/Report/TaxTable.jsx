@@ -69,7 +69,7 @@ const TaxTable = ({ TeamcurrentPosts }) => {
   return (
     <div>
       <TableContainer>
-        <Table variant="simple">
+        <Table variant="simple" id='tax-table'>
           <Thead>
             <Tr className="font-[500] text-[18px]">
               <Td>
@@ -142,7 +142,7 @@ const TaxTable = ({ TeamcurrentPosts }) => {
                           </div>
                           <img src={Iicon} alt="" />
                         </MenuItem>
-                        <MenuItem
+                        {/* <MenuItem
                           //   onClick={() => alert("Kagebunshin")}
                           fontWeight="semi-bold"
                           
@@ -151,7 +151,7 @@ const TaxTable = ({ TeamcurrentPosts }) => {
                             <img src={download} alt="" />
                             <span>Payment history</span>
                           </div>
-                        </MenuItem>
+                        </MenuItem> */}
                       </MenuList>
                     </Menu>
                 </Td>

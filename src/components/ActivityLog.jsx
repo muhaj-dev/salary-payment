@@ -19,6 +19,8 @@ const ActivityLog = ({
   setIsCalendar,
   isCalendar,
   handleDownloadPDF,
+  generatePDF,
+  onButtonClick,
 }) => {
   return (
     <div className="flex gap-4 flex-wrap justify-between relative">
@@ -26,7 +28,7 @@ const ActivityLog = ({
         <p className="font-[500] text-[20px] laptop:text-[25px]">
           Activity log
         </p>
-        <p className="">View and <span className="underline cursor-pointer" onClick={handleDownloadPDF}>download</span> activity log</p>
+        <p className="">View and <button className="underline cursor-pointer" onClick={generatePDF}>download</button> activity log</p>
       </div>
       <div className="flex gap-2 flex-wrap">
         <div className="">
@@ -47,8 +49,8 @@ const ActivityLog = ({
             value={selectedUser}
             onChange={handleSelect}
           >
-            {allUsers.map((user) => (
-              <option key={user.value} value={user.value}>
+            {allUsers.map((user, index) => (
+              <option key={index} value={user.value}>
                 {user.label}
               </option>
             ))}
