@@ -105,17 +105,6 @@ const Dashboard = () => {
   const paginateFront = () => setCurrentPage(currentPage + 1);
   const paginateBack = () => setCurrentPage(currentPage - 1);
 
-  // const handlePageChange = (page) => {
-  //   setCurrentPage(page);
-  // };
-
-  // const onShowSizeChange = (current, pageSize) => {
-  //   console.log(current, pageSize);
-  // };
-
-  // const handlePageSizeChange = (current, size) => {
-  //   setItemsPerPage(size);
-  // };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
