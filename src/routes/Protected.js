@@ -11,7 +11,7 @@ import TaxReport from "../pages/TaxReport";
 import ChangePassword from "../pages/ChangePassword";
 
 const Protected = () => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [IsLoggedIn, setIsLoggedIn] = useState();
 
   const checkUserToken = () => {
@@ -26,8 +26,8 @@ const Protected = () => {
     checkUserToken();
   }, []);
 
-  // const userDetails = localStorage.getItem("user_details");
-  // const user = JSON.parse(userDetails);
+  const userDetails = localStorage.getItem("user_details");
+  const user = JSON.parse(userDetails);
 
   return (
     <div className="relative">

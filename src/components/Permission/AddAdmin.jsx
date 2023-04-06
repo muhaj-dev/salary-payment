@@ -70,14 +70,12 @@ const AddAdmin = () => {
     e.preventDefault();
     setLoading(true);
     let userId = selectedLead[0];
-    console.log(selectedPermission);
     let formData = new FormData();
     formData.append("permission", selectedPermission);
     updateStaff(userId, formData)
       .then((data) => {
         setRefresh(!refresh);
         setLoading(false);
-        console.log(data);
         onClose();
         successToastMessage(toast, "Permission updated successfully");
       })

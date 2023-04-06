@@ -66,7 +66,7 @@ const revertStaffPermission = (userId, permissionId) => {
       });
       let data = await response.json();
       if (response.ok) resolve(data);
-      console.log(data);
+      // console.log(data);
       throw new Error(data.message);
     } catch (error) {
       reject(error);

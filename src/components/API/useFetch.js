@@ -4,7 +4,7 @@ const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [pending, setPending] = useState(true);
   const [error, setError] = useState(null);
-  const { refresh, setRefresh } = useAuth();
+  // const { refresh, setRefresh } = useAuth();
   const userToken = localStorage.getItem("lorchaintoken");
 
   const headers = {
@@ -34,7 +34,7 @@ const useFetch = (url) => {
         
         setError(err.message);
       });
-    }, [url, refresh]);
+    }, [url]);
     
     return { data, pending, error };
   };

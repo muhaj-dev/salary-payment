@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ActivityLog from "../components/ActivityLog";
 import ActivityTable from "../components/ActivityTable";
 import PageHoc from "../components/PageHoc";
-import Pagination from "../common/Pagination";
+// import Pagination from "../common/Pagination";
 import useFetch from "../components/API/useFetch";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { Pagination } from "antd";
 
 const Dashboard = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(8);
+  // const [itemsPerPage, setItemsPerPage] = useState(10);
+  // const [displayedItems, setDisplayedItems] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [items, setItems] = useState([]);
+  const [displayedItems, setDisplayedItems] = useState([]);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
@@ -96,6 +105,32 @@ const Dashboard = () => {
   const paginateFront = () => setCurrentPage(currentPage + 1);
   const paginateBack = () => setCurrentPage(currentPage - 1);
 
+  // const handlePageChange = (page) => {
+  //   setCurrentPage(page);
+  // };
+
+  // const onShowSizeChange = (current, pageSize) => {
+  //   console.log(current, pageSize);
+  // };
+
+  // const handlePageSizeChange = (current, size) => {
+  //   setItemsPerPage(size);
+  // };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handlePageSizeChange = (current, size) => {
+    setItemsPerPage(size);
+  };
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setDisplayedItems(list?.slice(startIndex, endIndex));
+  }, [currentPage, itemsPerPage, list]);
+
   return (
     <div className="w-full bg-white rounded-[10px] p-6 mt-14">
       <ActivityLog
@@ -108,9 +143,7 @@ const Dashboard = () => {
         setSelectedDate={setSelectedDate}
         isCalendar={isCalendar}
         setIsCalendar={setIsCalendar}
-        // handleDownloadPDF={handleDownloadPDF}
         generatePDF={generatePDF}
-        // onButtonClick={onButtonClick}
       />
 
       <br />
@@ -126,14 +159,25 @@ const Dashboard = () => {
           There is an error in the server. pls check back later...
         </div>
       )}
+      <br />
+      <br />
       {!pending && (
+        // <Pagination
+        //   postsPerPage={postsPerPage}
+        //   totalPosts={list?.length}
+        //   currentPage={currentPage}
+        //   paginateBack={paginateBack}
+        //   paginateFront={paginateFront}
+        //   paginate={paginate}
+        // />
+
         <Pagination
-          postsPerPage={postsPerPage}
-          totalPosts={list?.length}
+          defaultCurrent={1}
           currentPage={currentPage}
-          paginateBack={paginateBack}
-          paginateFront={paginateFront}
-          paginate={paginate}
+          total={list?.length}
+          pageSize={itemsPerPage}
+          onShowSizeChange={handlePageSizeChange}
+          onChange={handlePageChange}
         />
       )}
     </div>

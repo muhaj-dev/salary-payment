@@ -149,7 +149,6 @@ const EditStaff = ({ item }) => {
           window.location.reload(false);
 
           //these is where u will handle any logic once it is successful
-          // console.log(data);
         })
         .catch((err) => {
           setLoading(false);

@@ -25,8 +25,8 @@ const EditPermission = ({ audit, permissionId, userId }) => {
     e.preventDefault();
     setLoading(true);
     if (selectedPermission !== permissionId) {
-      console.log(selectedPermission);
-      console.log(userId);
+      // console.log(selectedPermission);
+      // console.log(userId);
       let formData = new FormData();
       formData.append("permission", selectedPermission);
       updateStaff(userId, formData)

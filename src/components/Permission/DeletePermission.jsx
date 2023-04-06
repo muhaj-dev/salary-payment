@@ -12,7 +12,7 @@ const DeletePermission = ({ permissionId, userId }) => {
 
   const revertUserPermission = () => {
     setLoading(true);
-    console.log(userId, permissionId);
+    // console.log(userId, permissionId);
     revertStaffPermission(userId, permissionId)
       .then((data) => {
         setRefresh(!refresh);

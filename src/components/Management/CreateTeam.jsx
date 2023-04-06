@@ -90,7 +90,6 @@ const CreateTeam = () => {
       membersId,
       about,
     }
-    // console.log(team)
 
     let token = localStorage.getItem("lorchaintoken");
     fetch(`${process.env.REACT_APP_LORCHAIN_API}/teams`, {

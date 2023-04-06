@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useToast } from "@chakra-ui/react";
-import {IoMdArrowBack} from 'react-icons/io'
+import { IoMdArrowBack } from "react-icons/io";
 import { BsEyeSlashFill, BsEyeFill } from "react-icons/bs";
 import LoginHoc from "../components/LoginHoc";
 import { successToastMessage, errorToastMessage } from "../helpers/toast";
@@ -12,6 +12,9 @@ function ChangePassword() {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
+
+  const userDetails = localStorage.getItem("user_details");
+  const user = JSON.parse(userDetails);
 
   const formik = useFormik({
     initialValues: {
@@ -25,7 +28,7 @@ function ChangePassword() {
         .required("New password is required"),
     }),
     onSubmit: async (values, { setSubmitting, setFieldError }) => {
-      console.log(values);
+      // console.log(values);
       let token = localStorage.getItem("lorchaintoken");
 
       try {
@@ -57,10 +60,17 @@ function ChangePassword() {
   return (
     <div className=" px-3 m-auto w-full">
       <div className="w-full ">
-        {/* <Link className="text-primary flex gap-2 items-center" to='/'>
-          <IoMdArrowBack />
-        <span className="underline font-semibold">Back to dashboard</span>
-        </Link> */}
+        {user.permission ? (
+          <Link className="text-primary flex gap-2 items-center" to="/admin/dashboard">
+            <IoMdArrowBack />
+            <span className="underline font-semibold">Back to dashboard</span>
+          </Link>
+        ) : (
+          <Link className="text-primary flex gap-2 items-center" to="/dashboard">
+            <IoMdArrowBack />
+            <span className="underline font-semibold">Back to dashboard</span>
+          </Link>
+        )}
         <form onSubmit={formik.handleSubmit}>
           {formik.touched.oldPassword && formik.errors.oldPassword ? (
             <div className="text-red-600 italic font-semibold">

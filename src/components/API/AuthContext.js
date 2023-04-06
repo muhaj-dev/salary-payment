@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const IsLoggedIn = localStorage.getItem("lorchaintoken");
-    // localStorage.getItem('user_details')
+    localStorage.getItem('user_details')
     if (IsLoggedIn) {
       setIsAuthenticated(true);
     } else {
@@ -43,11 +43,9 @@ const AuthProvider = ({ children }) => {
       if (response.ok) {
         // setLoading(true)
         localStorage.setItem("lorchaintoken", data.token);
-        console.log(data)
-        console.log(data.token)
         const user = JSON.stringify(data);
         localStorage.setItem("user_details", user);
-        console.log(user)
+        
 
         setUser(data);
         setIsAuthenticated(true);

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import useFetch from "../API/useFetch";
-import { useAuth } from "../API/AuthContext";
 
 const calculateDuration = (startDate, endDate) => {
   const diffInMs = new Date(endDate) - new Date(startDate);
@@ -20,7 +19,6 @@ const calculateDuration = (startDate, endDate) => {
 };
 
 const UserCard = () => {
-  // const {  } = useAuth()
   const userDetails = localStorage.getItem("user_details");
   const user = JSON.parse(userDetails);
 

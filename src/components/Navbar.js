@@ -28,7 +28,6 @@ const Navbar = () => {
 
   const userDetails = localStorage.getItem("user_details");
   const user = JSON.parse(userDetails);
-  console.log(user)
 
   const home = () => {
     navigate("/user/dashboard");

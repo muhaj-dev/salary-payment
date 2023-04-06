@@ -171,8 +171,7 @@ const AddStaff = (props) => {
             ),
           });
           onClose();
-          //these is where u will handle any logic once it is successful
-          // console.log(data);
+         
         })
         .catch((err) => {
           setLoading(false);

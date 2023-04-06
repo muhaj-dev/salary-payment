@@ -78,7 +78,7 @@ const PermissionModal = () => {
         ...permission.checkedRoles,
         [name]: checked,
       };
-      console.log(newCheckedRoles);
+      // console.log(newCheckedRoles);
       return [
         ...prev.slice(0, permissionIndex),
         {

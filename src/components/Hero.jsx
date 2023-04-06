@@ -6,7 +6,6 @@ const Hero = () => {
 
   const userDetails = localStorage.getItem("user_details");
   const user = JSON.parse(userDetails);
-  console.log(user)
 
   return (
     <div className="bg-primary w-full">

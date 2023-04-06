@@ -74,9 +74,6 @@ const CreateReport = () => {
     const team = {
         salary,
         wallet,
-    //   lead,
-    //   members,
-    //   about,
     };
     // console.log(team)
 
