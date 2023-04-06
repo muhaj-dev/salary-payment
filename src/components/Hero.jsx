@@ -2,14 +2,17 @@ import React from "react";
 import { useAuth } from "./API/AuthContext";
 
 const Hero = () => {
-  const { user } = useAuth();
+  // const {  } = useAuth();
 
-  
+  const userDetails = localStorage.getItem("user_details");
+  const user = JSON.parse(userDetails);
+  console.log(user)
+
   return (
     <div className="bg-primary w-full">
       <div className="flex w-[90%] max-w-[1512px] mx-auto text-white justify-between pt-14 pb-20">
         <div>
-          <p className="text-[26px] laptop:text-[32px]">Hi, {user.full_name}</p>
+          <p className="text-[26px] laptop:text-[32px]">Hi, {user?.full_name}</p>
           <p className="text-[14px] laptop:text-[16px]">
             CFO - <span>Super admin</span>
           </p>

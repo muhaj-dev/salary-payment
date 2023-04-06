@@ -20,16 +20,16 @@ const calculateDuration = (startDate, endDate) => {
 };
 
 const UserCard = () => {
-  const { user } = useAuth()
-  // const userDetails = localStorage.getItem("user_details");
-  // const user = JSON.parse(userDetails);
+  // const {  } = useAuth()
+  const userDetails = localStorage.getItem("user_details");
+  const user = JSON.parse(userDetails);
 
   const { data, pending, error } = useFetch(
     `${process.env.REACT_APP_LORCHAIN_API}/records/user/${user._id}`,
 
   );
 
-  if (!data || data.length === 0) {
+  if (!data || data?.length === 0) {
     return (
       <div className="text-primary font-semibold text-[18px] itallic text-center">
         No salary data found.
@@ -37,13 +37,13 @@ const UserCard = () => {
     );
   }
 
-  const totalSalary = data.reduce((acc, obj) => {
+  const totalSalary = data?.reduce((acc, obj) => {
     return acc + obj.salary;
   }, 0);
 
-  const curr = data[0].salary;
+  const curr = data[0]?.salary;
 
-  const activeDuration = calculateDuration(user.start_date, new Date());
+  const activeDuration = calculateDuration(user?.start_date, new Date());
 
   return (
     <div className="w-full  bg-white rounded-[10px] p-6">

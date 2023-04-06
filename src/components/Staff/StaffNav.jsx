@@ -8,13 +8,13 @@ import { useAuth } from "../API/AuthContext";
 
 
 const StaffNav = () => {
-  const { logout, user } = useAuth();
+  const { logout } = useAuth();
 
   const navigate = useNavigate();
   
 
-  // const userDetails = localStorage.getItem("user_details");
-  // const user = JSON.parse(userDetails);
+  const userDetails = localStorage.getItem("user_details");
+  const user = JSON.parse(userDetails);
 
 
   const home = () => {
@@ -34,11 +34,11 @@ const StaffNav = () => {
             <div className="flex gap-3">
               <IoIosArrowDown className="w-[30px] h-[20px] absolute -right-6 top-2" />
               <div className="rounded-full border-2 overflow-hidden ">
-                <img className="h-[45px]" src={user.image.url} alt="logo" />
+                <img className="h-[45px]" src={user?.image?.url} alt="logo" />
               </div>
               <div className="text-left h-fit">
                 <p className="font-semibold">{user.full_name}</p>
-                <p className="text-[#B0B0B0] text-[14px]">{user.email}</p>
+                <p className="text-[#B0B0B0] text-[14px]">{user?.email}</p>
               </div>
             </div>
           </MenuButton>
