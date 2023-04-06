@@ -23,7 +23,7 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import useFetch from "../API/useFetch";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-
+import { updateTeam } from "../../helpers";
 const thumbsContainer = {
   positon: "relative",
   display: "flex",
@@ -138,6 +138,10 @@ const AddStaff = (props) => {
       formData.append("tax_rate", values.tax);
       formData.append("job_role", values.job_role);
       formData.append("address", values.address);
+      if (values.team) {
+        formData.append("team", values.team);
+      }
+      formData.append("state_date", values.state_date);
       formData.append("wallet_address", values.wallet_address);
       formData.append("phone_number", values.phone_number);
       //after changing the file to object not array change if from values.file[0] to values.file
@@ -152,7 +156,17 @@ const AddStaff = (props) => {
         body: formData,
       })
         .then((res) => res.json())
-        .then((data) => {
+        .then(async (data) => {
+          try {
+            if (data.team) {
+              await updateTeam(
+                data.team,
+                JSON.stringify({ membersId: [data._id] })
+              );
+            }
+          } catch (err) {
+            console.log(err);
+          }
           setLoading(false);
           toast({
             position: "top-right",
@@ -171,7 +185,6 @@ const AddStaff = (props) => {
             ),
           });
           onClose();
-         
         })
         .catch((err) => {
           setLoading(false);
@@ -282,28 +295,28 @@ const AddStaff = (props) => {
               {thumbs}
             </aside>
           </section>
-        
-          <div className="relative">
-            {isCalendar &&
-            <>
-              <div className="right-10 top-28 laptop:top-12 z-50 shadow-xl absolute"></div>
-              <div
-                onClick={() => {
-                  setIsCalendar(false);
-                }}
-                className=" z-10 h-[100vh] w-[105vw] absolute -top-[34vh] right-0 -left-40"
-              />
-              <div className="absolute z-50 top-10 ">
-                <Calendar onChange={onChange} value={date} />
-              </div>
-              </>
 
-            }
-            <div 
-             onClick={() => {
-              setIsCalendar(true);
-            }}
-            className="cursor-pointer flex items-center mt-10 gap-2 h-[38px] rounded-md font-semibold border-2 border-[#EEEEEE] p-3">
+          <div className="relative">
+            {isCalendar && (
+              <>
+                <div className="right-10 top-28 laptop:top-12 z-50 shadow-xl absolute"></div>
+                <div
+                  onClick={() => {
+                    setIsCalendar(false);
+                  }}
+                  className=" z-10 h-[100vh] w-[105vw] absolute -top-[34vh] right-0 -left-40"
+                />
+                <div className="absolute z-50 top-10 ">
+                  <Calendar onChange={onChange} value={date} />
+                </div>
+              </>
+            )}
+            <div
+              onClick={() => {
+                setIsCalendar(true);
+              }}
+              className="cursor-pointer flex items-center mt-10 gap-2 h-[38px] rounded-md font-semibold border-2 border-[#EEEEEE] p-3"
+            >
               <img src={calender} alt="" />
               <p>{formattedDate}</p>
             </div>
@@ -442,7 +455,7 @@ const AddStaff = (props) => {
                       w={{ base: "40%", md: "30%", lg: "30%" }}
                       className="shadow-md rounded-lg p-4"
                     >
-                      <Radio value={option.name}>
+                      <Radio value={option._id}>
                         <p className="text-gray-900 font-[500]">
                           {option.name}
                         </p>
