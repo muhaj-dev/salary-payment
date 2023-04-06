@@ -5,6 +5,8 @@ import StaffLog from "../components/Staff/StaffLog";
 import StaffTable from "../components/Staff/StaffTable";
 import useFetch from "../components/API/useFetch";
 import { useAuth } from "../components/API/AuthContext";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const StaffDashboard = () => {
   const {  user } = useAuth();
@@ -20,6 +22,27 @@ const StaffDashboard = () => {
 
   );
 
+  const generatePDF = () => {
+    // Get the table element
+    const table = document.getElementById("tax-table");
+
+    // Use html2canvas to create a canvas from the table
+    html2canvas(table).then((canvas) => {
+      // Create a new PDF document
+      const doc = new jsPDF();
+
+      // Add the canvas to the PDF document
+      const imgData = canvas.toDataURL("image/png");
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 20;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(imgData, "PNG", 10, 10, pdfWidth, pdfHeight);
+
+      // Save the PDF document
+      doc.save("Tax.pdf");
+    });
+  };
+
   // Get current posts
   const list = data;
 
@@ -34,7 +57,7 @@ const StaffDashboard = () => {
 
   return (
     <div className="w-full bg-white rounded-[10px] p-6 mt-14">
-      <StaffLog />
+      <StaffLog generatePDF={generatePDF}/>
       <br />
       <br />
 

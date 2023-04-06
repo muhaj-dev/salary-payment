@@ -1,15 +1,28 @@
 import React from "react";
 import downloadw from "../../assets/downloadw.svg";
+import {  useToast } from "@chakra-ui/react";
+import { successToastMessage } from "../../helpers/toast";
 
-const StaffLog = () => {
+const StaffLog = ({generatePDF}) => {
+  const toast = useToast();
+
   return (
     <div className="flex gap-5 flex-wrap justify-between ">
       <div>
         <p className="font-[500] text-[20px] laptop:text-[25px]">
           Payment History
         </p>
-        <p className="text-[14px] text-[#838383]">
-          View and download payment history
+        <p className="">
+          View and{" "}
+          <button className="underline cursor-pointer" 
+          onClick={() => {
+            generatePDF()
+            successToastMessage(toast, "Downloaded");
+          }}
+          >
+            download
+          </button>{" "}
+          activity log
         </p>
       </div>
       <div className="flex gap-2">
