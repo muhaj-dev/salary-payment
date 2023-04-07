@@ -75,7 +75,6 @@ const Nav = forwardRef((props, ref)  => {
                     }
                     alt=""
                   />
-                <img className="h-[45px]" src={user?.image?.url} alt="logo" />
               </div>
               <div className="text-left h-fit">
                 <p className="font-semibold">{user?.full_name}</p>
