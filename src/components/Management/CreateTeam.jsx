@@ -8,7 +8,6 @@ import search from "../../assets/search.svg";
 import user from "../../assets/user.png";
 import deleteIcon from "../../assets/deleteIcon.svg";
 
-
 const CreateTeam = () => {
   const { data, pending, error } = useFetch(
     `${process.env.REACT_APP_LORCHAIN_API}/users`
@@ -21,7 +20,7 @@ const CreateTeam = () => {
   const [teamName, setTeamName] = useState("");
   // const [checkedMembers, setCheckedMembers] = useState([])
   const [checkedUserIds, setCheckedUserIds] = useState([]);
- 
+
   const [selectedLead, setSelectedLead] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchLead, setSearchLead] = useState("");
@@ -76,78 +75,88 @@ const CreateTeam = () => {
     const inputValue = e.target.value;
     setTeamName(inputValue);
   };
-     
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // const _id = selectedLead[0]
-    const leadId = selectedLead[0]
-    const membersId = checkedUserIds
-    const about = aboutTeam
-    const name = teamName
+    const leadId = selectedLead[0];
+    const membersId = checkedUserIds;
+    const about = aboutTeam;
+    const name = teamName;
     const teams = {
       name,
       leadId,
       membersId,
       about,
-    }
+    };
+    return new Promise(async (resolve, reject) => {
+      let token = localStorage.getItem("lorchaintoken");
 
-    let token = localStorage.getItem("lorchaintoken");
-    fetch(`${process.env.REACT_APP_LORCHAIN_API}/teams`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      // body: teams,
-      body: JSON.stringify(teams),
-    }).then((res) => res.json())
-    .then((data) => {
-      toast({
-        position: "top-right",
-        render: () => (
-          <Flex
-            color="primary"
-            p={3}
-            bg="white"
-            w="fit-content"
-            className="gap-2  items-center font-semibold shadow-card "
-            rounded={"md"}
-          >
-            <BsCheckCircleFill className="text-[#16A34A] " />
-            Team created successfuly
-          </Flex>
-        ),
-      });
-      onClose()
-      
-      // setIsPending(false);
-    })
-    .catch((err) => {
-      // setLoading(false);
-      toast({
-        position: "top-right",
-        render: () => (
-          <Flex
-            color="white"
-            p={3}
-            bg="red"
-            w="fit-content"
-            className="gap-2 items-center font-semibold shadow-card "
-            rounded={"md"}
-          >
-            <BsCheckCircleFill className="text-white " />
-            Team not created
-          </Flex>
-        ),
-      });
-      //handle any error here
-      console.log(err);
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_LORCHAIN_API}/teams`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(teams),
+          }
+        );
+
+        const data = await response.json();
+        if (response.ok) {
+          console.log(data);
+
+          toast({
+            position: "top-right",
+            render: () => (
+              <Flex
+                color="primary"
+                p={3}
+                bg="white"
+                w="fit-content"
+                className="gap-2  items-center font-semibold shadow-card "
+                rounded={"md"}
+              >
+                <BsCheckCircleFill className="text-[#16A34A] " />
+                Team created successfuly
+              </Flex>
+            ),
+          });
+          onClose();
+        } else {
+          resolve(data);
+          toast({
+            position: "top-right",
+            render: () => (
+              <Flex
+                color="white"
+                p={3}
+                bg="red"
+                w="fit-content"
+                className="gap-2 items-center font-semibold shadow-card "
+                rounded={"md"}
+              >
+                <BsCheckCircleFill className="text-white " />
+                {data.message}
+              </Flex>
+            ),
+          });
+          // setLoading(false);
+          // console.log(data.message);
+          // console.log(data);
+          // throw new Error(data.message);
+        }
+      } catch (error) {
+        reject(error);
+
+        console.error(error.message);
+        console.error(error);
+        throw error;
+      }
     });
   };
-
-
-
- 
 
   return (
     <div>

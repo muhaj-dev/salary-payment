@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { useToast, Flex } from "@chakra-ui/react";
+import { useToast, Flex, Button } from "@chakra-ui/react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import ModalWrapper from "../../common/ModalWrapper";
 import avatar from "../../assets/avatar.svg";
@@ -84,7 +84,7 @@ const validationSchema = Yup.object().shape({
 
 const AddStaff = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { setLoading } = useAuth();
+  const { setLoading, isLoadiing } = useAuth();
   const toast = useToast();
 
   const [file, setFile] = useState({});
@@ -137,63 +137,82 @@ const AddStaff = (props) => {
       formData.append("salary", values.salary);
       formData.append("tax_rate", values.tax);
       formData.append("job_role", values.job_role);
+      // formData.append("job_role", values.);
       formData.append("address", values.address);
       formData.append("wallet_address", values.wallet_address);
       formData.append("phone_number", values.phone_number);
       //after changing the file to object not array change if from values.file[0] to values.file
       formData.append("file", values.file);
 
-      let token = localStorage.getItem("lorchaintoken");
-      fetch(`${process.env.REACT_APP_LORCHAIN_API}/users/register`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      })
-        .then((res) => res.json())
-        .then((data) => {
+      return new Promise(async (resolve, reject) => {
+        let token = localStorage.getItem("lorchaintoken");
+
+        try {
+          const response = await fetch(
+            `${process.env.REACT_APP_LORCHAIN_API}/users/register`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              body: formData,
+            }
+          );
+
+          const data = await response.json();
+          if (response.ok) {
+            console.log(data);
+            setLoading(false);
+
+            toast({
+              position: "top-right",
+              render: () => (
+                <Flex
+                  color="primary"
+                  p={3}
+                  bg="white"
+                  w="fit-content"
+                  className="gap-2  items-center font-semibold shadow-card "
+                  rounded={"md"}
+                >
+                  <BsCheckCircleFill className="text-[#16A34A] " />
+                  Staff created successfuly
+                </Flex>
+              ),
+            });
+            onClose();
+          } else {
+            resolve(data);
+            toast({
+              position: "top-right",
+              render: () => (
+                <Flex
+                  color="white"
+                  p={3}
+                  bg="red"
+                  w="fit-content"
+                  className="gap-2 items-center font-semibold shadow-card "
+                  rounded={"md"}
+                >
+                  <BsCheckCircleFill className="text-white " />
+                  {data.message}
+                </Flex>
+              ),
+            });
+            setLoading(false);
+            // console.log(data.message);
+            // console.log(data);
+            // throw new Error(data.message);
+          }
+        } catch (error) {
           setLoading(false);
-          toast({
-            position: "top-right",
-            render: () => (
-              <Flex
-                color="primary"
-                p={3}
-                bg="white"
-                w="fit-content"
-                className="gap-2  items-center font-semibold shadow-card "
-                rounded={"md"}
-              >
-                <BsCheckCircleFill className="text-[#16A34A] " />
-                Staff created successfuly
-              </Flex>
-            ),
-          });
-          onClose();
-         
-        })
-        .catch((err) => {
-          setLoading(false);
-          toast({
-            position: "top-right",
-            render: () => (
-              <Flex
-                color="white"
-                p={3}
-                bg="red"
-                w="fit-content"
-                className="gap-2 items-center font-semibold shadow-card "
-                rounded={"md"}
-              >
-                <BsCheckCircleFill className="text-white " />
-                Staff not created
-              </Flex>
-            ),
-          });
-          //handle any error here
-          console.log(err);
-        });
+          reject(error);
+
+          // console.error(error.message);
+          // console.error(error);
+          throw error;
+        }
+      });
     },
   });
 
@@ -249,12 +268,27 @@ const AddStaff = (props) => {
         <form className=" py-6" onSubmit={formik.handleSubmit}>
           <div className="flex justify-between ">
             <p className="font-[500] text-[22px]">Add Staff</p>
-            <button
-              type="submit"
-              className="px-5 py-2 text-white bg-primary h-fit border-2 border-primary rounded-lg"
-            >
-              Save information
-            </button>
+            {!isLoadiing ? (
+              <button
+                type="submit"
+                className="px-5 py-2 text-white bg-primary h-fit border-2 border-primary rounded-lg"
+              >
+                Save information
+              </button>
+            ) : (
+              <Button
+                isLoading
+                // loadingText="Please wait"
+                colorScheme="primary"
+                variant="outline"
+                spinnerPlacement="end"
+                width={""}
+                mt={4}
+                py={4}
+              >
+                Continue
+              </Button>
+            )}
           </div>
 
           <section className="container mt-5 relative">
@@ -282,28 +316,28 @@ const AddStaff = (props) => {
               {thumbs}
             </aside>
           </section>
-        
-          <div className="relative">
-            {isCalendar &&
-            <>
-              <div className="right-10 top-28 laptop:top-12 z-50 shadow-xl absolute"></div>
-              <div
-                onClick={() => {
-                  setIsCalendar(false);
-                }}
-                className=" z-10 h-[100vh] w-[105vw] absolute -top-[34vh] right-0 -left-40"
-              />
-              <div className="absolute z-50 top-10 ">
-                <Calendar onChange={onChange} value={date} />
-              </div>
-              </>
 
-            }
-            <div 
-             onClick={() => {
-              setIsCalendar(true);
-            }}
-            className="cursor-pointer flex items-center mt-10 gap-2 h-[38px] rounded-md font-semibold border-2 border-[#EEEEEE] p-3">
+          <div className="relative">
+            {isCalendar && (
+              <>
+                <div className="right-10 top-28 laptop:top-12 z-50 shadow-xl absolute"></div>
+                <div
+                  onClick={() => {
+                    setIsCalendar(false);
+                  }}
+                  className=" z-10 h-[100vh] w-[105vw] absolute -top-[34vh] right-0 -left-40"
+                />
+                <div className="absolute z-50 top-10 ">
+                  <Calendar onChange={onChange} value={date} />
+                </div>
+              </>
+            )}
+            <div
+              onClick={() => {
+                setIsCalendar(true);
+              }}
+              className="cursor-pointer flex items-center mt-10 gap-2 h-[38px] rounded-md font-semibold border-2 border-[#EEEEEE] p-3"
+            >
               <img src={calender} alt="" />
               <p>{formattedDate}</p>
             </div>
