@@ -7,7 +7,7 @@ export const NavMenu = [
     {
       link: "/management/staffs",
       id: 2,
-      name:"Staff mgt",
+      name:"Staff Mgt",
     },
     {
       id: 3,

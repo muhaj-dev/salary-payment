@@ -35,7 +35,7 @@ const Nav = () => {
 
   return (
     <nav className="p-3 my-2 flex justify-between w-[95%] mx-auto max-w-[1512px]">
-      <div className="flex gap-10">
+      <div className="flex gap-10 cursor-pointer">
         <div onClick={home}>
           <img className=" h-[45px]" src={Plogo} alt="logo" />
         </div>

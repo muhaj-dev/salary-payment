@@ -1,7 +1,6 @@
 import React from "react";
 import Card from "./Card";
 import Hero from "./Hero";
-import Navbar from "../components/NavBar";
 import Nav from "../components/Nav";
 
 const PageHoc = (WrappedComponent) => {
@@ -9,7 +8,6 @@ const PageHoc = (WrappedComponent) => {
     return (
       <div className="flex ">
         <div className="w-full">
-          {/* <Navbar /> */}
           <Nav />
           <Hero />
           <div className="pt-11 bg-[#F7F7F7] ">

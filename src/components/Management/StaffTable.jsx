@@ -166,13 +166,14 @@ const StaffTable = ({ currentPosts }) => {
                       <BsThreeDotsVertical className="cursor-pointerml-auto text-[grey]" />
                     </MenuButton>
                     <MenuList>
-                      <MenuItem fontWeight="semi-bold">
+                      <MenuItem fontWeight="semi-bold"  >
+
                         <EditStaff item={item} />
                       </MenuItem>
                       <MenuItem fontWeight="semi-bold">
                         <div className="flex gap-2">
                           <img src={download} alt="" />
-                          <span>Payment history</span>
+                          <span>Delete</span>
                         </div>
                       </MenuItem>
                     </MenuList>
