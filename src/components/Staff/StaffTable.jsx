@@ -14,9 +14,7 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import download from "../../assets/download.svg";
-import Edit from "../../assets/Edit.svg";
-import Iicon from "../../assets/Iicon.svg";
+
 
 const table = [
   {
@@ -68,14 +66,14 @@ const StaffTable = ({ currentPosts }) => {
           </Thead>
 
           <Tbody>
-            {currentPosts?.map((item, index) => (
-              <Tr key={index}>
+            {currentPosts?.map((item) => (
+              <Tr key={item?._id}>
                 <Td>
                   <Checkbox
-                    isChecked={checkedItems[index]}
+                    isChecked={checkedItems[item?._id]}
                     className="accent-primary"
                     onChange={(e) =>
-                      setCheckedItems([e.target.checked, checkedItems[index]])
+                      setCheckedItems([e.target.checked, checkedItems[item?._id]])
                     }
                   >
                     {" "}
@@ -83,53 +81,17 @@ const StaffTable = ({ currentPosts }) => {
                 </Td>
                 <Td>
                   <a
-                    href={item.transaction_url}
+                    href={item?.transaction_url}
                     target="_blank"
                     rel="noreferrer"
                     className="underline"
                   >
-                    {item._id}
+                    {item?._id}
                   </a>
                 </Td>
-                <Td>USD {item.salary}</Td>
-                <Td>{item.payment_date}</Td>
-                <Td>{item.remark}</Td>
-                {/* <Td>
-                  <Menu bg="primary">
-                    <MenuButton
-                      as={Button}
-                      bg="transparent"
-                      _hover={{ bg: "transparent" }}
-                    >
-                      <BsThreeDotsVerticalVertical className="cursor-pointerml-auto text-[grey]" />
-                    </MenuButton>
-                    <MenuList>
-                      <MenuItem
-                        //   onClick={() => alert("Kagebunshin")}
-                        fontWeight="semi-bold"
-                        
-                        display="flex"
-                        justifyContent={"space-between"}
-                      >
-                        <div className="flex gap-2">
-                          <img src={Edit} alt="" />
-                          <span>Edit</span>
-                        </div>
-                        <img src={Iicon} alt="" />
-                      </MenuItem>
-                      <MenuItem
-                        //   onClick={() => alert("Kagebunshin")}
-                        fontWeight="semi-bold"
-                        
-                      >
-                        <div className="flex gap-2">
-                          <img src={download} alt="" />
-                          <span>Payslip </span>
-                        </div>
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
-                </Td> */}
+                <Td>USD {item?.salary}</Td>
+                <Td>{item?.payment_date}</Td>
+                <Td>{item?.remark}</Td>
               </Tr>
             ))}
           </Tbody>

@@ -20,8 +20,7 @@ const StaffDashboard = () => {
   // const user = JSON.parse(userDetails);
 
   const { data, pending, error } = useFetch(
-    `${process.env.REACT_APP_LORCHAIN_API}/records/user/${user._id}`,
-
+    `${process.env.REACT_APP_LORCHAIN_API}/records/user/${user._id}`
   );
 
   const generatePDF = () => {
@@ -46,12 +45,19 @@ const StaffDashboard = () => {
   };
 
   // Get current posts
-  const list = data;
+  const list = data?.records;
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = list?.slice(indexOfFirstPost, indexOfLastPost);
 
+  // if (!currentPosts || currentPosts?.length === 0) {
+  //   return (
+  //     <div className="text-primary font-semibold mt-36 text-[18px] itallic text-center">
+  //       You have no records
+  //     </div>
+  //   );
+  // }
   //Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const paginateFront = () => setCurrentPage(currentPage + 1);
@@ -59,11 +65,17 @@ const StaffDashboard = () => {
 
   return (
     <div className="w-full bg-white rounded-[10px] p-6 mt-14">
-      <StaffLog generatePDF={generatePDF}/>
+      <StaffLog generatePDF={generatePDF} />
       <br />
       <br />
+      {!currentPosts || currentPosts?.length === 0 ? (
+        <div className="text-primary font-semibold mt-20 text-[18px] itallic text-center">
+          You have no records
+        </div>
+      ) : (
+        <StaffTable currentPosts={currentPosts} />
+      )}
 
-      {currentPosts && <StaffTable currentPosts={currentPosts} />}
       {pending && (
         <div className="text-primary italic text-center bg-[red-500] font-bold text-[20px]">
           <Spinner
@@ -82,7 +94,7 @@ const StaffDashboard = () => {
       )}
       <Pagination
         postsPerPage={postsPerPage}
-        totalPosts={data?.length}
+        totalPosts={list?.length}
         currentPage={currentPage}
         paginateBack={paginateBack}
         paginateFront={paginateFront}

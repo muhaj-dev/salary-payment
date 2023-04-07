@@ -10,10 +10,7 @@ import jsPDF from "jspdf";
 import { Pagination } from "antd";
 
 const Dashboard = () => {
-  // const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(8);
-  // const [itemsPerPage, setItemsPerPage] = useState(10);
-  // const [displayedItems, setDisplayedItems] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -102,9 +99,9 @@ const Dashboard = () => {
   const currentPosts = list?.slice(indexOfFirstPost, indexOfLastPost);
 
   //Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const paginateFront = () => setCurrentPage(currentPage + 1);
-  const paginateBack = () => setCurrentPage(currentPage - 1);
+  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  // const paginateFront = () => setCurrentPage(currentPage + 1);
+  // const paginateBack = () => setCurrentPage(currentPage - 1);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);

@@ -77,22 +77,22 @@ const ActivityTable = ({ currentPosts }) => {
           </Thead>
           <Tbody>
             {currentPosts?.map((item) => (
-              <Tr key={item._id}>
+              <Tr key={item?._id}>
                 <Td>
                   <Checkbox
-                    isChecked={checkedItems[item.user._id]}
+                    isChecked={checkedItems[item?.user?._id]}
                     className="accent-primary"
                     onChange={(e) =>
                       setCheckedItems([
                         e.target.checked,
-                        checkedItems[item.user._id],
+                        checkedItems[item?.user?._id],
                       ])
                     }
                   >
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td className=" text-[14px] ">{item.user._id}</Td>
+                <Td className=" text-[14px] ">{item?.user?._id}</Td>
                 <Td>
                   <p className="font-semibold text-[14px] mb-1">
                     {item?.user?.full_name}
@@ -103,13 +103,13 @@ const ActivityTable = ({ currentPosts }) => {
                       to="#"
                       className="underline  text-[14px] "
                       onClick={(e) => {
-                        window.location.href = `mailto:${item.user.email}`;
+                        window.location.href = `mailto:${item?.user?.email}`;
                         e.preventDefault();
                       }}
                     >
                       {item.user.email}
                     </Link>
-                    <p className=" text-[14px] "> - {item.permission === null ? "Staff" : "Admin"}</p>
+                    <p className=" text-[14px] "> - {item?.permission === null ? "Staff" : "Admin"}</p>
                   </div>
                 </Td>
                 <Td className=" text-[14px] ">{formatDate(item.time)} </Td>

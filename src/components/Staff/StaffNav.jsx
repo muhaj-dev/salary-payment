@@ -37,7 +37,7 @@ const StaffNav = () => {
                 <img className="h-[45px]" src={user?.image?.url} alt="logo" />
               </div>
               <div className="text-left h-fit">
-                <p className="font-semibold">{user.full_name}</p>
+                <p className="font-semibold">{user?.full_name}</p>
                 <p className="text-[#B0B0B0] text-[14px]">{user?.email}</p>
               </div>
             </div>
