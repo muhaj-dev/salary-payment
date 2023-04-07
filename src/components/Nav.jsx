@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, forwardRef } from "react";
 import { NavMenu } from "../Data/NavData";
 import { useNavigate } from "react-router-dom";
 import {
@@ -20,10 +20,10 @@ import MobileNav from "./MobileNav";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "./API/AuthContext";
 
-const Nav = () => {
+const Nav = forwardRef((props, ref)  => {
   const { logout } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
+  // const btnRef = React.useRef();
   const navigate = useNavigate();
 
   const userDetails = localStorage.getItem("user_details");
@@ -108,7 +108,7 @@ const Nav = () => {
       </div>
       <div className="my-auto z-50 block laptop_l:hidden ">
         <AiOutlineMenu
-          ref={btnRef}
+          ref={ref}
           onClick={onOpen}
           className="w-[30px] h-[30px]"
         />
@@ -117,7 +117,7 @@ const Nav = () => {
           isOpen={isOpen}
           placement="right"
           onClose={onClose}
-          finalFocusRef={btnRef}
+          finalFocusRef={ref}
         >
           <DrawerOverlay />
           <DrawerContent>
@@ -130,6 +130,6 @@ const Nav = () => {
       </div>
     </nav>
   );
-};
+});
 
 export default Nav;

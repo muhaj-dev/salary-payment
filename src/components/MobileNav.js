@@ -8,14 +8,14 @@ const MobileNav = () => {
       <div className="mt-3 flex flex-col"> 
         {NavMenu.map((nav) => (
         
-          <NavLink key={nav.id} to={nav.link} className="my-4 pb-3 font-semibold text-[20px] text-black border-b-2 border-black">
+          <NavLink key={nav.id} to={nav.link} className="py-2 pb-3 font-semibold text-[16px] tablet:text-[18px] text-black border-b-2 border-black">
             {nav.name}
           </NavLink>
          
         ))}
          <NavLink
           to="/permission"
-          className="my-4 pb-3 font-semibold text-[20px] text-black border-b-2 border-black"
+          className="py-2 pb-3 font-semibold text-[16px] tablet:text-[18px] text-black border-b-2 border-black"
         >
           Admin permissions
         </NavLink>
