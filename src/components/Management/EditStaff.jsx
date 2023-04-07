@@ -210,8 +210,8 @@ const EditStaff = ({ item }) => {
   }, []);
 
   return (
-    <div>
-      <div onClick={onOpen} className="gap-16 w-full flex justify-between">
+    <div className='w-full'>
+      <div onClick={onOpen} className=" w-full flex justify-between">
         <div className="flex gap-2">
           <img src={Edit} alt="" />
           <span>Edit</span>

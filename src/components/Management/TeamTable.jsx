@@ -21,6 +21,7 @@ import download from "../../assets/download.svg";
 import Edit from "../../assets/Edit.svg";
 import Iicon from "../../assets/Iicon.svg";
 import EditTeam from "./EditTeam";
+import DeleteTeam from "./DeleteTeam";
 
 const table = [
   {
@@ -130,20 +131,16 @@ const TeamTable = ({ TeamcurrentPosts }) => {
                           display="flex"
                           justifyContent={"space-between"}
                         >
-                          <div>
-
+                        
                           <EditTeam item={item} />
-                          </div>
+                         
                         </MenuItem>
                         <MenuItem
                           //   onClick={() => alert("Kagebunshin")}
                           fontWeight="semi-bold"
                           
                         >
-                          <div className="flex gap-2">
-                            <img src={download} alt="" />
-                            <span>Payment history</span>
-                          </div>
+                         <DeleteTeam />
                         </MenuItem>
                       </MenuList>
                     </Menu>

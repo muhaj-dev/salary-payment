@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageHoc from "../components/PageHoc";
+import { Spinner } from "@chakra-ui/react";
 import Pagination from "../common/Pagination";
 import PaymentTable from "../components/Report/PaymentTable";
 import useFetch from "../components/API/useFetch";
@@ -98,7 +99,13 @@ const PaymentReport = () => {
       <PaymentTable currentPosts={currentPosts} />
       {pending && (
         <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
-          Loading...
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#662483"
+            size="xl"
+          />
         </div>
       )}
       {error && (

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PermissionHoc from "../components/Permission/PermissiomHoc";
 import PermissionLog from "../components/Permission/PermissionLog";
+import { Spinner } from "@chakra-ui/react";
 import Pagination from "../common/Pagination";
 import PermissionTable from "../components/Permission/PermissionTable";
 import useFetch from "../components/API/useFetch";
@@ -34,7 +35,13 @@ const Permission = () => {
       <PermissionTable currentPosts={currentPosts} />
       {pending && (
         <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
-          Loading...
+           <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#662483"
+            size="xl"
+          />
         </div>
       )}
       {error && (

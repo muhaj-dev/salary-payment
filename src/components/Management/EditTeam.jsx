@@ -143,7 +143,7 @@ const EditTeam = ({ item }) => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <div
         onClick={onOpen}
         className="w-full flex gap-10 tablet:gap-16 justify-between"

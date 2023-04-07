@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Spinner } from "@chakra-ui/react";
 import MangLog from "../components/Management/MangLog";
 import PageHoc from "../components/PageHoc";
 import Pagination from "../common/Pagination";
@@ -77,7 +78,13 @@ const Managment = () => {
       <TeamTable TeamcurrentPosts={TeamcurrentPosts} />
       {pending && (
         <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
-          Loading...
+           <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#662483"
+            size="xl"
+          />
         </div>
       )}
       {error && (

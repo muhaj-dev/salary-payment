@@ -3,6 +3,7 @@ import ActivityLog from "../components/ActivityLog";
 import ActivityTable from "../components/ActivityTable";
 import PageHoc from "../components/PageHoc";
 // import Pagination from "../common/Pagination";
+import { Spinner } from "@chakra-ui/react";
 import useFetch from "../components/API/useFetch";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -91,7 +92,7 @@ const Dashboard = () => {
   if (searchTerm) {
     list = filteredData;
   } else if (selectedUser) {
-    list = list?.filter((post) => post?.user.full_name === selectedUser);
+    list = list?.filter((post) => post?.user?.full_name === selectedUser);
   } else if (selectedDate) {
     list = selectedDate;
   }
@@ -104,7 +105,6 @@ const Dashboard = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const paginateFront = () => setCurrentPage(currentPage + 1);
   const paginateBack = () => setCurrentPage(currentPage - 1);
-
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -140,7 +140,13 @@ const Dashboard = () => {
       <ActivityTable currentPosts={currentPosts} />
       {pending && (
         <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
-          Loading...
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#662483"
+            size="xl"
+          />
         </div>
       )}
       {error && (

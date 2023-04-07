@@ -5,30 +5,31 @@ import { revertStaffPermission } from "../../helpers";
 import { successToastMessage, errorToastMessage } from "../../helpers/toast";
 import { useAuth } from "../API/AuthContext";
 
-const DeletePermission = ({ permissionId, userId }) => {
+const DeleteTeam = ({ permissionId, userId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { loading, setLoading, setRefresh, refresh } = useAuth();
   const toast = useToast();
 
-  const revertUserPermission = () => {
-    setLoading(true);
-    // console.log(userId, permissionId);
-    revertStaffPermission(userId, permissionId)
-      .then((data) => {
-        setRefresh(!refresh);
+  //   const revertUserPermission = () => {
+  //     setLoading(true);
+  //     // console.log(userId, permissionId);
+  //     revertStaffPermission(userId, permissionId)
+  //       .then((data) => {
+  //         setRefresh(!refresh);
 
-        setLoading(false);
-        onClose();
-        successToastMessage(toast, "User permission reverted successfully");
-      })
-      .catch((err) => {
-        setLoading(false);
-        onClose();
-        errorToastMessage(toast, err.message);
-      });
-  };
+  //         setLoading(false);
+  //         onClose();
+  //         successToastMessage(toast, "User permission reverted successfully");
+  //       })
+  //       .catch((err) => {
+  //         setLoading(false);
+  //         onClose();
+  //         errorToastMessage(toast, err.message);
+  //       });
+  //   };
+
   return (
-    <div className='w-full'>
+    <div className="w-full">
       <div
         onClick={onOpen}
         className="flex items-center gap-2 w-full px-2 py-2 h-fit rounded-lg"
@@ -44,12 +45,11 @@ const DeletePermission = ({ permissionId, userId }) => {
       >
         <div className="my-10">
           <p className="text-[20px]  font-bold text-center">
-            This Admin will not have access to any of the permission. Are you
-            sure you want to delete the admin?
+            Are you sure you want to delete this team?
           </p>
           <div className="flex justify-between w-fit gap-6 mx-auto mt-10">
             <button
-              onClick={revertUserPermission}
+            //   onClick={revertUserPermission}
               className="bg-green-500 text-white py-3 px-5 rounded-md"
             >
               Ok
@@ -67,4 +67,4 @@ const DeletePermission = ({ permissionId, userId }) => {
   );
 };
 
-export default DeletePermission;
+export default DeleteTeam;

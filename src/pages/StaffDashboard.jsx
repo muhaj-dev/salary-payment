@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import StaffHoc from "../components/Staff/StaffHoc";
 import Pagination from "../common/Pagination";
 import StaffLog from "../components/Staff/StaffLog";
+import { Spinner } from "@chakra-ui/react";
 import StaffTable from "../components/Staff/StaffTable";
 import useFetch from "../components/API/useFetch";
 import { useAuth } from "../components/API/AuthContext";
@@ -64,7 +65,13 @@ const StaffDashboard = () => {
       {currentPosts && <StaffTable currentPosts={currentPosts} />}
       {pending && (
         <div className="text-primary italic text-center bg-[red-500] font-bold text-[20px]">
-          Loading...
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#662483"
+            size="xl"
+          />
         </div>
       )}
       {error && (

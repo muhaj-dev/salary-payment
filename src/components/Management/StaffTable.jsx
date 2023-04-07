@@ -11,16 +11,15 @@ import {
   Thead,
   Tbody,
   Tr,
-
   Td,
   TableContainer,
   Checkbox,
 } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import download from "../../assets/download.svg";
-import EditStaff from "./EditStaff";
-import profile from '../../assets/profile.png'
-
+import DeleteStaff from "./DeleteStaff";
+import EditStaff from './EditStaff'
+import profile from "../../assets/profile.png";
 
 const table = [
   {
@@ -125,7 +124,11 @@ const StaffTable = ({ currentPosts }) => {
                 <Td display={"flex"} gap={2} alignItems="center">
                   <img
                     className="h-[40px] rounded-full w-[40px]"
-                    src={item?.image?.url === undefined ? profile : item?.image?.url}
+                    src={
+                      item?.image?.url === undefined
+                        ? profile
+                        : item?.image?.url
+                    }
                     alt=""
                   />
                   <div>
@@ -151,7 +154,6 @@ const StaffTable = ({ currentPosts }) => {
                 </Td>
                 <Td>{formatDate(item.start_date)} </Td>
                 <Td>
-                  {/* {formatDate(item.end_date ? item.end_date : "Active")} */}
                   {formatDate(item.end_date)}
                   {item.end_item}
                 </Td>
@@ -166,15 +168,11 @@ const StaffTable = ({ currentPosts }) => {
                       <BsThreeDotsVertical className="cursor-pointerml-auto text-[grey]" />
                     </MenuButton>
                     <MenuList>
-                      <MenuItem fontWeight="semi-bold"  >
-
+                      <MenuItem fontWeight="semi-bold">
                         <EditStaff item={item} />
                       </MenuItem>
                       <MenuItem fontWeight="semi-bold">
-                        <div className="flex gap-2">
-                          <img src={download} alt="" />
-                          <span>Delete</span>
-                        </div>
+                        <DeleteStaff />
                       </MenuItem>
                     </MenuList>
                   </Menu>
