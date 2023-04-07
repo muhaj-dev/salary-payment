@@ -135,8 +135,8 @@ const StaffTable = ({ currentPosts }) => {
                     <div className="flex gap-2">
                       <p>{item.email} -</p>
                       <p className="underline">
-                        {item.wallet_address.slice(0, 4)}...
-                        {item.wallet_address.slice(
+                        {item.wallet_address?.slice(0, 4)}...
+                        {item.wallet_address?.slice(
                           -3,
                           item.wallet_address.length
                         )}
