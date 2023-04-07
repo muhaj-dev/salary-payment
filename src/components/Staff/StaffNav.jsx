@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
-
+import profile from "../../assets/profile.png";
 import { IoIosArrowDown } from "react-icons/io";
 import Plogo from "../../assets/Plogo.png";
 import { useAuth } from "../API/AuthContext";
@@ -34,7 +34,15 @@ const StaffNav = () => {
             <div className="flex gap-3">
               <IoIosArrowDown className="w-[30px] h-[20px] absolute -right-6 top-2" />
               <div className="rounded-full border-2 overflow-hidden ">
-                <img className="h-[45px]" src={user?.image?.url} alt="logo" />
+              <img
+                    className="h-[40px] rounded-full w-[40px]"
+                    src={
+                      user?.image?.url === undefined
+                        ? profile
+                        : user?.image?.url
+                    }
+                    alt=""
+                  />
               </div>
               <div className="text-left h-fit">
                 <p className="font-semibold">{user?.full_name}</p>
@@ -57,7 +65,15 @@ const StaffNav = () => {
           <MenuButton pos="relative">
             <div className="flex">
               <div className="rounded-full border-2 overflow-hidden">
-                <img className=" h-[35px] w-[35px] " src={user.image.url} alt="logo" />
+              <img
+                    className="h-[40px] rounded-full w-[40px]"
+                    src={
+                      user?.image?.url === undefined
+                        ? profile
+                        : user?.image?.url
+                    }
+                    alt=""
+                  />
               </div>
               <IoIosArrowDown className="w-[30px] h-[24px] my-auto" />
             </div>

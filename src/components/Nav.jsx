@@ -16,6 +16,7 @@ import {
 import { AiOutlineMenu } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
 import Plogo from "../assets/Plogo.png";
+import profile from "../assets/profile.png";
 import MobileNav from "./MobileNav";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "./API/AuthContext";
@@ -65,6 +66,15 @@ const Nav = forwardRef((props, ref)  => {
             <div className="flex gap-3">
               <IoIosArrowDown className="w-[30px] h-[20px] absolute -right-6 top-2" />
               <div className="rounded-full border-2 overflow-hidden ">
+              <img
+                    className="h-[40px] rounded-full w-[40px]"
+                    src={
+                      user?.image?.url === undefined
+                        ? profile
+                        : user?.image?.url
+                    }
+                    alt=""
+                  />
                 <img className="h-[45px]" src={user?.image?.url} alt="logo" />
               </div>
               <div className="text-left h-fit">
@@ -89,11 +99,15 @@ const Nav = forwardRef((props, ref)  => {
           <MenuButton pos="relative">
             <div className="flex">
               <div className="rounded-full border-2 overflow-hidden">
-                <img
-                  className=" h-[35px] w-[35px] "
-                  src={user?.image?.url}
-                  alt="logo"
-                />
+              <img
+                    className="h-[40px] rounded-full w-[40px]"
+                    src={
+                      user?.image?.url === undefined
+                        ? profile
+                        : user?.image?.url
+                    }
+                    alt=""
+                  />
               </div>
               <IoIosArrowDown className="w-[30px] h-[24px] my-auto" />
             </div>
