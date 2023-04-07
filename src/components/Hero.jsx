@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuth } from "./API/AuthContext";
+import { capitalize } from '../helpers'
 
 const Hero = () => {
 
@@ -22,7 +22,7 @@ const Hero = () => {
         <div>
           <p className="text-[26px] laptop:text-[32px]">Hi, {user?.full_name}</p>
           <p className="text-[14px] laptop:text-[16px]">
-            <span>{user?.permission?.name}</span>
+            <span>{capitalize(user?.permission?.name)}</span>
           </p>
         </div>
         <div>
