@@ -539,7 +539,7 @@ const AddStaff = (props) => {
                 <FormLabel>Wallet Address</FormLabel>
                 <Input
                   type="text"
-                  placeholder="0xC57c4384f0eE6E4Ca8FE7FA834a6D525477fC6B5"
+                  placeholder="0xC..."
                   {...formik.getFieldProps("wallet_address")}
                 />
                 <FormErrorMessage className="absolute -bottom-5">

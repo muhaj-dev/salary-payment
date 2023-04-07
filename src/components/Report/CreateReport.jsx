@@ -3,8 +3,13 @@ import useFetch from "../API/useFetch";
 import { useToast, Flex } from "@chakra-ui/react";
 import Calendar from "react-calendar";
 import { BsCheckCircleFill } from "react-icons/bs";
+import { MdOutlineContentCopy } from 'react-icons/md'
 import { useDisclosure, Input } from "@chakra-ui/react";
 import ModalWrapper from "../../common/ModalWrapper";
+import { CiCalendar } from "react-icons/ci";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import calender from "../../assets/calender.svg";
+
 import search from "../../assets/search.svg";
 
 const CreateReport = () => {
@@ -13,20 +18,27 @@ const CreateReport = () => {
   );
   const members = data;
   const toast = useToast();
+  console.log(members);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [salary, setSetSalary] = useState("");
-  const [wallet, setWallet] = useState("");
+  const [wallet, setWallet] = useState();
   const [selectedLead, setSelectedLead] = useState(null);
   const [searchLead, setSearchLead] = useState("");
-  const [trans, setTrans] = useState(selectedLead);
-  
-  const [selectedDate, setSelectedDate] = useState('212222');
+  const [transaction_url, setTransaction_url] = useState(selectedLead);
+
+  const [date, setDate] = useState(new Date());
+
+  const [selectedDate, setSelectedDate] = useState("212222");
   const [isCalendar, setIsCalendar] = useState(false);
 
+  const [copyText, setCopyText] = useState("");
+
+  // function handleCopy() {
+  //   navigator.clipboard.writeText(copyText);
+  // }
   // Date
 
- 
   // For Team Lead
 
   const handleSelectLead = (leadId) => {
@@ -41,6 +53,9 @@ const CreateReport = () => {
     lead.full_name.toLowerCase().includes(searchLead.toLowerCase())
   );
 
+  function handleChange(event) {
+    setWallet(event.target.value);
+  }
   //textarea
 
   const handleSalary = (e) => {
@@ -52,30 +67,27 @@ const CreateReport = () => {
   const handleTrans = (e) => {
     e.preventDefault();
     const inputValue = e.target.value;
-    setTrans(inputValue);
+    setTransaction_url(inputValue);
   };
 
-  const handleCalender = (e) => {
-    e.preventDefault();
-    const inputValue = e.target.value;
-    setTrans(inputValue);
-  };
-  
-  const handleDateClick = (e) => {
-    e.preventDefault();
-    const inputValue = e.target.value;
-    setSelectedDate(inputValue);
+  const onChange = (date) => {
+    setDate(date);
   };
 
-
+  const formattedDate = date.toLocaleString("default", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const team = {
-        salary,
-        wallet,
+      salary,
+      transaction_url,
+      date,
     };
-    // console.log(team)
+    console.log(team);
 
     let token = localStorage.getItem("lorchaintoken");
 
@@ -175,11 +187,12 @@ const CreateReport = () => {
                   <div
                     onClick={() =>
                       handleSelectLead([
-                        user._id,
-                        user.full_name,
-                        user.email,
-                        user.image.url,
-                        user?.transaction_url
+                        user?._id,
+                        user?.full_name,
+                        user?.email,
+                        user?.image?.url,
+                        user?.transaction_url,
+                        user?.wallet_address,
                       ])
                     }
                     className="flex cursor-pointer justify-between mb-3"
@@ -187,14 +200,14 @@ const CreateReport = () => {
                     <div className="flex gap-3 mb-3">
                       <img
                         className="w-[40px] h-[40px] rounded-full"
-                        src={user.image?.url}
+                        src={user?.image?.url}
                         alt=""
                       />
                       <div className="">
                         <p className="font-semibold mt- text-start">
-                          {user.full_name}
+                          {user?.full_name}
                         </p>
-                        <p className="-mt-2 text-start">{user.email}</p>
+                        <p className="-mt-2 text-start">{user?.email}</p>
                       </div>
                     </div>
                   </div>
@@ -214,19 +227,52 @@ const CreateReport = () => {
                 mt={1}
                 pl={6}
               />
-                <span className="font-bold absolute top-9 left-3">$</span>
+              <span className="font-bold absolute top-9 left-3">$</span>
             </div>
             <div className="mt-6  w-full tablet:w-[47%] ">
               <label className="font-semibold"> Wallet </label>
-              <Input
-                label="text"
-                type="text"
-                id="wallet"
-                value={selectedLead}
-                // onChange={handleTeamName}
-                placeholder="wallet"
-                mt={1}
-              />
+              {selectedLead?.length >= 6 ? (
+                <>
+                  <div className="relative">
+                    <Input
+                      type="text"
+                      value={selectedLead[5] ? selectedLead[5] : ""}
+                      placeholder="0x0ee"
+                      mt={1}
+                      onChange={(e) => {
+                        setCopyText(e.target.value);
+                        setWallet(e.target?.selectedLead[5]);
+                        
+                      }}
+                    />
+                    <CopyToClipboard
+                    className='absolute cursor-pointer top-3 right-2 bg-white w-[10%] h-[60%]'
+                   
+                      text={selectedLead[5] ? selectedLead[5] : ""}
+                    >
+                      <MdOutlineContentCopy 
+                       onClick={() =>
+                        toast({
+                          title: 'Wallet copied',
+                          status: 'success',
+                          duration: 2000,
+                          isClosable: true,
+                        })
+                      }
+                      className="p-2 bg-white" />
+                    </CopyToClipboard>
+                  </div>
+                </>
+              ) : (
+                <Input
+                  type="text"
+                  // value={selectedLead[5] ? selectedLead[5] : ""}
+                  placeholder="0x0ee"
+                  mt={1}
+                />
+              )}
+              {/* <input type="text" value={wallet} onChange={handleChange} /> */}
+              {/* <div>{selectedLead[5]}</div> */}
             </div>
             <div className="mt-6 w-full tablet:w-[47%]">
               <label className="font-semibold">Transaction link</label>
@@ -241,21 +287,31 @@ const CreateReport = () => {
             </div>
             <div className="mt-6 w-full tablet:w-[47%]">
               <label className="font-semibold">Payment date</label>
-              <Input
-                label="text"
-                type="text"
-                id="date"
-                // onChange={handl}
-                placeholder=""
-                mt={1}
-              />
-              {isCalendar &&
-              
-                <div className="-right-10 top-28 laptop:top-12 z-50 shadow-xl absolute">
-          <Calendar onChange={handleDateClick} value={selectedDate} />
-          <p>Selected Date: {selectedDate && selectedDate.length > 0 && selectedDate[0].time}</p>
-        </div>
-              }
+
+              {isCalendar && (
+                <>
+                  <div className="right-10 top-28 laptop:top-12 z-50 shadow-xl absolute"></div>
+                  <div
+                    onClick={() => {
+                      setIsCalendar(false);
+                    }}
+                    className=" z-10 h-[100vh] w-[105vw] absolute -top-[34vh] right-0 -left-40"
+                  />
+                  <div className="absolute z-50 top-10 ">
+                    <Calendar onChange={onChange} value={date} />
+                  </div>
+                </>
+              )}
+              <div
+                onClick={() => {
+                  setIsCalendar(true);
+                }}
+                className="cursor-pointer flex items-center mt-1 gap-2 h-[38px] rounded-md font-semibold border-2 border-[#EEEEEE] p-3"
+              >
+                <img src={calender} alt="" />
+                <p>{formattedDate}</p>
+                <div className="relative"></div>
+              </div>
             </div>
           </div>
         </form>

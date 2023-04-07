@@ -131,12 +131,14 @@ const Nav = forwardRef((props, ref)  => {
           isOpen={isOpen}
           placement="right"
           onClose={onClose}
+          // size={'full'}
           finalFocusRef={ref}
         >
           <DrawerOverlay />
           <DrawerContent>
             <DrawerCloseButton />
             <DrawerBody>
+              
               <MobileNav />
             </DrawerBody>
           </DrawerContent>

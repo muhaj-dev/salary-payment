@@ -17,7 +17,7 @@ body {
 }
 
 .active{
-  background-color: #F4F0F6;
+  /* background-color: #F4F0F6; */
   color: #662483;
 }
 .shadow-card{
