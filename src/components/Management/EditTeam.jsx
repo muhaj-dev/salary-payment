@@ -137,7 +137,6 @@ const EditTeam = ({ item }) => {
             </Flex>
           ),
         });
-        //handle any error here
         console.log(err);
       });
   };
