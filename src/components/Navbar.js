@@ -30,7 +30,7 @@ const Navbar = () => {
   const user = JSON.parse(userDetails);
 
   const home = () => {
-    navigate("/user/dashboard");
+    navigate("/admin/dashboard");
   };
 
   return (

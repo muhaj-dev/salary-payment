@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
           localStorage.setItem("lorchaintoken", data.token);
           const user = JSON.stringify(data);
           localStorage.setItem("user_details", user);
-          console.log(data);
+          // console.log(data);
 
           setUser(data);
           setIsAuthenticated(true);

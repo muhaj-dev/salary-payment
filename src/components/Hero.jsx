@@ -2,7 +2,6 @@ import React from "react";
 import { useAuth } from "./API/AuthContext";
 
 const Hero = () => {
-  // const {  } = useAuth();
 
   const userDetails = localStorage.getItem("user_details");
   const user = JSON.parse(userDetails);
