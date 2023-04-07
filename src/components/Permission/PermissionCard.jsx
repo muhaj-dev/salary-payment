@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../API/useFetch";
 import profile from "../../assets/profile.png";
-import { getAllPermissions } from "../../helpers";
+import { getAllPermissions, capitalize } from "../../helpers";
 import { useAuth } from "../API/AuthContext";
 const PermissionCard = () => {
   const [permissions, setPermissions] = useState([]);
@@ -20,12 +20,6 @@ const PermissionCard = () => {
       });
   }, [refresh]);
 
-  const capitalize = (str) => {
-    return str
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  };
   // Get current posts
   const list = data?.filter((admin) => admin.permission !== undefined);
 

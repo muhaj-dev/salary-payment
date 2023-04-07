@@ -23,7 +23,7 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import useFetch from "../API/useFetch";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-
+import { updateTeam } from "../../helpers";
 const thumbsContainer = {
   positon: "relative",
   display: "flex",
@@ -139,6 +139,10 @@ const AddStaff = (props) => {
       formData.append("job_role", values.job_role);
       // formData.append("job_role", values.);
       formData.append("address", values.address);
+      if (values.team) {
+        formData.append("team", values.team);
+      }
+      formData.append("state_date", values.state_date);
       formData.append("wallet_address", values.wallet_address);
       formData.append("phone_number", values.phone_number);
       //after changing the file to object not array change if from values.file[0] to values.file
@@ -160,6 +164,17 @@ const AddStaff = (props) => {
           );
 
           const data = await response.json();
+          try {
+            if (data.team) {
+              updateTeam(
+                data.team,
+                JSON.stringify({ membersId: [data._id] })
+              );
+            }
+          } catch (err) {
+            console.log(err);
+          }
+          
           if (response.ok) {
             console.log(data);
             setLoading(false);
@@ -476,7 +491,7 @@ const AddStaff = (props) => {
                       w={{ base: "40%", md: "30%", lg: "30%" }}
                       className="shadow-md rounded-lg p-4"
                     >
-                      <Radio value={option.name}>
+                      <Radio value={option._id}>
                         <p className="text-gray-900 font-[500]">
                           {option.name}
                         </p>
