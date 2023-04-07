@@ -19,6 +19,7 @@ const Managment = () => {
     `${process.env.REACT_APP_LORCHAIN_API}/users`,
 
   );
+  console.log(data)
 
   // Get current posts
 

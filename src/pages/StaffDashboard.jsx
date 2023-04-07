@@ -10,7 +10,8 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 const StaffDashboard = () => {
-  const {  user } = useAuth();
+  const userDetails = localStorage.getItem("user_details");
+  const user = JSON.parse(userDetails);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
