@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useFetch from "../API/useFetch";
-import { useToast, Flex } from "@chakra-ui/react";
+import { useToast, Flex, Spinner } from "@chakra-ui/react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { useDisclosure, Input, Textarea } from "@chakra-ui/react";
 import ModalWrapper from "../../common/ModalWrapper";
@@ -14,6 +14,7 @@ const CreateTeam = () => {
   );
   const members = data;
   const toast = useToast();
+  const [loading, setLoading] = useState(true);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [aboutTeam, setAboutTeam] = useState("");
@@ -83,6 +84,8 @@ const CreateTeam = () => {
     const membersId = checkedUserIds;
     const about = aboutTeam;
     const name = teamName;
+    setLoading(false);
+
     const teams = {
       name,
       leadId,
@@ -106,7 +109,8 @@ const CreateTeam = () => {
 
         const data = await response.json();
         if (response.ok) {
-          console.log(data);
+          // console.log(data);
+          setLoading(true);
 
           toast({
             position: "top-right",
@@ -127,6 +131,8 @@ const CreateTeam = () => {
           onClose();
         } else {
           resolve(data);
+          setLoading(true);
+
           toast({
             position: "top-right",
             render: () => (
@@ -176,12 +182,16 @@ const CreateTeam = () => {
           <div className="relative">
             <div className="flex justify-between mt-3 ">
               <p className="font-[500] text-[22px]"> Create team</p>
-              <button
-                type="submit"
-                className="px-5 py-1 text-white bg-primary h-fit border-2 border-primary rounded-lg"
-              >
-                Save
-              </button>
+              {loading ? (
+                <button
+                  type="submit"
+                  className="px-5 py-1 text-white bg-primary h-fit border-2 border-primary rounded-lg"
+                >
+                  Save payment
+                </button>
+              ) : (
+                <Spinner mr={14} color="primary" size="sm" />
+              )}
             </div>
             <div className="mt-6 w-full">
               <label className="font-semibold">Team name</label>

@@ -18,7 +18,7 @@ import {
   Radio,
   RadioGroup,
 } from "@chakra-ui/react";
-import { useDisclosure } from "@chakra-ui/react";
+import { useDisclosure, Spinner } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import useFetch from "../API/useFetch";
 import Calendar from "react-calendar";
@@ -84,8 +84,9 @@ const validationSchema = Yup.object().shape({
 
 const AddStaff = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { setLoading, isLoadiing } = useAuth();
+  // const { setLoading, isLoadiing } = useAuth();
   const toast = useToast();
+  const [loading, setLoading] = useState(true);
 
   const [file, setFile] = useState({});
   const [date, setDate] = useState(new Date());
@@ -126,7 +127,7 @@ const AddStaff = (props) => {
     initialValues,
     // validationSchema,
     onSubmit: async (values) => {
-      setLoading(true);
+      setLoading(false);
 
       const formData = new FormData();
 
@@ -177,7 +178,8 @@ const AddStaff = (props) => {
           
           if (response.ok) {
             console.log(data);
-            setLoading(false);
+          setLoading(true);
+
 
             toast({
               position: "top-right",
@@ -198,6 +200,8 @@ const AddStaff = (props) => {
             onClose();
           } else {
             resolve(data);
+          setLoading(true);
+
             toast({
               position: "top-right",
               render: () => (
@@ -215,8 +219,7 @@ const AddStaff = (props) => {
               ),
             });
             setLoading(false);
-            // console.log(data.message);
-            // console.log(data);
+            
             // throw new Error(data.message);
           }
         } catch (error) {
@@ -283,7 +286,7 @@ const AddStaff = (props) => {
         <form className=" py-6" onSubmit={formik.handleSubmit}>
           <div className="flex justify-between ">
             <p className="font-[500] text-[22px]">Add Staff</p>
-            {!isLoadiing ? (
+            {loading ? (
               <button
                 type="submit"
                 className="px-5 py-2 text-white bg-primary h-fit border-2 border-primary rounded-lg"
@@ -291,18 +294,8 @@ const AddStaff = (props) => {
                 Save information
               </button>
             ) : (
-              <Button
-                isLoading
-                // loadingText="Please wait"
-                colorScheme="primary"
-                variant="outline"
-                spinnerPlacement="end"
-                width={""}
-                mt={4}
-                py={4}
-              >
-                Continue
-              </Button>
+              <Spinner mr={14} color="primary" size="sm" />
+             
             )}
           </div>
 

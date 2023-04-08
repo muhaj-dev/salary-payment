@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import useFetch from "../API/useFetch";
-import { useToast, Flex } from "@chakra-ui/react";
+import { useToast, Flex, Spinner } from "@chakra-ui/react";
 import Calendar from "react-calendar";
 import { BsCheckCircleFill } from "react-icons/bs";
-import { MdOutlineContentCopy } from 'react-icons/md'
+import { MdOutlineContentCopy } from "react-icons/md";
 import { useDisclosure, Input } from "@chakra-ui/react";
 import ModalWrapper from "../../common/ModalWrapper";
 import { CiCalendar } from "react-icons/ci";
@@ -18,8 +18,7 @@ const CreateReport = () => {
   );
   const members = data;
   const toast = useToast();
-  console.log(members);
-
+  const [loading, setLoading] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [salary, setSetSalary] = useState("");
   const [wallet, setWallet] = useState();
@@ -29,20 +28,16 @@ const CreateReport = () => {
 
   const [date, setDate] = useState(new Date());
 
-  const [selectedDate, setSelectedDate] = useState("212222");
   const [isCalendar, setIsCalendar] = useState(false);
 
   const [copyText, setCopyText] = useState("");
 
-  // function handleCopy() {
-  //   navigator.clipboard.writeText(copyText);
-  // }
   // Date
 
   // For Team Lead
 
-  const handleSelectLead = (leadId) => {
-    setSelectedLead(leadId);
+  const handleSelectLead = (userId) => {
+    setSelectedLead(userId);
   };
 
   const handleSearchLead = (event) => {
@@ -53,9 +48,9 @@ const CreateReport = () => {
     lead.full_name.toLowerCase().includes(searchLead.toLowerCase())
   );
 
-  function handleChange(event) {
-    setWallet(event.target.value);
-  }
+  // function handleChange(event) {
+  //   setWallet(event.target.value);
+  // }
   //textarea
 
   const handleSalary = (e) => {
@@ -82,40 +77,86 @@ const CreateReport = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const team = {
+    let userId = selectedLead[0];
+    let createdDate = date;
+
+    setLoading(false);
+    const records = {
       salary,
       transaction_url,
-      date,
+      createdDate,
+      userId,
     };
-    console.log(team);
+    console.log(records);
 
-    let token = localStorage.getItem("lorchaintoken");
+    return new Promise(async (resolve, reject) => {
+      let token = localStorage.getItem("lorchaintoken");
 
-    fetch(`${process.env.REACT_APP_LORCHAIN_API}/records`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(team),
-    }).then((data) => {
-      toast({
-        position: "top-right",
-        render: () => (
-          <Flex
-            color="primary"
-            p={3}
-            bg="white"
-            w="fit-content"
-            className="gap-2  items-center font-semibold shadow-card "
-            rounded={"md"}
-          >
-            <BsCheckCircleFill className="text-[#16A34A] " />
-            Staff report created successfuly
-          </Flex>
-        ),
-      });
-      onClose();
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_LORCHAIN_API}/records`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(records),
+          }
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+          console.log(data);
+          setLoading(true);
+
+          toast({
+            position: "top-right",
+            render: () => (
+              <Flex
+                color="primary"
+                p={3}
+                bg="white"
+                w="fit-content"
+                className="gap-2  items-center font-semibold shadow-card "
+                rounded={"md"}
+              >
+                <BsCheckCircleFill className="text-[#16A34A] " />
+                Report successfuly created
+              </Flex>
+            ),
+          });
+          onClose();
+        } else {
+          resolve(data);
+          setLoading(true);
+
+          toast({
+            position: "top-right",
+            render: () => (
+              <Flex
+                color="white"
+                p={3}
+                bg="red"
+                w="fit-content"
+                className="gap-2 items-center font-semibold shadow-card "
+                rounded={"md"}
+              >
+                <BsCheckCircleFill className="text-white " />
+                {data.message}
+              </Flex>
+            ),
+          });
+          
+          throw new Error(data.message);
+        }
+      } catch (error) {
+        reject(error);
+
+        // console.error(error.message);
+        // console.error(error);
+        throw error;
+      }
     });
   };
 
@@ -137,12 +178,16 @@ const CreateReport = () => {
           <div className="relative">
             <div className="flex justify-between mt-3 ">
               <p className="font-[500] text-[22px]"> Record payment</p>
-              <button
-                type="submit"
-                className="px-5 py-1 text-white bg-primary h-fit border-2 border-primary rounded-lg"
-              >
-                Save payment
-              </button>
+              {loading ? (
+                <button
+                  type="submit"
+                  className="px-5 py-1 text-white bg-primary h-fit border-2 border-primary rounded-lg"
+                >
+                  Save payment
+                </button>
+              ) : (
+                <Spinner mr={14} color="primary" size="sm" />
+              )}
             </div>
 
             <div className="mt-6 w-full relative">
@@ -242,24 +287,23 @@ const CreateReport = () => {
                       onChange={(e) => {
                         setCopyText(e.target.value);
                         setWallet(e.target?.selectedLead[5]);
-                        
                       }}
                     />
                     <CopyToClipboard
-                    className='absolute cursor-pointer top-3 right-2 bg-white w-[10%] h-[60%]'
-                   
+                      className="absolute cursor-pointer top-3 right-2 bg-white w-[10%] h-[60%]"
                       text={selectedLead[5] ? selectedLead[5] : ""}
                     >
-                      <MdOutlineContentCopy 
-                       onClick={() =>
-                        toast({
-                          title: 'Wallet copied',
-                          status: 'success',
-                          duration: 2000,
-                          isClosable: true,
-                        })
-                      }
-                      className="p-2 bg-white" />
+                      <MdOutlineContentCopy
+                        onClick={() =>
+                          toast({
+                            title: "Wallet copied",
+                            status: "success",
+                            duration: 2000,
+                            isClosable: true,
+                          })
+                        }
+                        className="p-2 bg-white"
+                      />
                     </CopyToClipboard>
                   </div>
                 </>
