@@ -3,14 +3,18 @@ import ActivityLog from "../components/ActivityLog";
 import ActivityTable from "../components/ActivityTable";
 import PageHoc from "../components/PageHoc";
 // import Pagination from "../common/Pagination";
-import { Spinner } from "@chakra-ui/react";
+import { Spinner, Select } from "@chakra-ui/react";
 import useFetch from "../components/API/useFetch";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { Pagination } from "antd";
 
 const Dashboard = () => {
-  const [postsPerPage] = useState(8);
+  const { data, pending, error } = useFetch(
+    `${process.env.REACT_APP_LORCHAIN_API}/activities`
+  );
+
+  const [postsPerPage, setPostsPerPage] = useState(8);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -23,9 +27,9 @@ const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isCalendar, setIsCalendar] = useState(false);
 
-  const { data, pending, error } = useFetch(
-    `${process.env.REACT_APP_LORCHAIN_API}/activities`
-  );
+  const handleSelectChange = (e) => {
+    setPostsPerPage(parseInt(e.target.value));
+  };
 
   const generatePDF = () => {
     // Get the table element
@@ -85,6 +89,9 @@ const Dashboard = () => {
     uniqueUsers?.map((user) => ({ label: user, value: user }))
   );
 
+  // this is the part to make changes
+
+  // let list = [...data]?.reverse();
   let list = data;
   if (searchTerm) {
     list = filteredData;
@@ -118,7 +125,7 @@ const Dashboard = () => {
   }, [currentPage, itemsPerPage, list]);
 
   return (
-    <div className="w-full bg-white rounded-[10px] p-6 mt-14">
+    <div className="relative w-full bg-white rounded-[10px] p-6 mt-14">
       <ActivityLog
         searchTerm={searchTerm}
         handleSearch={handleSearch}
@@ -134,7 +141,13 @@ const Dashboard = () => {
 
       <br />
 
-      <ActivityTable currentPosts={currentPosts} />
+      {currentPosts?.length === 0 ? (
+        <div className="text-primary font-semibold mt-20 text-[18px] itallic text-center">
+          You have no records
+        </div>
+      ) : (
+        <ActivityTable currentPosts={currentPosts} />
+      )}
       {pending && (
         <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
           <Spinner
@@ -151,6 +164,7 @@ const Dashboard = () => {
           There is an error in the server. pls check back later...
         </div>
       )}
+
       <br />
       <br />
       {!pending && (
@@ -162,15 +176,30 @@ const Dashboard = () => {
         //   paginateFront={paginateFront}
         //   paginate={paginate}
         // />
+        <div className="flex justify-between ">
+          <div className="flex gap-2">
+            <label htmlFor="posts-per-page">Show:</label>
+            <Select
+              id="posts-per-page"
+              value={postsPerPage}
+              onChange={handleSelectChange}
+            >
+              <option value="8">8</option>
+              <option value="12">12</option>
+              <option value="16">16</option>
+              <option value="4">20</option>
+            </Select>
+          </div>
 
-        <Pagination
-          defaultCurrent={1}
-          currentPage={currentPage}
-          total={list?.length}
-          pageSize={itemsPerPage}
-          onShowSizeChange={handlePageSizeChange}
-          onChange={handlePageChange}
-        />
+          <Pagination
+            defaultCurrent={1}
+            currentPage={currentPage}
+            total={list?.length}
+            pageSize={itemsPerPage}
+            onShowSizeChange={handlePageSizeChange}
+            onChange={handlePageChange}
+          />
+        </div>
       )}
     </div>
   );

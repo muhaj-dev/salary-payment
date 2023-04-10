@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useFetch from "../API/useFetch";
-import { useToast, Flex, Spinner } from "@chakra-ui/react";
+import { useToast, Flex, Spinner, Textarea } from "@chakra-ui/react";
 import Calendar from "react-calendar";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { MdOutlineContentCopy } from "react-icons/md";
@@ -20,13 +20,13 @@ const CreateReport = () => {
   const toast = useToast();
   const [loading, setLoading] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [salary, setSetSalary] = useState("");
+  // const [salary, setSalary] = useState("");
   const [wallet, setWallet] = useState();
-  const [selectedLead, setSelectedLead] = useState(null);
+  const [selectedLead, setSelectedLead] = useState([]);
   const [searchLead, setSearchLead] = useState("");
-  const [transaction_url, setTransaction_url] = useState(selectedLead);
-
-  const [date, setDate] = useState(new Date());
+  const [transaction_url, setTransaction_url] = useState('');
+  const [remark, setRemark] = useState("");
+  const [payment_date, setPayment_date] = useState(new Date());
 
   const [isCalendar, setIsCalendar] = useState(false);
 
@@ -39,6 +39,7 @@ const CreateReport = () => {
   const handleSelectLead = (userId) => {
     setSelectedLead(userId);
   };
+ 
 
   const handleSearchLead = (event) => {
     setSearchLead(event.target.value);
@@ -48,16 +49,16 @@ const CreateReport = () => {
     lead.full_name.toLowerCase().includes(searchLead.toLowerCase())
   );
 
-  // function handleChange(event) {
-  //   setWallet(event.target.value);
-  // }
+  function handleRemark(event) {
+    setRemark(event.target.value);
+  }
   //textarea
 
-  const handleSalary = (e) => {
-    e.preventDefault();
-    const inputValue = e.target.value;
-    setSetSalary(inputValue);
-  };
+  // const handleSalary = (e) => {
+  //   e.preventDefault();
+  //   const inputValue = e.target.value;
+  //   setSalary(inputValue);
+  // };
 
   const handleTrans = (e) => {
     e.preventDefault();
@@ -66,28 +67,34 @@ const CreateReport = () => {
   };
 
   const onChange = (date) => {
-    setDate(date);
+    // setDate(date);
+    setPayment_date(date);
   };
 
-  const formattedDate = date.toLocaleString("default", {
+  const formattedDate = payment_date.toLocaleString("default", {
     month: "short",
     day: "numeric",
     year: "numeric",
   });
 
+  
+  // const payment_date
+  const address = selectedLead?.[5];
+  const userId = selectedLead?.[0];
+  const salary = selectedLead?.[6]
+
+  const records = {
+    address,
+    remark,
+    salary,
+    payment_date : payment_date,
+    userId: userId,
+    transaction_url,
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
-    let userId = selectedLead[0];
-    let createdDate = date;
 
     setLoading(false);
-    const records = {
-      salary,
-      transaction_url,
-      createdDate,
-      userId,
-    };
-    console.log(records);
 
     return new Promise(async (resolve, reject) => {
       let token = localStorage.getItem("lorchaintoken");
@@ -98,6 +105,7 @@ const CreateReport = () => {
           {
             method: "POST",
             headers: {
+              "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(records),
@@ -107,7 +115,6 @@ const CreateReport = () => {
         const data = await response.json();
 
         if (response.ok) {
-          console.log(data);
           setLoading(true);
 
           toast({
@@ -147,14 +154,11 @@ const CreateReport = () => {
               </Flex>
             ),
           });
-          
+
           throw new Error(data.message);
         }
       } catch (error) {
         reject(error);
-
-        // console.error(error.message);
-        // console.error(error);
         throw error;
       }
     });
@@ -238,6 +242,7 @@ const CreateReport = () => {
                         user?.image?.url,
                         user?.transaction_url,
                         user?.wallet_address,
+                        user?.salary,
                       ])
                     }
                     className="flex cursor-pointer justify-between mb-3"
@@ -262,33 +267,60 @@ const CreateReport = () => {
           </div>
 
           <div className="flex flex-wrap mb-6 justify-between">
-            <div className="relative mt-6 w-full tablet:w-[47%]">
+            {/* <div className="relative mt-6 w-full tablet:w-[47%]">
               <label className="font-semibold">Salary</label>
               <Input
                 type="number"
                 id="salary"
-                onChange={handleSalary}
-                placeholder="1500"
+                // onChange={handleSalary}
+                value={selectedLead[6]}
+                placeholder="0"
                 mt={1}
                 pl={6}
               />
               <span className="font-bold absolute top-9 left-3">$</span>
+            </div> */}
+            <div className="mt-6  w-full tablet:w-[47%] ">
+              <label className="font-semibold"> Salary </label>
+              {selectedLead?.length >= 7 ? (
+                <>
+                  <div className="relative">
+                    <div className="mt-1 h-[45px] w-full py-2 pl-4 rounded-md border-[2px]"> 
+                    {selectedLead[6] }
+                    </div>
+                    {/* <Input
+                      type="text"
+                      value={selectedLead[6] ? selectedLead[6] : ""}
+                      placeholder="0"
+                      mt={1}
+                      onChange={(e) => {
+                        // setCopyText(e.target.value);
+                        setSalary(e.target?.selectedLead[6]);
+                      }}
+                    /> */}
+                      {/* text={selectedLead[6] ? selectedLead[6] : ""} */}
+                  
+                  </div>
+                </>
+              ) : (
+                <Input
+                  type="text"
+                  // value={selectedLead[5] ? selectedLead[5] : ""}
+                  placeholder="00"
+                  mt={1}
+                />
+              )}
+              {/* <input type="text" value={wallet} onChange={handleChange} /> */}
+              {/* <div>{selectedLead[5]}</div> */}
             </div>
             <div className="mt-6  w-full tablet:w-[47%] ">
               <label className="font-semibold"> Wallet </label>
               {selectedLead?.length >= 6 ? (
                 <>
                   <div className="relative">
-                    <Input
-                      type="text"
-                      value={selectedLead[5] ? selectedLead[5] : ""}
-                      placeholder="0x0ee"
-                      mt={1}
-                      onChange={(e) => {
-                        setCopyText(e.target.value);
-                        setWallet(e.target?.selectedLead[5]);
-                      }}
-                    />
+                  <div className="mt-1 h-[45px] w-full py-2 pl-4 rounded-md border-[2px]"> 
+                    {selectedLead[5] }
+                    </div>
                     <CopyToClipboard
                       className="absolute cursor-pointer top-3 right-2 bg-white w-[10%] h-[60%]"
                       text={selectedLead[5] ? selectedLead[5] : ""}
@@ -342,7 +374,7 @@ const CreateReport = () => {
                     className=" z-10 h-[100vh] w-[105vw] absolute -top-[34vh] right-0 -left-40"
                   />
                   <div className="absolute z-50 top-10 ">
-                    <Calendar onChange={onChange} value={date} />
+                    <Calendar onChange={onChange} value={payment_date} />
                   </div>
                 </>
               )}
@@ -357,6 +389,16 @@ const CreateReport = () => {
                 <div className="relative"></div>
               </div>
             </div>
+          </div>
+          <div>
+            <label htmlFor="my-textarea" className="font-semibold mb-1">Note:</label>
+            <Textarea
+              id="my-textarea"
+              value={remark}
+              onChange={handleRemark}
+              maxLength={30}
+              className="outline w-full block outline-1 rounded-md h-[100px] max-h-[300px]"
+            />
           </div>
         </form>
       </ModalWrapper>

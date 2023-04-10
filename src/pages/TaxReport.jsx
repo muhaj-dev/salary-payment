@@ -40,27 +40,30 @@ const Report = () => {
       doc.save("Tax.pdf");
     });
   };
-  
+
   let teamList = data;
   if (searchTerm) {
-      teamList = filteredData;
-    }
+    teamList = filteredData;
+  }
 
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchTerm(value);
     const results = teamList?.filter((post) =>
-    post?.user?.full_name.toLowerCase().includes(value)
+      post?.user?.full_name.toLowerCase().includes(value)
     );
     setFilteredData(results);
-};
+  };
 
-// Get current posts
+  // Get current posts
 
-const indexOfLastPost = currentPage * postsPerPage;
-const indexOfFirstPost = indexOfLastPost - postsPerPage;
-// const currentPosts = teamList?.slice(indexOfFirstPost, indexOfLastPost);
-  const TeamcurrentPosts = teamList?.records?.slice(indexOfFirstPost, indexOfLastPost);
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  // const currentPosts = teamList?.slice(indexOfFirstPost, indexOfLastPost);
+  const TeamcurrentPosts = teamList?.records?.slice(
+    indexOfFirstPost,
+    indexOfLastPost
+  );
 
   //Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -97,11 +100,16 @@ const indexOfFirstPost = indexOfLastPost - postsPerPage;
         </p>
       </div>
       <br />
-
-      <TaxTable TeamcurrentPosts={TeamcurrentPosts} />
+      {TeamcurrentPosts?.length === 0 ? (
+        <div className="text-primary font-semibold mt-20 text-[18px] itallic text-center">
+          You have no records
+        </div>
+      ) : (
+        <TaxTable TeamcurrentPosts={TeamcurrentPosts} />
+      )}
       {pending && (
         <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
-         <Spinner
+          <Spinner
             thickness="4px"
             speed="0.65s"
             emptyColor="gray.200"
@@ -115,14 +123,16 @@ const indexOfFirstPost = indexOfLastPost - postsPerPage;
           There is an error in the server. pls check back later...
         </div>
       )}
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={teamList?.length}
-        currentPage={currentPage}
-        paginateBack={paginateBack}
-        paginateFront={paginateFront}
-        paginate={paginate}
-      />
+      <div className="flex justify-end">
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={data?.length}
+          currentPage={currentPage}
+          paginateBack={paginateBack}
+          paginateFront={paginateFront}
+          paginate={paginate}
+        />
+      </div>
     </div>
   );
 };

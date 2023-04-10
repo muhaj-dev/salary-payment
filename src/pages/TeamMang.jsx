@@ -16,8 +16,7 @@ const Managment = () => {
   const navigate = useNavigate();
 
   const { data, pending, error } = useFetch(
-    `${process.env.REACT_APP_LORCHAIN_API}/teams`,
-
+    `${process.env.REACT_APP_LORCHAIN_API}/teams`
   );
 
   const handleSearch = (event) => {
@@ -75,10 +74,17 @@ const Managment = () => {
       </div>
 
       <br />
-      <TeamTable TeamcurrentPosts={TeamcurrentPosts} />
+
+      {TeamcurrentPosts?.length === 0 ? (
+        <div className="text-primary font-semibold mt-20 text-[18px] itallic text-center">
+          You have no records
+        </div>
+      ) : (
+        <TeamTable TeamcurrentPosts={TeamcurrentPosts} />
+      )}
       {pending && (
         <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
-           <Spinner
+          <Spinner
             thickness="4px"
             speed="0.65s"
             emptyColor="gray.200"
@@ -92,14 +98,17 @@ const Managment = () => {
           There is an error in the server. pls check back later...
         </div>
       )}
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={teamList?.length}
-        currentPage={currentPage}
-        paginateBack={paginateBack}
-        paginateFront={paginateFront}
-        paginate={paginate}
-      />
+
+      <div className="flex justify-end">
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={data?.length}
+          currentPage={currentPage}
+          paginateBack={paginateBack}
+          paginateFront={paginateFront}
+          paginate={paginate}
+        />
+      </div>
     </div>
   );
 };

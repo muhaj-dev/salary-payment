@@ -27,7 +27,7 @@ const ActivityLog = ({
   const toast = useToast();
 
   return (
-    <div className="flex gap-4 flex-wrap justify-between relative">
+    <div className="flex gap-4 flex-col tablet:flex-row justify-between relative">
       <div>
         <p className="font-[500] text-[20px] laptop:text-[25px]">
           Activity log
@@ -35,7 +35,6 @@ const ActivityLog = ({
         <p className="">
           View and{" "}
           <button className="underline cursor-pointer" 
-          // onClick={generatePDF}
           onClick={() => {
             generatePDF()
             successToastMessage(toast, "Downloaded");
@@ -46,7 +45,7 @@ const ActivityLog = ({
           activity log
         </p>
       </div>
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex gap-3 w-fit ">
         <div className="">
           <Input
             type="text"
@@ -77,7 +76,7 @@ const ActivityLog = ({
             onClick={() => {
               setIsCalendar(true);
             }}
-            className="flex cursor-pointer w-fit  px-2 items-center gap-2 h-[38px] rounded-md  border-2 border-[#EEEEEE]"
+            className="flex cursor-pointer w-[150px]  px-2 items-center gap-2 h-[38px] rounded-md  border-2 border-[#EEEEEE]"
           >
             <CiCalendar className="font-bold" />
             <p className="text-sm tablet:text-[16px] font-semibold">
@@ -89,7 +88,7 @@ const ActivityLog = ({
             onClick={() => {
               setIsCalendar(false);
             }}
-            className="flex cursor-pointer w-fit  px-2 items-center gap-2 h-[38px] rounded-md  border-2 border-[#EEEEEE]"
+            className="flex cursor-pointer  w-[150px]  px-2 items-center gap-2 h-[38px] rounded-md  border-2 border-[#EEEEEE]"
           >
             <CiCalendar className="font-bold" />
             <p className="text-sm tablet:text-[16px] font-semibold">

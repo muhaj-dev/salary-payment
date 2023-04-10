@@ -218,12 +218,12 @@ const AddStaff = (props) => {
                 </Flex>
               ),
             });
-            setLoading(false);
+            setLoading(true);
             
             // throw new Error(data.message);
           }
         } catch (error) {
-          setLoading(false);
+          // setLoading(false);
           reject(error);
 
           // console.error(error.message);

@@ -32,7 +32,15 @@ const Permission = () => {
     <div className="bg-white px-8 mt-16 py-8">
       <PermissionLog />
       <br />
+      { currentPosts?.length === 0 ? (
+        <div className="text-primary font-semibold mt-20 text-[18px] itallic text-center">
+          You have no records
+        </div>
+      ) : (
+      
       <PermissionTable currentPosts={currentPosts} />
+      )}
+      
       {pending && (
         <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
            <Spinner
@@ -49,6 +57,8 @@ const Permission = () => {
           There is an error in the server. pls check back later...
         </div>
       )}
+      <div className="flex justify-end">
+
       <Pagination
         postsPerPage={postsPerPage}
         totalPosts={data?.length}
@@ -57,6 +67,7 @@ const Permission = () => {
         paginateFront={paginateFront}
         paginate={paginate}
       />
+      </div>
     </div>
   );
 };

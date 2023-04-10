@@ -9,6 +9,7 @@ import {
   TableContainer,
   Checkbox,
 } from "@chakra-ui/react";
+import { BsArrowUpShort } from 'react-icons/bs'
 import { Link } from "react-router-dom";
 
 const table = [
@@ -23,7 +24,7 @@ const table = [
   {
     id: 3,
     head: "Time & Date",
-    img: arrowDown
+    // img: arrowDown
   },
   {
     id: 4,

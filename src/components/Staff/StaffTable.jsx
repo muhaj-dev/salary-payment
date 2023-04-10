@@ -1,10 +1,5 @@
-import React , { useState }from "react";
+import React from "react";
 import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Button,
   Table,
   Thead,
   Tbody,
@@ -13,7 +8,6 @@ import {
   TableContainer,
   Checkbox,
 } from "@chakra-ui/react";
-import { BsThreeDotsVertical } from "react-icons/bs";
 
 
 const table = [

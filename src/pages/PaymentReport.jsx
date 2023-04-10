@@ -9,7 +9,6 @@ import RepoLog from "../components/Report/RepoLog";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
-
 const PaymentReport = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
@@ -18,8 +17,7 @@ const PaymentReport = () => {
   const navigate = useNavigate();
 
   const { data, pending, error } = useFetch(
-    `${process.env.REACT_APP_LORCHAIN_API}/records`,
-
+    `${process.env.REACT_APP_LORCHAIN_API}/records`
   );
 
   const generatePDF = () => {
@@ -49,18 +47,15 @@ const PaymentReport = () => {
   if (searchTerm) {
     list = filteredData;
   }
-  
+
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchTerm(value);
-    const results = list?.filter(
-      (post) =>
-      post?.user.full_name.toLowerCase().includes(value) 
+    const results = list?.filter((post) =>
+      post?.user.full_name.toLowerCase().includes(value)
     );
     setFilteredData(results);
   };
-
-
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -73,7 +68,12 @@ const PaymentReport = () => {
 
   return (
     <div className="w-full bg-white rounded-[10px] p-6 mt-14">
-      <RepoLog generatePDF={generatePDF} searchTerm={searchTerm} handleSearch={handleSearch} placeholder={"Search with name"} />
+      <RepoLog
+        generatePDF={generatePDF}
+        searchTerm={searchTerm}
+        handleSearch={handleSearch}
+        placeholder={"Search with name"}
+      />
       <br />
       <div className=" w-[97%] mx-auto flex gap-3 tablet:gap-4 items-center ">
         <p
@@ -95,8 +95,13 @@ const PaymentReport = () => {
         </p>
       </div>
       <br />
-
-      <PaymentTable currentPosts={currentPosts} />
+      {currentPosts?.length === 0 ? (
+        <div className="text-primary font-semibold mt-20 text-[18px] itallic text-center">
+          You have no records
+        </div>
+      ) : (
+        <PaymentTable currentPosts={currentPosts} />
+      )}
       {pending && (
         <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
           <Spinner
@@ -113,14 +118,16 @@ const PaymentReport = () => {
           There is an error in the server. pls check back later...
         </div>
       )}
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={data?.length}
-        currentPage={currentPage}
-        paginateBack={paginateBack}
-        paginateFront={paginateFront}
-        paginate={paginate}
-      />
+      <div className="flex justify-end">
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={data?.length}
+          currentPage={currentPage}
+          paginateBack={paginateBack}
+          paginateFront={paginateFront}
+          paginate={paginate}
+        />
+      </div>
     </div>
   );
 };

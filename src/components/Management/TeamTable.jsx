@@ -43,7 +43,7 @@ const table = [
   {
     id: 5,
     head: "Date Created",
-    img: arrowDown,
+    // img: arrowDown,
   },
   {
     id: 6,

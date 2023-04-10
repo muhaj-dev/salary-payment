@@ -36,19 +36,19 @@ const table = [
   {
     id: 4,
     head: "Tax paid",
-    img: arrowDown,
+    // img: arrowDown,
 
   },
   {
     id: 5,
     head: "Total tax",
-    img: arrowDown,
+    // img: arrowDown,
 
   },
   {
     id: 6,
     head: "Salary",
-    img: arrowDown,
+    // img: arrowDown,
 
   },
   {

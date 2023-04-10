@@ -7,7 +7,6 @@ import Pagination from "../common/Pagination";
 import StaffTable from "../components/Management/StaffTable";
 import useFetch from "../components/API/useFetch";
 
-
 const Managment = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,8 +15,7 @@ const Managment = () => {
   const navigate = useNavigate();
 
   const { data, pending, error } = useFetch(
-    `${process.env.REACT_APP_LORCHAIN_API}/users`,
-
+    `${process.env.REACT_APP_LORCHAIN_API}/users`
   );
   // console.log(data)
 
@@ -26,9 +24,8 @@ const Managment = () => {
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchTerm(value);
-    const results = data?.filter(
-      (post) =>
-      post.full_name.toLowerCase().includes(value) 
+    const results = data?.filter((post) =>
+      post.full_name.toLowerCase().includes(value)
     );
     setFilteredData(results);
   };
@@ -46,11 +43,14 @@ const Managment = () => {
   const paginateFront = () => setCurrentPage(currentPage + 1);
   const paginateBack = () => setCurrentPage(currentPage - 1);
 
-
   return (
     <div className="w-full bg-white rounded-[10px] p-6 mt-14">
-      <MangLog searchTerm={searchTerm} handleSearch={handleSearch} placeholder={"Search with Staff name"} />
-    
+      <MangLog
+        searchTerm={searchTerm}
+        handleSearch={handleSearch}
+        placeholder={"Search with Staff name"}
+      />
+
       <br />
 
       <div className=" w-[97%] mx-auto flex gap-3 tablet:gap-4 items-center ">
@@ -74,10 +74,16 @@ const Managment = () => {
       </div>
       <br />
 
-      <StaffTable currentPosts={currentPosts} />
+      {currentPosts?.length === 0 ? (
+        <div className="text-primary font-semibold mt-20 text-[18px] itallic text-center">
+          You have no records
+        </div>
+      ) : (
+        <StaffTable currentPosts={currentPosts} />
+      )}
       {pending && (
         <div className=" italic my-20 text-center bg-[red-500] font-semibold text-[20px]">
-           <Spinner
+          <Spinner
             thickness="4px"
             speed="0.65s"
             emptyColor="gray.200"
@@ -91,14 +97,16 @@ const Managment = () => {
           There is an error in the server. pls check back later...
         </div>
       )}
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={list?.length}
-        currentPage={currentPage}
-        paginateBack={paginateBack}
-        paginateFront={paginateFront}
-        paginate={paginate}
-      />
+      <div className="flex justify-end">
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={data?.length}
+          currentPage={currentPage}
+          paginateBack={paginateBack}
+          paginateFront={paginateFront}
+          paginate={paginate}
+        />
+      </div>
     </div>
   );
 };

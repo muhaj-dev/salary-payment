@@ -37,7 +37,7 @@ const table = [
   {
     id: 4,
     head: "Date Stated",
-    img: arrowDown,
+    // img: arrowDown,
   },
   {
     id: 5,
@@ -46,7 +46,7 @@ const table = [
   {
     id: 6,
     head: "Salary",
-    img: arrowDown,
+    // img: arrowDown,
   },
   {
     id: 7,

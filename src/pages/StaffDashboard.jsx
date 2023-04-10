@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import StaffHoc from "../components/Staff/StaffHoc";
 import Pagination from "../common/Pagination";
 import StaffLog from "../components/Staff/StaffLog";
-import { Spinner } from "@chakra-ui/react";
+import { Spinner, Select } from "@chakra-ui/react";
 import StaffTable from "../components/Staff/StaffTable";
 import useFetch from "../components/API/useFetch";
 import { useAuth } from "../components/API/AuthContext";
@@ -14,7 +14,8 @@ const StaffDashboard = () => {
   const user = JSON.parse(userDetails);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(5);
+  const [postsPerPage, setPostsPerPage] = useState(5);
+
 
   // const userDetails = localStorage.getItem("user_details");
   // const user = JSON.parse(userDetails);
@@ -22,6 +23,10 @@ const StaffDashboard = () => {
   const { data, pending, error } = useFetch(
     `${process.env.REACT_APP_LORCHAIN_API}/records/user/${user._id}`
   );
+
+  const handleSelectChange = (e) => {
+    setPostsPerPage(parseInt(e.target.value));
+  };
 
   const generatePDF = () => {
     // Get the table element
@@ -51,13 +56,6 @@ const StaffDashboard = () => {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = list?.slice(indexOfFirstPost, indexOfLastPost);
 
-  // if (!currentPosts || currentPosts?.length === 0) {
-  //   return (
-  //     <div className="text-primary font-semibold mt-36 text-[18px] itallic text-center">
-  //       You have no records
-  //     </div>
-  //   );
-  // }
   //Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const paginateFront = () => setCurrentPage(currentPage + 1);
@@ -68,7 +66,7 @@ const StaffDashboard = () => {
       <StaffLog generatePDF={generatePDF} />
       <br />
       <br />
-      {!currentPosts || currentPosts?.length === 0 ? (
+      {currentPosts?.length === 0 ? (
         <div className="text-primary font-semibold mt-20 text-[18px] itallic text-center">
           You have no records
         </div>
@@ -92,14 +90,31 @@ const StaffDashboard = () => {
           There is an error in the server. pls check back later...
         </div>
       )}
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={list?.length}
-        currentPage={currentPage}
-        paginateBack={paginateBack}
-        paginateFront={paginateFront}
-        paginate={paginate}
-      />
+
+      <div className="flex justify-between ">
+        <div className="flex gap-2">
+          <label htmlFor="posts-per-page">Show:</label>
+          <Select
+            id="posts-per-page"
+            value={postsPerPage}
+            onChange={handleSelectChange}
+          >
+            <option value="8">3</option>
+            <option value="12">6</option>
+            <option value="16">10</option>
+            <option value="4">20</option>
+          </Select>
+        </div>
+
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={list?.length}
+          currentPage={currentPage}
+          paginateBack={paginateBack}
+          paginateFront={paginateFront}
+          paginate={paginate}
+        />
+      </div>
     </div>
   );
 };

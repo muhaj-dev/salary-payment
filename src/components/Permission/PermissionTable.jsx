@@ -71,7 +71,7 @@ const PermissionTable = ({ currentPosts }) => {
           </Thead>
           <Tbody>
             {adminPermit?.map((item) => (
-              <Tr key={item.id}>
+              <Tr key={item._id}>
                 <Td>
                   <Checkbox
                     isChecked={checkedItems[item.id]}
