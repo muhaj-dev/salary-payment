@@ -24,7 +24,7 @@ const CreateReport = () => {
   const [wallet, setWallet] = useState();
   const [selectedLead, setSelectedLead] = useState([]);
   const [searchLead, setSearchLead] = useState("");
-  const [transaction_url, setTransaction_url] = useState('');
+  const [transaction_url, setTransaction_url] = useState("");
   const [remark, setRemark] = useState("");
   const [payment_date, setPayment_date] = useState(new Date());
 
@@ -39,7 +39,6 @@ const CreateReport = () => {
   const handleSelectLead = (userId) => {
     setSelectedLead(userId);
   };
- 
 
   const handleSearchLead = (event) => {
     setSearchLead(event.target.value);
@@ -77,17 +76,16 @@ const CreateReport = () => {
     year: "numeric",
   });
 
-  
   // const payment_date
   const address = selectedLead?.[5];
   const userId = selectedLead?.[0];
-  const salary = selectedLead?.[6]
+  const salary = selectedLead?.[6];
 
   const records = {
     address,
     remark,
     salary,
-    payment_date : payment_date,
+    payment_date: payment_date,
     userId: userId,
     transaction_url,
   };
@@ -285,8 +283,8 @@ const CreateReport = () => {
               {selectedLead?.length >= 7 ? (
                 <>
                   <div className="relative">
-                    <div className="mt-1 h-[45px] w-full py-2 pl-4 rounded-md border-[2px]"> 
-                    {selectedLead[6] }
+                    <div className="mt-1 h-[45px] w-full py-2 pl-4 rounded-md border-[2px]">
+                      {selectedLead[6]}
                     </div>
                     {/* <Input
                       type="text"
@@ -298,8 +296,7 @@ const CreateReport = () => {
                         setSalary(e.target?.selectedLead[6]);
                       }}
                     /> */}
-                      {/* text={selectedLead[6] ? selectedLead[6] : ""} */}
-                  
+                    {/* text={selectedLead[6] ? selectedLead[6] : ""} */}
                   </div>
                 </>
               ) : (
@@ -310,20 +307,15 @@ const CreateReport = () => {
                   mt={1}
                 />
               )}
-              {/* <input type="text" value={wallet} onChange={handleChange} /> */}
-              {/* <div>{selectedLead[5]}</div> */}
             </div>
             <div className="mt-6  w-full tablet:w-[47%] ">
               <label className="font-semibold"> Wallet </label>
               {selectedLead?.length >= 6 ? (
                 <>
                   <div className="relative">
-                  <div className="mt-1 h-[45px] w-full py-2 pl-4 rounded-md border-[2px]"> 
-                    {selectedLead[5]?.slice(0, 5)}...
-                        {selectedLead[5]?.slice(
-                          -4,
-                          selectedLead[5].length
-                        )}
+                    <div className="mt-1 h-[45px] w-full py-2 pl-4 rounded-md border-[2px]">
+                      {selectedLead[5]?.slice(0, 5)}...
+                      {selectedLead[5]?.slice(-4, selectedLead[5].length)}
                     </div>
                     <CopyToClipboard
                       className="absolute cursor-pointer top-3 right-2 bg-white w-[10%] h-[60%]"
@@ -351,8 +343,6 @@ const CreateReport = () => {
                   mt={1}
                 />
               )}
-              {/* <input type="text" value={wallet} onChange={handleChange} /> */}
-              {/* <div>{selectedLead[5]}</div> */}
             </div>
             <div className="mt-6 w-full tablet:w-[47%]">
               <label className="font-semibold">Transaction link</label>
@@ -378,7 +368,15 @@ const CreateReport = () => {
                     className=" z-10 h-[100vh] w-[105vw] absolute -top-[34vh] right-0 -left-40"
                   />
                   <div className="absolute z-50 top-[40%] ">
-                    <Calendar onChange={onChange} value={payment_date} />
+                    <div className="absolute z-40">
+                      <Calendar onChange={onChange} value={payment_date} />
+                    </div>
+                    <div
+                      onClick={() => {
+                        setIsCalendar(false);
+                      }}
+                      className=" absolute -left-[45vw] -top-[38vh] w-[95vw] h-[95vh]"
+                    />
                   </div>
                 </>
               )}
@@ -394,8 +392,10 @@ const CreateReport = () => {
               </div>
             </div>
           </div>
-          <div className='mb-6'>
-            <label htmlFor="my-textarea" className="font-semibold mb-1">Note:</label>
+          <div className="mb-6">
+            <label htmlFor="my-textarea" className="font-semibold mb-1">
+              Note:
+            </label>
             <Textarea
               id="my-textarea"
               value={remark}
