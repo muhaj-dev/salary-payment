@@ -177,8 +177,8 @@ const Dashboard = () => {
         //   paginate={paginate}
         // />
         <div className="flex justify-between ">
-          <div className="flex gap-2">
-            <label htmlFor="posts-per-page">Show:</label>
+          <div className="flex gap-2 items-center">
+            <label htmlFor="posts-per-page" className='font-semibold ' >Show:</label>
             <Select
               id="posts-per-page"
               value={postsPerPage}
