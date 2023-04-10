@@ -373,7 +373,7 @@ const CreateReport = () => {
                     }}
                     className=" z-10 h-[100vh] w-[105vw] absolute -top-[34vh] right-0 -left-40"
                   />
-                  <div className="absolute z-50 top-10 ">
+                  <div className="absolute z-50 top-[40%] ">
                     <Calendar onChange={onChange} value={payment_date} />
                   </div>
                 </>
@@ -390,7 +390,7 @@ const CreateReport = () => {
               </div>
             </div>
           </div>
-          <div>
+          <div className='mb-6'>
             <label htmlFor="my-textarea" className="font-semibold mb-1">Note:</label>
             <Textarea
               id="my-textarea"
