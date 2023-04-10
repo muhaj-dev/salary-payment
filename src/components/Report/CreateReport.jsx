@@ -319,7 +319,11 @@ const CreateReport = () => {
                 <>
                   <div className="relative">
                   <div className="mt-1 h-[45px] w-full py-2 pl-4 rounded-md border-[2px]"> 
-                    {selectedLead[5] }
+                    {selectedLead[5]?.slice(0, 5)}...
+                        {selectedLead[5]?.slice(
+                          -4,
+                          selectedLead[5].length
+                        )}
                     </div>
                     <CopyToClipboard
                       className="absolute cursor-pointer top-3 right-2 bg-white w-[10%] h-[60%]"

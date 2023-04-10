@@ -41,7 +41,7 @@ const Card = () => {
     <div className="w-full  bg-white rounded-[10px] p-6">
       <div className="flex justify-around gap-y-3 flex-wrap ">
         {cards.map((item) => (
-          <div key={item.id} className="rounded-lg p-5 shadow-card w-[200px] laptop:w-[30%]">
+          <div key={item.id} className="rounded-lg p-5 shadow-card w-full tablet:w-[47%] laptop:w-[30%]">
             <div>
                 <p className="mb-1 text-[14px]  laptop:text-[18px]">{item?.title}</p>
                 <div className="flex items-center">

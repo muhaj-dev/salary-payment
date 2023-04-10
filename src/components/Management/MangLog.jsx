@@ -13,7 +13,7 @@ const MangLog = ({ searchTerm, handleSearch, placeholder }) => {
           Staff Management
         </p>
       </div>
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3 ">
         <div className="flex relative">
           <ImSearch className="relative top-3 h-[16px] w-[30px] left-[32px] text-[#B9BBBE] " />
           <Input
@@ -30,7 +30,7 @@ const MangLog = ({ searchTerm, handleSearch, placeholder }) => {
             alt=""
           />
         </div>
-        <div className="flex gap-3 ">
+        <div className="flex gap-3  ">
           <CreateTeam />
           <AddStaff />
         </div>
