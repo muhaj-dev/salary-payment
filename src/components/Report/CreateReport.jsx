@@ -20,7 +20,7 @@ const CreateReport = () => {
   const toast = useToast();
   const [loading, setLoading] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // const [salary, setSalary] = useState("");
+  const [salary, setSalary] = useState("");
   const [wallet, setWallet] = useState();
   const [selectedLead, setSelectedLead] = useState([]);
   const [searchLead, setSearchLead] = useState("");
@@ -66,7 +66,6 @@ const CreateReport = () => {
   };
 
   const onChange = (date) => {
-    // setDate(date);
     setPayment_date(date);
   };
 
@@ -76,10 +75,9 @@ const CreateReport = () => {
     year: "numeric",
   });
 
-  // const payment_date
+
   const address = selectedLead?.[5];
   const userId = selectedLead?.[0];
-  const salary = selectedLead?.[6];
 
   const records = {
     address,
@@ -265,48 +263,19 @@ const CreateReport = () => {
           </div>
 
           <div className="flex flex-wrap mb-6 justify-between">
-            {/* <div className="relative mt-6 w-full tablet:w-[47%]">
-              <label className="font-semibold">Salary</label>
-              <Input
-                type="number"
-                id="salary"
-                // onChange={handleSalary}
-                value={selectedLead[6]}
-                placeholder="0"
-                mt={1}
-                pl={6}
-              />
-              <span className="font-bold absolute top-9 left-3">$</span>
-            </div> */}
             <div className="mt-6  w-full tablet:w-[47%] ">
               <label className="font-semibold"> Salary </label>
-              {selectedLead?.length >= 7 ? (
-                <>
-                  <div className="relative">
-                    <div className="mt-1 h-[45px] w-full py-2 pl-4 rounded-md border-[2px]">
-                      {selectedLead[6]}
-                    </div>
-                    {/* <Input
-                      type="text"
-                      value={selectedLead[6] ? selectedLead[6] : ""}
-                      placeholder="0"
-                      mt={1}
-                      onChange={(e) => {
-                        // setCopyText(e.target.value);
-                        setSalary(e.target?.selectedLead[6]);
-                      }}
-                    /> */}
-                    {/* text={selectedLead[6] ? selectedLead[6] : ""} */}
-                  </div>
-                </>
-              ) : (
+              <div className="relative">
                 <Input
-                  type="text"
-                  // value={selectedLead[5] ? selectedLead[5] : ""}
-                  placeholder="00"
+                  type="number"
+                  value={salary}
+                  placeholder="0"
                   mt={1}
+                  onChange={(e) => {
+                    setSalary(e.target.value);
+                  }}
                 />
-              )}
+              </div>
             </div>
             <div className="mt-6  w-full tablet:w-[47%] ">
               <label className="font-semibold"> Wallet </label>
@@ -338,7 +307,6 @@ const CreateReport = () => {
               ) : (
                 <Input
                   type="text"
-                  // value={selectedLead[5] ? selectedLead[5] : ""}
                   placeholder="0x0ee"
                   mt={1}
                 />
@@ -375,7 +343,7 @@ const CreateReport = () => {
                       onClick={() => {
                         setIsCalendar(false);
                       }}
-                      className=" absolute -left-[45vw] -top-[38vh] w-[95vw] h-[95vh]"
+                      className=" absolute -left-[7vw] tablet:-left-[52vw] -top-[40vh] tablet:-top-[38vh] w-[99vw] h-[95vh]"
                     />
                   </div>
                 </>
