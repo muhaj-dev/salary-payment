@@ -14,8 +14,8 @@ const RepoLog = ({ searchTerm, generatePDF, handleSearch, placeholder }) => {
       <div>
         <p className="font-[500] text-[20px] laptop:text-[25px]">Report</p>
       </div>
-      <div className="flex gap-3">
-        <div className="flex relative">
+      <div className="flex mt-3  flex-wrap gap-3">
+        <div className="flex  relative ">
           <ImSearch className="relative top-3.5 h-[16px] w-[30px] left-[32px] text-[#B9BBBE] " />
           <Input
             type="text"

@@ -93,7 +93,10 @@ const ActivityTable = ({ currentPosts }) => {
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td className=" text-[14px] ">{item?.user?._id}</Td>
+                <Td className=" text-[14px] ">
+                  {}
+                  {item?.user?._id?.slice(0, 5)}
+                  </Td>
                 <Td>
                   <p className="font-semibold text-[14px] mb-1">
                     {item?.user?.full_name}
@@ -110,7 +113,7 @@ const ActivityTable = ({ currentPosts }) => {
                     >
                       {item.user.email}
                     </Link>
-                    <p className=" text-[14px] "> - {item?.permission === null ? "Staff" : "Admin"}</p>
+                    <p className=" text-[14px] "> - {item?.permission === undefined ? "Staff" : "Admin"}</p>
                   </div>
                 </Td>
                 <Td className=" text-[14px] ">{formatDate(item.time)} </Td>

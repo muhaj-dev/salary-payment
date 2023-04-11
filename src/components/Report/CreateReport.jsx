@@ -336,7 +336,7 @@ const CreateReport = () => {
                     className=" z-10 h-[100vh] w-[105vw] absolute -top-[34vh] right-0 -left-40"
                   />
                   <div className="absolute z-50 top-[40%] ">
-                    <div className="absolute z-40">
+                    <div className="absolute z-40 top-[10vh] tablet:top-0 tablet:-left-20">
                       <Calendar onChange={onChange} value={payment_date} />
                     </div>
                     <div

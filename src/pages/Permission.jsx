@@ -9,7 +9,7 @@ import useFetch from "../components/API/useFetch";
 
 const Permission = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(5);
+  const [postsPerPage] = useState(8);
 
   const { data, pending, error } = useFetch(
     `${process.env.REACT_APP_LORCHAIN_API}/users`,

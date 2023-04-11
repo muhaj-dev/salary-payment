@@ -31,7 +31,7 @@ const PermissionCard = () => {
       )}
       {permissions && (
         <div className="flex justify-around gap-y-3 flex-wrap ">
-          <div className="rounded-lg p-5 shadow-card w-[200px] laptop:w-[30%]">
+          <div className="rounded-lg p-5 shadow-card w-full tablet:w-[47%] laptop:w-[30%]">
             <div>
               <p className="mb-1 text-[14px] laptop:text-[18px]">
                 Total Permission
@@ -65,8 +65,9 @@ const PermissionCard = () => {
           {permissions.map((permission) => (
             <div
               key={permission._id}
-              className="rounded-lg p-5 shadow-card w-[200px] laptop:w-[30%]"
-            >
+              className="rounded-lg p-5 shadow-card w-full tablet:w-[47%] laptop:w-[30%]"
+              >
+            
               <div>
                 <p className="mb-1 text-[14px] laptop:text-[18px]">
                   {capitalize(permission.name)}

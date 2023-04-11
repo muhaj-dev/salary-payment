@@ -125,7 +125,7 @@ const PaymentTable = ({ currentPosts }) => {
                 </Td>
                 <Td>
                 <a href={item.transaction_url} target='_blank'  rel="noreferrer"  className="underline">
-                  #{item._id}
+                  #{item?._id?.slice(0, 5)}
                   </a>
                 </Td>
                 <Td>

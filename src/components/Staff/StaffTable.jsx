@@ -80,7 +80,9 @@ const StaffTable = ({ currentPosts }) => {
                     rel="noreferrer"
                     className="underline"
                   >
-                    {item?._id}
+                  
+                  {item?._id?.slice(0, 5)}
+
                   </a>
                 </Td>
                 <Td>USD {item?.salary}</Td>

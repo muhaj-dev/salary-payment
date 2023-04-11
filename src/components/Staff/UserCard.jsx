@@ -64,7 +64,7 @@ const UserCard = () => {
         </div>
       )}
       <div className="flex justify-around gap-y-3 flex-wrap ">
-        <div className="rounded-lg p-5 shadow-card w-[200px] laptop:w-[30%]">
+        <div className="rounded-lg p-5 shadow-card w-full tablet:w-[47%] laptop:w-[30%]">
           <div>
             <p className="mb-1 text-[14px] laptop:text-[18px]">Last Salary</p>
             <div className="flex gap-1 items-center">
@@ -77,7 +77,7 @@ const UserCard = () => {
           </div>
         </div>
 
-        <div className="rounded-lg p-5 shadow-card w-[200px] laptop:w-[30%]">
+        <div className="rounded-lg p-5 shadow-card w-full tablet:w-[47%] laptop:w-[30%]">
           <div>
             <p className="mb-1 text-[14px] laptop:text-[18px]">
               Total Paid Salary
@@ -92,7 +92,7 @@ const UserCard = () => {
           </div>
         </div>
 
-        <div className="rounded-lg p-5 shadow-card w-[200px] laptop:w-[30%]">
+        <div className="rounded-lg p-5 shadow-card w-full tablet:w-[47%] laptop:w-[30%]">
           <div>
             <p className="mb-1 text-[14px] laptop:text-[18px]">Active months</p>
             <div className="flex gap-1 items-center">

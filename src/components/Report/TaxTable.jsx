@@ -108,7 +108,9 @@ const TaxTable = ({ TeamcurrentPosts }) => {
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td className="underline">#{item._id}</Td>
+                <Td className="underline">#{item?._id?.slice(0, 5)}
+                
+                </Td>
                 <Td>{item.user.full_name}</Td>
                 <Td>
                   <span className="bg-[#F7F7F7] px-3 py-1 rounded-md">
