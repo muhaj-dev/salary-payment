@@ -66,7 +66,6 @@ const EditStaff = ({ item }) => {
   const { setLoading } = useAuth();
   const toast = useToast();
   const [file, setFile] = useState({});
-
   const { data, pending, error } = useFetch(
     `${process.env.REACT_APP_LORCHAIN_API}/teams`
   );
@@ -84,7 +83,7 @@ const EditStaff = ({ item }) => {
   const initialValues = {
     full_name: item.full_name,
     email: item.email,
-    nationality: item.nationality,
+    natioanlity: item.natioanlity,
     gender: item.gender,
     tax: item.tax_rate,
     salary: item.salary,
@@ -107,7 +106,7 @@ const EditStaff = ({ item }) => {
       formData.append("full_name", values.full_name);
       formData.append("email", values.email);
       formData.append("gender", values.gender);
-      formData.append("nationality", values.nationality);
+      formData.append("natioanlity", values.natioanlity);
       formData.append("salary", values.salary);
       formData.append("tax_rate", values.tax);
       formData.append("job_role", values.job_role);
@@ -340,24 +339,22 @@ const EditStaff = ({ item }) => {
                 <FormErrorMessage>{formik.errors.gender}</FormErrorMessage>
               </FormControl>
               <FormControl
-                id="nationality"
+                id="text"
                 mt="5"
-                isInvalid={
-                  formik.errors.nationality && formik.touched.nationality
-                }
+                mb={4}
+                isInvalid={formik.errors.natioanlity && formik.touched.natioanlity}
               >
                 <FormLabel>Nationality</FormLabel>
-                <Select
-                  placeholder="Nationality"
-                  fontWeight={"500"}
-                  icon={<ChevronDownIcon />}
-                  {...formik.getFieldProps("nationality")}
-                >
-                  <option value="Nigera">Nigeria</option>
-                  <option value="Ghana">Ghana</option>
-                </Select>
-                <FormErrorMessage>{formik.errors.nationality}</FormErrorMessage>
+                <Input
+                  type="text"
+                  placeholder="Enter your Nation"
+                  {...formik.getFieldProps("natioanlity")}
+                />
+                <FormErrorMessage className="absolute -bottom-5">
+                  {formik.errors.natioanlity}
+                </FormErrorMessage>
               </FormControl>
+
 
               <FormControl
                 id="text"
@@ -416,7 +413,25 @@ const EditStaff = ({ item }) => {
           </div>
           <div className="flex gap-5 justify-between">
             <div className="w-full tablet:w-[48%]">
-              <FormControl
+            <FormControl
+                id="Product Designer"
+                mt="5"
+                mb={4}
+                isInvalid={
+                  formik.errors.job_role && formik.touched.job_role
+                }
+              >
+                <FormLabel>Role</FormLabel>
+                <Input
+                  type="text"
+                  placeholder="Enter job role"
+                  {...formik.getFieldProps("job_role")}
+                />
+                <FormErrorMessage className="absolute -bottom-5">
+                  {formik.errors.job_role}
+                </FormErrorMessage>
+              </FormControl>
+              {/* <FormControl
                 id="job_role"
                 mt="5"
                 isInvalid={formik.errors.job_role && formik.touched.job_role}
@@ -434,7 +449,7 @@ const EditStaff = ({ item }) => {
                   <option value="management">Management</option>
                 </Select>
                 <FormErrorMessage>{formik.errors.job_role}</FormErrorMessage>
-              </FormControl>
+              </FormControl> */}
 
               <FormControl
                 id="job_role"
@@ -447,7 +462,7 @@ const EditStaff = ({ item }) => {
                 <FormLabel>Wallet Address</FormLabel>
                 <Input
                   type="text"
-                  placeholder="0xC57c4384f0eE6E4Ca8FE7FA834a6D525477fC6B5"
+                  placeholder="0xC5..."
                   {...formik.getFieldProps("wallet_address")}
                 />
                 <FormErrorMessage className="absolute -bottom-5">

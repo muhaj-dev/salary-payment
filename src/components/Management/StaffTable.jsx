@@ -18,13 +18,17 @@ import {
 import { BsThreeDotsVertical } from "react-icons/bs";
 import download from "../../assets/download.svg";
 import DeleteStaff from "./DeleteStaff";
-import EditStaff from './EditStaff'
+import EditStaff from "./EditStaff";
 import profile from "../../assets/profile.png";
 
 const table = [
   {
     id: 1,
     head: "User ID",
+  },
+  {
+    id: 8,
+    head: "User name",
   },
   {
     id: 2,
@@ -120,10 +124,9 @@ const StaffTable = ({ currentPosts }) => {
                     {" "}
                   </Checkbox>
                 </Td>
-                <Td>
-                {item?._id?.slice(0, 5)}
-                  
-                   </Td>
+                
+                <Td>{item?._id?.slice(0, 5)}</Td> 
+                <Td>{item?.discord_username?.slice(0, -5)}</Td>
                 <Td display={"flex"} gap={2} alignItems="center">
                   <img
                     className="h-[40px] rounded-full w-[40px]"

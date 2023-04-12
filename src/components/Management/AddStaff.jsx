@@ -63,7 +63,7 @@ const img = {
 const validationSchema = Yup.object().shape({
   full_name: Yup.string().required("This field is required"),
   email: Yup.string().required("Email is required"),
-  nationality: Yup.string().required("This field is required"),
+  natioanlity: Yup.string().required("This field is required"),
   gender: Yup.string().required("This field is required"),
   //it should be an object not an array
   // file: Yup.object().min("At least one image is required"),
@@ -111,7 +111,7 @@ const AddStaff = (props) => {
   const initialValues = {
     full_name: "",
     email: "",
-    nationality: "",
+    natioanlity: "",
     gender: "",
     tax: "",
     salary: "",
@@ -136,7 +136,7 @@ const AddStaff = (props) => {
       formData.append("full_name", values.full_name);
       formData.append("email", values.email);
       formData.append("gender", values.gender);
-      formData.append("nationality", values.nationality);
+      formData.append("natioanlity", values.natioanlity);
       formData.append("salary", values.salary);
       formData.append("tax_rate", values.tax);
       formData.append("job_role", values.job_role);
@@ -440,7 +440,8 @@ const AddStaff = (props) => {
                 </Select>
                 <FormErrorMessage>{formik.errors.gender}</FormErrorMessage>
               </FormControl>
-              <FormControl
+
+              {/* <FormControl
                 id="nationality"
                 mt="5"
                 isInvalid={
@@ -458,6 +459,23 @@ const AddStaff = (props) => {
                   <option value="Ghana">Ghana</option>
                 </Select>
                 <FormErrorMessage>{formik.errors.nationality}</FormErrorMessage>
+              </FormControl> */}
+
+              <FormControl
+                id="text"
+                mt="5"
+                mb={4}
+                isInvalid={formik.errors.natioanlity && formik.touched.natioanlity}
+              >
+                <FormLabel>Nationality</FormLabel>
+                <Input
+                  type="text"
+                  placeholder="Enter your Nation"
+                  {...formik.getFieldProps("natioanlity")}
+                />
+                <FormErrorMessage className="absolute -bottom-5">
+                  {formik.errors.natioanlity}
+                </FormErrorMessage>
               </FormControl>
 
               <FormControl
@@ -465,6 +483,7 @@ const AddStaff = (props) => {
                 mt="5"
                 mb={4}
                 isInvalid={formik.errors.address && formik.touched.address}
+                
               >
                 <FormLabel>Address</FormLabel>
                 <Input
@@ -517,7 +536,7 @@ const AddStaff = (props) => {
           </div>
           <div className="flex gap-5 justify-between">
             <div className="w-full tablet:w-[48%]">
-              <FormControl
+              {/* <FormControl
                 id="job_role"
                 mt="5"
                 isInvalid={formik.errors.job_role && formik.touched.job_role}
@@ -535,6 +554,25 @@ const AddStaff = (props) => {
                   <option value="management">Management</option>
                 </Select>
                 <FormErrorMessage>{formik.errors.job_role}</FormErrorMessage>
+              </FormControl> */}
+
+              <FormControl
+                id="Product Designer"
+                mt="5"
+                mb={4}
+                isInvalid={
+                  formik.errors.job_role && formik.touched.job_role
+                }
+              >
+                <FormLabel>Role</FormLabel>
+                <Input
+                  type="text"
+                  placeholder="Enter job role"
+                  {...formik.getFieldProps("job_role")}
+                />
+                <FormErrorMessage className="absolute -bottom-5">
+                  {formik.errors.job_role}
+                </FormErrorMessage>
               </FormControl>
 
               <FormControl
