@@ -152,10 +152,10 @@ const AddAdmin = () => {
                     <div
                       onClick={() =>
                         handleSelectLead([
-                          user._id,
-                          user.full_name,
-                          user.email,
-                          user.image.url,
+                          user?._id,
+                          user?.full_name,
+                          user?.email,
+                          user?.image?.url,
                         ])
                       }
                       className="flex cursor-pointer justify-between mb-3"
@@ -164,17 +164,17 @@ const AddAdmin = () => {
                         <img
                           className="w-[40px] h-[40px] rounded-full"
                           src={
-                            user.image?.url === undefined
+                            user?.image?.url === undefined
                               ? profile
-                              : user.image?.url
+                              : user?.image?.url
                           }
                           alt=""
                         />
                         <div className="">
                           <p className="font-semibold mt- text-start">
-                            {user.full_name}
+                            {user?.full_name}
                           </p>
-                          <p className="-mt-2 text-start">{user.email}</p>
+                          <p className="-mt-2 text-start">{user?.email}</p>
                         </div>
                       </div>
                     </div>

@@ -45,7 +45,7 @@ const ActivityLog = ({
           activity log
         </p>
       </div>
-      <div className="flex gap-3 w-fit ">
+      <div className="block tablet:flex gap-3 tablet:flex-row w-fit ">
         <div className="">
           <Input
             type="text"
@@ -57,7 +57,7 @@ const ActivityLog = ({
           />
           <ImSearch className="relative -top-[1.6rem] w-5 h-3 left-1 text-[#B9BBBE] " />
         </div>
-        <div className="w-[30%] ">
+        <div className="tablet:w-[30%] w-[50%]  ">
           <Select
             fontWeight={"500"}
             placeholder=""

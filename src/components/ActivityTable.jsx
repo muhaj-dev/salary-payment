@@ -111,9 +111,13 @@ const ActivityTable = ({ currentPosts }) => {
                         e.preventDefault();
                       }}
                     >
-                      {item.user.email}
+                      {item?.user?.email}
                     </Link>
-                    <p className=" text-[14px] "> - {item?.permission === undefined ? "Staff" : "Admin"}</p>
+                    <p className=" text-[14px] "> 
+                    {/* - {item?.user?.permission?.name === undefined ?   "Staff" : item?.user?.permission?.name} */}
+                    {/* {item?.user?.permission?.name} */}
+                    {/* {item?.user?.permission} */}
+                    </p>
                   </div>
                 </Td>
                 <Td className=" text-[14px] ">{formatDate(item.time)} </Td>

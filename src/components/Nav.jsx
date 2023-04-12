@@ -84,7 +84,7 @@ const Nav = forwardRef((props, ref)  => {
           </MenuButton>
           <MenuList>
             <MenuItem>
-              <NavLink to="/reset-password">Change password</NavLink>
+              <NavLink className='w-full m-0 p-2' to="/reset-password">Change password</NavLink>
             </MenuItem>
             <MenuItem onClick={logout}>Logout</MenuItem>
           </MenuList>
@@ -113,7 +113,7 @@ const Nav = forwardRef((props, ref)  => {
           </MenuButton>
           <MenuList>
             <MenuItem>
-              <NavLink to="/reset-password">Change password</NavLink>
+              <NavLink className='w-full m-0 p-2' to="/reset-password">Change password</NavLink>
             </MenuItem>
             <MenuItem onClick={logout}>Logout</MenuItem>
           </MenuList>
