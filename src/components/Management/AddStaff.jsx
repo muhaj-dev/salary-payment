@@ -78,15 +78,16 @@ const validationSchema = Yup.object().shape({
   state_date: Yup.string().required("This field is required"),
   job_role: Yup.string().required("This field is required"),
   address: Yup.string().required("This field is required"),
+  discord_username: Yup.string().required("This field is required"),
   wallet_address: Yup.string().required("This field is required"),
   phone_number: Yup.string().required("This field is required"),
 });
 
 const AddStaff = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // const { setLoading, isLoadiing } = useAuth();
   const toast = useToast();
   const [loading, setLoading] = useState(true);
+  const { refresh, setRefresh } = useAuth();
 
   const [file, setFile] = useState({});
   const [date, setDate] = useState(new Date());
@@ -116,6 +117,7 @@ const AddStaff = (props) => {
     salary: "",
     file: {},
     team: "",
+    discord_username: "",
     state_date: date,
     job_role: "",
     address: "",
@@ -138,7 +140,7 @@ const AddStaff = (props) => {
       formData.append("salary", values.salary);
       formData.append("tax_rate", values.tax);
       formData.append("job_role", values.job_role);
-      // formData.append("job_role", values.);
+      formData.append("discord_username", values.discord_username);
       formData.append("address", values.address);
       if (values.team) {
         formData.append("team", values.team);
@@ -167,20 +169,16 @@ const AddStaff = (props) => {
           const data = await response.json();
           try {
             if (data.team) {
-              updateTeam(
-                data.team,
-                JSON.stringify({ membersId: [data._id] })
-              );
+              updateTeam(data.team, JSON.stringify({ membersId: [data._id] }));
             }
           } catch (err) {
             console.log(err);
           }
-          
+
           if (response.ok) {
             console.log(data);
-          setLoading(true);
-
-
+            setLoading(true);
+            setRefresh(!refresh);
             toast({
               position: "top-right",
               render: () => (
@@ -200,7 +198,7 @@ const AddStaff = (props) => {
             onClose();
           } else {
             resolve(data);
-          setLoading(true);
+            setLoading(true);
 
             toast({
               position: "top-right",
@@ -219,7 +217,7 @@ const AddStaff = (props) => {
               ),
             });
             setLoading(true);
-            
+
             // throw new Error(data.message);
           }
         } catch (error) {
@@ -295,7 +293,6 @@ const AddStaff = (props) => {
               </button>
             ) : (
               <Spinner mr={14} color="primary" size="sm" />
-             
             )}
           </div>
 
@@ -401,6 +398,25 @@ const AddStaff = (props) => {
                 />
                 <FormErrorMessage className="absolute -bottom-5">
                   {formik.errors.phone_number}
+                </FormErrorMessage>
+              </FormControl>
+              <FormControl
+                id="text"
+                mt="5"
+                mb={4}
+                isInvalid={
+                  formik.errors.discord_username &&
+                  formik.touched.discord_username
+                }
+              >
+                <FormLabel>Discord Username</FormLabel>
+                <Input
+                  type="text"
+                  placeholder="john_doe#1234"
+                  {...formik.getFieldProps("discord_username")}
+                />
+                <FormErrorMessage className="absolute -bottom-5">
+                  {formik.errors.discord_username}
                 </FormErrorMessage>
               </FormControl>
             </div>

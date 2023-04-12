@@ -4,7 +4,7 @@ const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [pending, setPending] = useState(true);
   const [error, setError] = useState(null);
-  // const { refresh, setRefresh } = useAuth();
+  const { refresh } = useAuth();
   const userToken = localStorage.getItem("lorchaintoken");
 
   const headers = {
@@ -31,12 +31,12 @@ const useFetch = (url) => {
       })
       .catch((err) => {
         setPending(false);
-        
+
         setError(err.message);
       });
-    }, [url]);
-    
-    return { data, pending, error };
-  };
+  }, [url, refresh]);
+
+  return { data, pending, error };
+};
 
 export default useFetch;
