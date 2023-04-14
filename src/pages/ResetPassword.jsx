@@ -9,13 +9,10 @@ import { Link } from "react-router-dom";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().required("Email is required"),
-  password: Yup.string().required("Password is required"),
 });
 
-const Login = () => {
-  const { login, Loading, setLoading } = useAuth();
-  const [show, setShow] = useState(false);
-  const handleClick = () => setShow(!show);
+const ResetPassword = () => {
+  const { resetpassword, Loading, setLoading } = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -26,18 +23,23 @@ const Login = () => {
     validationSchema: LoginSchema,
     onSubmit: (values) => {
       setLoading(true);
-      login(values.email, values.password);
+      resetpassword(values.email);
+      // setShow(true);
+
+    
     },
   });
 
   return (
     <div className=" px-3 m-auto w-full">
       <div className="w-full ">
+        <Link to='/' className="underline text-primary  " >Back to login page</Link>
+          <p className="mt-4 text-[20px] font-semibold italic">
+            Enter your correct email address
+          </p>
+       
         <form onSubmit={formik.handleSubmit}>
           <div className="my-3">
-            <label htmlFor="email" className="block font-semibold text-[16px]">
-              Email
-            </label>
             <input
               id="email"
               type="email"
@@ -54,37 +56,10 @@ const Login = () => {
             ) : null}
           </div>
 
-          <div className="my-3 relative">
-            <label
-              htmlFor="password"
-              className="block font-semibold text-[16px]"
-            >
-              Password
-            </label>
-            <input
-              type={show ? "text" : "password"}
-              id="password"
-              name="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className="border-[1.5px] w-full text-[16px] border-[black] outline-[1.5px] outline-primary px-3 py-2 mt-1 rounded-md"
-            />
-            {formik.touched.password && formik.errors.password ? (
-              <div className=" text-[red] text-[14px] italic">
-                {formik.errors.password}
-              </div>
-            ) : null}
-            <div className="absolute top-10 right-4" onClick={handleClick}>
-              {show ? <BsEyeFill /> : <BsEyeSlashFill />}
-            </div>
-          </div>
-          <Link to='/forgot-password' className="text-primary  italic underline" >Forget password ?</Link>
-
           <div className="w-full">
             {!Loading ? (
               <button className="text-[16px] my-3 rounded-md py-3 text-white w-full bg-primary">
-                Login
+                Reset
               </button>
             ) : (
               <Button
@@ -107,4 +82,4 @@ const Login = () => {
   );
 };
 
-export default LoginHoc(Login);
+export default LoginHoc(ResetPassword);

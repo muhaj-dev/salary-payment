@@ -111,7 +111,70 @@ const AuthProvider = ({ children }) => {
       }
     });
   };
+  const resetpassword = async (email) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_LORCHAIN_API}/users/forgot-password`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+          }
+        );
 
+        const data = await response.json();
+        if (response.ok) {
+
+          setLoading(true);
+          toast({
+            position: "top-right",
+            render: () => (
+              <Flex
+                color="primary"
+                p={3}
+                bg="white"
+                w="fit-content"
+                className="gap-2  items-center font-semibold shadow-card "
+                rounded={"md"}
+              >
+                <BsCheckCircleFill className="text-[#16A34A] " />
+                successful. Your password has been sent to your email
+              </Flex>
+            ),
+          });
+          setLoading(false);
+
+         
+        } else {
+          setIsAuthenticated(false);
+          resolve(data);
+          toast({
+            position: "top-right",
+            render: () => (
+              <Flex
+                color="white"
+                p={3}
+                bg="red"
+                w="fit-content"
+                className="gap-2 items-center font-semibold shadow-card "
+                rounded={"md"}
+              >
+                <BsCheckCircleFill className="text-white " />
+                {data.message}
+              </Flex>
+            ),
+          });
+          // setLoading(false);
+        
+        }
+      } catch (error) {
+        setLoading(false);
+        reject(error);
+        throw error;
+      }
+    });
+  };
 
   const logout = () => {
     localStorage.removeItem("lorchaintoken");
@@ -135,6 +198,7 @@ const AuthProvider = ({ children }) => {
     refresh,
     setRefresh,
     setLoading,
+    resetpassword,
   };
 
   return (
