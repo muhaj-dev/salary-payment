@@ -10,7 +10,8 @@ const LoginHoc = (WrappedComponent) => {
     return (
       <Flex>
         <Box className="relative hidden tablet:block tablet:w-[50%] h-[100vh] ">
-          <img src={logo} className="absolute top-6 left-20 h-[45px]" alt="logo" />
+          {/* <img src={logo} className="absolute top-6 left-20 h-[45px]" alt="logo" /> */}
+          <p className="absolute top-6 left-12 font-[700] text-[200%] text-[#fff] ">PayRec</p>
           <img src={staff} alt="logo" className="h-full object-cover w-full " />
           <div className="absolute top-[41%] w-full text-white">
             <LogDetails />

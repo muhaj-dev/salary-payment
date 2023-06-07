@@ -38,7 +38,9 @@ const Nav = forwardRef((props, ref)  => {
     <nav className="p-3 my-2 flex justify-between w-[95%] mx-auto max-w-[1512px]">
       <div className="flex gap-10 cursor-pointer">
         <div onClick={home}>
-          <img className=" h-[45px]" src={Plogo} alt="logo" />
+          {/* <img className=" h-[45px]" src={Plogo} alt="logo" /> */}
+          <p className="font-[700] text-[200%] text-primary ">PayRec</p>
+
         </div>
         <div className=" hidden laptop_l:flex align-middle font-semibold">
           <div className="flex gap-2  my-auto">
